@@ -5,14 +5,11 @@ import static com.google.android.exoplayer2.Player.STATE_ENDED;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
-import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
@@ -22,10 +19,6 @@ import android.webkit.CookieManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.VideoView;
-
-import androidx.annotation.NonNull;
 
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -33,15 +26,11 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.gson.JsonObject;
 import com.zune.customtv.base.BaseActivity;
 import com.zune.customtv.base.BaseApplication;
-import com.zune.customtv.bean.AiQing;
-import com.zune.customtv.bean.BaseDataBean;
 import com.zune.customtv.bean.Mp4Bean;
 import com.zune.customtv.utils.SurfaceControllerView;
-
-import org.json.JSONObject;
+import com.zune.customtv.utils.YaoKongUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -79,6 +68,8 @@ public class PlayActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        findViewById(R.id.back).setOnClickListener(v -> YaoKongUtils.back());
+        findViewById(R.id.play).setOnClickListener(v -> YaoKongUtils.playOrPause());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tvChangeVideo = findViewById(R.id.tv_change_video);
         mediaUrls = getIntent().getStringArrayListExtra("mediaUrl");

@@ -39,4 +39,22 @@
         android:visibility="gone"
         tools:visibility="visible" />
 
+    <Button
+        android:id="@+id/back"
+        android:visibility="gone"
+        android:text="返回"
+        android:layout_marginTop="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/play"
+        android:text="播放/暂停"
+        android:visibility="gone"
+        android:layout_marginTop="92dp"
+        android:layout_marginLeft="32dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </FrameLayout>
