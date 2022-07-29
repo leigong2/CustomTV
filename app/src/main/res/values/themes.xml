@@ -1,0 +1,4 @@
+<resources>
+
+    <style name="Theme.CustomTV" parent="@style/Theme.AppCompat.NoActionBar" />
+</resources>

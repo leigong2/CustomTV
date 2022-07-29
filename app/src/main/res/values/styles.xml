@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme" parent="AppTheme.Base">
+    </style>
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimaryDark">@color/app_primary</item>
+        <item name="colorPrimary">@color/app_primary</item>
+        <item name="colorAccent">@color/app_primary</item>
+        <item name="android:windowBackground">@color/translate</item>
+    </style>
+
+    <style name="AppTheme.Base.RealSplash">
+        <item name="android:windowBackground">@mipmap/splash</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <style name="AppTheme.Base.FullScreen">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+</resources>

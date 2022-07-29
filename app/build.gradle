@@ -1,0 +1,55 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        applicationId "com.zune.customtv"
+        minSdkVersion 19
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    signingConfigs {
+        release {
+            keyAlias 'key0'
+            keyPassword '111111'
+            storeFile file('android.jks')
+            storePassword '111111'
+        }
+        debug {
+            keyAlias 'key0'
+            keyPassword '111111'
+            storeFile file('android.jks')
+            storePassword '111111'
+        }
+    }
+}
+
+dependencies {
+    api  fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.leanback:leanback:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    //提供tar+gzip的打包方式(TarArchive和GZipCompress)
+    //http://commons.apache.org/proper/commons-compress/download_compress.cgi
+    implementation 'org.apache.commons:commons-compress:1.18'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.15.1'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.15.1'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation project(path: ':ijkplayer')
+}

@@ -1,0 +1,3 @@
+rootProject.name = "CustomTV"
+include ':app'
+include ':ijkplayer'
