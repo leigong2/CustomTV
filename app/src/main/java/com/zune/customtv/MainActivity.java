@@ -53,6 +53,7 @@ public class MainActivity extends BaseActivity {
                 childAt.requestFocus();
             }
         });
+        viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @NonNull
             @Override

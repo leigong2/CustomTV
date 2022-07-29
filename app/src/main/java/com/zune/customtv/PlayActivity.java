@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
@@ -36,6 +37,7 @@ import com.google.gson.JsonObject;
 import com.zune.customtv.base.BaseActivity;
 import com.zune.customtv.base.BaseApplication;
 import com.zune.customtv.bean.AiQing;
+import com.zune.customtv.bean.BaseDataBean;
 import com.zune.customtv.bean.Mp4Bean;
 import com.zune.customtv.utils.SurfaceControllerView;
 
@@ -80,7 +82,9 @@ public class PlayActivity extends BaseActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         tvChangeVideo = findViewById(R.id.tv_change_video);
         mediaUrls = getIntent().getStringArrayListExtra("mediaUrl");
-        if (mediaUrls != null && mediaUrls.size() == 1 && mediaUrls.get(0).startsWith("https://www.pianba.tv")) {
+        if (mediaUrls != null && mediaUrls.size() == 1 && !mediaUrls.get(0).contains("app.jw")) {
+            WebView webView = findViewById(R.id.web_view);
+            initWebView(webView);
             new Thread() {
                 @Override
                 public void run() {
@@ -90,30 +94,29 @@ public class PlayActivity extends BaseActivity {
                         OkHttpClient okHttpClient = new OkHttpClient();
                         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                         Request request = new Request.Builder()
-                                .url(mediaUrls.get(0))
+                                .url("https://9kjx.com/?url=" + mediaUrls.get(0))
                                 .build();
                         //3.创建一个Call对象，参数是request对象，发送请求
                         Call call = okHttpClient.newCall(request);
                         Response response = call.execute();
                         if (response != null && response.body() != null) {
                             String string = response.body().string();
-                            System.out.println(string);
-                            //<script type="text/javascript">var player_data={"flag":"play","encrypt":0,"trysee":0,"points":0,"link":"\/yun\/251021-1-1.html","link_next":"\/yun\/251021-1-2.html","link_pre":"","url":"https:\/\/wolongzywcdn3.com:65\/F68slL3O\/index.m3u8","url_next":"https:\/\/wolongzywcdn3.com:65\/A8ZYWswv\/index.m3u8","from":"wolong","server":"no","note":"","id":"251021","sid":1,"nid":1}</script><script type="text/javascript" src="/static/js/playerconfig.js?t=20220727"></script><script type="text/javascript" src="/static/js/player.js?t=20220727"></script>
-                            String[] split = string.split("\n");
-                            for (String s : split) {
-                                if (s.contains("var player_data=")) {
-                                    String json = s.split("var player_data=")[1].split("</script><script")[0];
-                                    AiQing aiQing = BaseApplication.getInstance().getGson().fromJson(json, AiQing.class);
-                                    mHandler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            startPlayByVideoView(aiQing.url);
+                            for (String s : string.split("\n")) {
+                                if (s.contains("<iframe")) {
+                                    String realUrl = s.split("src=\"")[1].split("\" autoPlay")[0];
+                                    mHandler.post(() -> {
+                                        if (isDestroyed() || isFinishing()) {
+                                            return;
                                         }
+                                        webView.loadUrl(realUrl);
+                                        int uiFlags = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                                        getWindow().getDecorView().setSystemUiVisibility(uiFlags);
                                     });
-                                    return;
+                                    break;
                                 }
                             }
-                            Toast.makeText(PlayActivity.this, "未找到合适的链接", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -230,6 +233,7 @@ public class PlayActivity extends BaseActivity {
         settings.setJavaScriptCanOpenWindowsAutomatically(true);
         settings.setDatabaseEnabled(true);
         settings.setSupportZoom(true);
+        webView.setVisibility(View.VISIBLE);
     }
 
     private void playWithUrl(int position) {

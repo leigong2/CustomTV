@@ -18,6 +18,12 @@
         android:layout_marginTop="40dp"
         tools:text="视频卡顿切换视频源" />
 
+    <WebView
+        android:id="@+id/web_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <TextureView
         android:id="@+id/video_view"
         android:layout_gravity="center"
