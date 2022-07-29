@@ -264,7 +264,7 @@ public class PlayActivity extends BaseActivity {
                         @Override
                         public void run() {
                             String mp4VideoUri = getMp4Url(mp4Bean);
-                            startPlayByVideoView(mp4VideoUri);
+                            startPlay(mp4VideoUri);
                         }
                     });
                 } catch (Exception e) {
