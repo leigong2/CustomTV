@@ -61,7 +61,6 @@ public class PlayActivity extends BaseActivity {
     private TextView tvChangeVideo;
     private ArrayList<String> mediaUrls;
     private int mCurrentPosition;
-    private Handler mHandler = new Handler(Looper.getMainLooper());
     private IjkMediaPlayer mediaPlayer;
 
     public static void start(Context context, ArrayList<String> mediaUrl) {
