@@ -18,7 +18,9 @@ import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
@@ -26,8 +28,11 @@ import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.gson.Gson;
 import com.zune.customtv.base.BaseActivity;
 import com.zune.customtv.base.BaseApplication;
+import com.zune.customtv.bean.AiQingParser;
+import com.zune.customtv.bean.AiQingResponse;
 import com.zune.customtv.bean.Mp4Bean;
 import com.zune.customtv.utils.SurfaceControllerView;
 import com.zune.customtv.utils.YaoKongUtils;
@@ -38,9 +43,13 @@ import java.util.Collections;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import okio.BufferedSink;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
@@ -74,8 +83,6 @@ public class PlayActivity extends BaseActivity {
         tvChangeVideo = findViewById(R.id.tv_change_video);
         mediaUrls = getIntent().getStringArrayListExtra("mediaUrl");
         if (mediaUrls != null && mediaUrls.size() == 1 && !mediaUrls.get(0).contains("app.jw")) {
-            WebView webView = findViewById(R.id.web_view);
-            initWebView(webView);
             new Thread() {
                 @Override
                 public void run() {
@@ -85,7 +92,7 @@ public class PlayActivity extends BaseActivity {
                         OkHttpClient okHttpClient = new OkHttpClient();
                         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                         Request request = new Request.Builder()
-                                .url("https://9kjx.com/?url=" + mediaUrls.get(0))
+                                .url("https://1717yun.com.zh188.net/0526/?url=" + mediaUrls.get(0))
                                 .build();
                         //3.创建一个Call对象，参数是request对象，发送请求
                         Call call = okHttpClient.newCall(request);
@@ -93,24 +100,75 @@ public class PlayActivity extends BaseActivity {
                         if (response != null && response.body() != null) {
                             String string = response.body().string();
                             for (String s : string.split("\n")) {
-                                if (s.contains("<iframe")) {
-                                    String realUrl = s.split("src=\"")[1].split("\" autoPlay")[0];
-                                    mHandler.post(() -> {
-                                        if (isDestroyed() || isFinishing()) {
-                                            return;
+                                if (s.contains("api.php?url=")) {
+                                    String realWebUrl = s.split("src=\"")[1];
+                                    //1.创建一个okhttpclient对象
+                                    OkHttpClient okHttpClient2 = new OkHttpClient.Builder()
+                                            .followRedirects(false)
+                                            .build();
+                                    //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+                                    String url = "https://1717yun.com.zh188.net" + realWebUrl.trim().substring(0, realWebUrl.length() - 2);
+                                    Request request2 = new Request.Builder()
+                                            .url(url)
+                                            .build();
+                                    //3.创建一个Call对象，参数是request对象，发送请求
+                                    Call call2 = okHttpClient2.newCall(request2);
+                                    Response response2 = call2.execute();
+                                    if (response2 != null && response2.body() != null) {
+                                        String string2 = response2.body().string();
+                                        String[] split = string2.split("\n");
+                                        for (String s1 : split) {
+                                            if (s1.contains("skin")) {
+                                                //("..index..php",{'url':'https://v.qq.com/x/cover/mzc00200nu3kdtu.html','referer':'','ref':form,'time':'1659159576','type':'','other':y.encode(other_l),'ref':form,'ios':''},function(data)
+                                                //{'url':'https://v.qq.com/x/cover/mzc00200nu3kdtu.html','referer':'','ref':form,'time':'1659159576','type':'','other':y.encode(other_l),'ref':form,'ios':''}
+                                                String s2 = s1.split("\\.\\.index\\.\\.php\",")[1].split(",function\\(data\\)\\{if\\(data.code==\"200\"\\)")[0];
+                                                String paramsJson = s2.replaceAll("\'", "\"").replaceAll("form", "\"0\"")
+                                                        .replaceAll("y\\.encode\\(other_l\\)", "\"\"");
+                                                AiQingParser aiQingParser = BaseApplication.getInstance().getGson().fromJson(paramsJson, AiQingParser.class);
+                                                //1.创建一个okhttpclient对象
+                                                OkHttpClient okHttpClient3 = new OkHttpClient.Builder()
+                                                        .followRedirects(false)
+                                                        .build();
+                                                //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+                                                RequestBody body = new FormBody.Builder()
+                                                        .add("ios", aiQingParser.ios)
+                                                        .add("other", aiQingParser.other)
+                                                        .add("ref", aiQingParser.ref)
+                                                        .add("referer", aiQingParser.referer)
+                                                        .add("time", aiQingParser.time)
+                                                        .add("type", aiQingParser.type)
+                                                        .add("url", aiQingParser.url)
+                                                        .build();
+                                                Request request3 = new Request.Builder()
+                                                        .url("https://1717yun.com.zh188.net/20220722/..index..php")
+                                                        .post(body)
+                                                        .build();
+                                                //3.创建一个Call对象，参数是request对象，发送请求
+                                                Call call3 = okHttpClient3.newCall(request3);
+                                                Response response3 = call3.execute();
+                                                if (response3 != null && response3.body() != null) {
+                                                    String string3 = response3.body().string();
+                                                    AiQingResponse aiQingResponse = BaseApplication.getInstance().getGson().fromJson(string3, AiQingResponse.class);
+                                                    String realMp4Url = aiQingResponse.url;
+                                                    BaseApplication.getInstance().getHandler().post(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            startPlayByVideoView(realMp4Url);
+                                                        }
+                                                    });
+                                                }
+                                                break;
+                                            }
                                         }
-                                        webView.loadUrl(realUrl);
-                                        int uiFlags = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-                                        getWindow().getDecorView().setSystemUiVisibility(uiFlags);
-                                    });
+                                        System.out.println(string2);
+                                    }
                                     break;
                                 }
                             }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
+                        Toast.makeText(BaseApplication.getInstance(), "加载出错：" + BaseApplication.getInstance().getGson().toJson(e), Toast.LENGTH_SHORT).show();
                     }
                 }
             }.start();
@@ -225,6 +283,27 @@ public class PlayActivity extends BaseActivity {
         settings.setDatabaseEnabled(true);
         settings.setSupportZoom(true);
         webView.setVisibility(View.VISIBLE);
+        webView.setWebViewClient(new MyWebViewClient());
+    }
+
+    static class MyWebViewClient extends WebViewClient {
+        @Override
+        public void onLoadResource(WebView view, String url) {
+            super.onLoadResource(view, url);
+            view.loadUrl(
+                    "javascript:(       function() {\n" +
+                            "       document.getElementsByClassName('panel')[0].style.marginLeft='20px';\n" +
+                            "       document.getElementsByClassName('slide')[0].style.marginLeft='20px';\n" +
+                            "       document.getElementsByClassName('panel')[0].style.marginTop='20px';\n" +
+                            "       document.getElementsByClassName('slide')[0].style.marginTop='20px';\n" +
+                            "       document.getElementsByClassName('OK-jiexi')[0].style.backgroundColor='#0000';\n" +
+                            "       document.getElementsByClassName('OK-jiexi')[0].style.color ='#FFF';\n" +
+                            "       document.getElementsByClassName('OK-jiexi')[0].style.opacity ='0.4';\n" +
+                            "       document.body.getElementsByTagName('div')[1].style.marginTop='-56px';\n" +
+                            "       document.getElementById('bofang').click();\n" +
+                            "       })()"
+            );
+        }
     }
 
     private void playWithUrl(int position) {

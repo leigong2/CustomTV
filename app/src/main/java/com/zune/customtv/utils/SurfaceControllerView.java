@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.zune.customtv.R;
+import com.zune.customtv.base.BaseApplication;
 
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
@@ -36,7 +37,7 @@ public class SurfaceControllerView extends FrameLayout {
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private View mVideoBack;
     private TextView mVideoTitle;
-    private View mBottomLay;
+    private ViewGroup mBottomLay;
     private View mTopLay;
 
     private int mBigLength;
@@ -317,7 +318,13 @@ public class SurfaceControllerView extends FrameLayout {
         mChangeHandler.removeCallbacksAndMessages(null);
         int topHeight = -mTopLay.getMeasuredHeight() - 64;
         if (!isControllerHide) {
-            ObjectAnimator.ofFloat(mBottomLay, "translationY", 0, mBottomLay.getMeasuredHeight())
+            for (int i = 0; i < mBottomLay.getChildCount(); i++) {
+                ObjectAnimator.ofFloat(mBottomLay.getChildAt(i), "translationY", 0, i == 0 ? mBottomLay.getMeasuredHeight()
+                        : dp2px(10))
+                        .setDuration(300)
+                        .start();
+            }
+            ObjectAnimator.ofFloat(mBottomLay, "translationY", 0, dp2px(20))
                     .setDuration(300)
                     .start();
             ObjectAnimator.ofFloat(mTopLay, "translationY", 0, topHeight)
@@ -325,7 +332,13 @@ public class SurfaceControllerView extends FrameLayout {
                     .start();
         } else {
             dismissControllerDelay();
-            ObjectAnimator.ofFloat(mBottomLay, "translationY", mBottomLay.getMeasuredHeight(), 0)
+            for (int i = 0; i < mBottomLay.getChildCount(); i++) {
+                ObjectAnimator.ofFloat(mBottomLay.getChildAt(i), "translationY", i == 0 ? mBottomLay.getMeasuredHeight()
+                        : dp2px(10), 0)
+                        .setDuration(300)
+                        .start();
+            }
+            ObjectAnimator.ofFloat(mBottomLay, "translationY", dp2px(20), 0)
                     .setDuration(300)
                     .start();
             ObjectAnimator.ofFloat(mTopLay, "translationY", topHeight, 0)
@@ -333,6 +346,14 @@ public class SurfaceControllerView extends FrameLayout {
                     .start();
         }
         isControllerHide = !isControllerHide;
+    }
+
+    /**
+     * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
+     */
+    public static int dp2px(float dpValue) {
+        final float scale = BaseApplication.getInstance().getResources().getDisplayMetrics().density;
+        return (int) (dpValue * scale + 0.5f);
     }
 
     public interface OnOrientationChangeListener {
