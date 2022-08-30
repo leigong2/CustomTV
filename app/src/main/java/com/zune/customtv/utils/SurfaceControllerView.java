@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Rect;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
@@ -24,8 +25,6 @@ import androidx.annotation.Nullable;
 import com.zune.customtv.R;
 import com.zune.customtv.base.BaseApplication;
 
-import tv.danmaku.ijk.media.player.IjkMediaPlayer;
-
 public class SurfaceControllerView extends FrameLayout {
 
     private ImageView mPreBtn;
@@ -42,9 +41,9 @@ public class SurfaceControllerView extends FrameLayout {
 
     private int mBigLength;
     private int mSmallLength;
-    private IjkMediaPlayer ijkMediaPlayer;
+    private MediaPlayer ijkMediaPlayer;
 
-    public void setIjkMediaPlayer(IjkMediaPlayer ijkMediaPlayer) {
+    public void setIjkMediaPlayer(MediaPlayer ijkMediaPlayer) {
         this.ijkMediaPlayer = ijkMediaPlayer;
     }
 
@@ -133,7 +132,7 @@ public class SurfaceControllerView extends FrameLayout {
                                 float offsetX = event.getRawX() - downX;
                                 float progressSecond = (offsetX / v.getMeasuredWidth()) * totalProgress;
                                 float currentProgress = mSeekBar.getProgress();
-                                ijkMediaPlayer.seekTo((long) (progressSecond + currentProgress));
+                                ijkMediaPlayer.seekTo((int) (progressSecond + currentProgress));
                             }
                         }
                         break;
@@ -245,12 +244,19 @@ public class SurfaceControllerView extends FrameLayout {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (ijkMediaPlayer.isPlaying()) {
-                    mTvProgress.setText(getTotalUsTime(ijkMediaPlayer.getCurrentPosition(), false));
-                    mSeekBar.setProgress((int) ijkMediaPlayer.getCurrentPosition());
+                try {
+                    if (getContext() instanceof Activity && ((Activity) getContext()).isFinishing()) {
+                        return;
+                    }
+                    if (ijkMediaPlayer.isPlaying()) {
+                        mTvProgress.setText(getTotalUsTime(ijkMediaPlayer.getCurrentPosition(), false));
+                        mSeekBar.setProgress((int) ijkMediaPlayer.getCurrentPosition());
+                    }
+                    refreshPlayIcon();
+                    startPlay();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                refreshPlayIcon();
-                startPlay();
             }
         }, 1000);
         mTvTotal.setText(getTotalUsTime(ijkMediaPlayer.getDuration(), true));
@@ -320,7 +326,7 @@ public class SurfaceControllerView extends FrameLayout {
         if (!isControllerHide) {
             for (int i = 0; i < mBottomLay.getChildCount(); i++) {
                 ObjectAnimator.ofFloat(mBottomLay.getChildAt(i), "translationY", 0, i == 0 ? mBottomLay.getMeasuredHeight()
-                        : dp2px(10))
+                                : dp2px(10))
                         .setDuration(300)
                         .start();
             }
@@ -334,7 +340,7 @@ public class SurfaceControllerView extends FrameLayout {
             dismissControllerDelay();
             for (int i = 0; i < mBottomLay.getChildCount(); i++) {
                 ObjectAnimator.ofFloat(mBottomLay.getChildAt(i), "translationY", i == 0 ? mBottomLay.getMeasuredHeight()
-                        : dp2px(10), 0)
+                                : dp2px(10), 0)
                         .setDuration(300)
                         .start();
             }

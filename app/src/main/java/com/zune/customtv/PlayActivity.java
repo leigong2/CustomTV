@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
@@ -61,7 +62,7 @@ public class PlayActivity extends BaseActivity {
     private TextView tvChangeVideo;
     private ArrayList<String> mediaUrls;
     private int mCurrentPosition;
-    private IjkMediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer;
 
     public static void start(Context context, ArrayList<String> mediaUrl) {
         Intent intent = new Intent(context, PlayActivity.class);
@@ -88,25 +89,43 @@ public class PlayActivity extends BaseActivity {
                     super.run();
                     try {
                         //1.创建一个okhttpclient对象
-                        OkHttpClient okHttpClient = new OkHttpClient();
+                        OkHttpClient okHttpClient0 = new OkHttpClient();
                         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
-                        Request request = new Request.Builder()
+                        Request request0 = new Request.Builder()
                                 .url("https://1717yun.com.zh188.net/0526/?url=" + mediaUrls.get(0))
                                 .build();
                         //3.创建一个Call对象，参数是request对象，发送请求
-                        Call call = okHttpClient.newCall(request);
-                        Response response = call.execute();
-                        if (response != null && response.body() != null) {
-                            String string = response.body().string();
-                            for (String s : string.split("\n")) {
-                                if (s.contains("api.php?url=")) {
-                                    String realWebUrl = s.split("src=\"")[1];
+                        Call call0 = okHttpClient0.newCall(request0);
+                        Response response0 = call0.execute();
+                        if (response0 != null && response0.body() != null) {
+                            String string0 = response0.body().string();
+                            for (String s0 : string0.split("\n")) {
+                                if (s0.contains("src=\"")) {
+                                    String realWebUrl0 = s0.split("src=\"")[1].split(".html")[0] + ".html";
+                                    //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+                                    String url = "https://1717yun.com.zh188.net" + realWebUrl0.trim().substring(0, realWebUrl0.length() - 2);
+                                    //1.创建一个okhttpclient对象
+                                    OkHttpClient okHttpClient = new OkHttpClient();
+                                    //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+                                    Request request = new Request.Builder()
+                                            .url(url)
+                                            .build();
+                                    //3.创建一个Call对象，参数是request对象，发送请求
+                                    Call call = okHttpClient.newCall(request);
+                                    Response response = call.execute();
+                                    if (response != null && response.body() != null) {
+                                        String string = response.body().string();
+                                        for (String s : string.split("\n")) {
+                                            if (s.contains("api.php?url=")) {
+                                                url = "https://1717yun.com.zh188.net" + s.split("src=\"")[1].substring(0, s.split("src=\"")[1].length() - 2) + "ml";;
+                                            }
+                                        }
+                                    }
+
                                     //1.创建一个okhttpclient对象
                                     OkHttpClient okHttpClient2 = new OkHttpClient.Builder()
                                             .followRedirects(false)
                                             .build();
-                                    //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
-                                    String url = "https://1717yun.com.zh188.net" + realWebUrl.trim().substring(0, realWebUrl.length() - 2);
                                     Request request2 = new Request.Builder()
                                             .url(url)
                                             .build();
@@ -167,7 +186,6 @@ public class PlayActivity extends BaseActivity {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        Toast.makeText(BaseApplication.getInstance(), "加载出错：" + BaseApplication.getInstance().getGson().toJson(e), Toast.LENGTH_SHORT).show();
                     }
                 }
             }.start();
@@ -181,9 +199,9 @@ public class PlayActivity extends BaseActivity {
         SurfaceControllerView videoController = findViewById(R.id.video_controller);
         videoView.setVisibility(View.VISIBLE);
         videoController.setVisibility(View.VISIBLE);
-        mediaPlayer = new IjkMediaPlayer();
+        mediaPlayer = new MediaPlayer();
         videoController.setIjkMediaPlayer(mediaPlayer);
-        mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1);
+//        mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_clear", 1);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
             mediaPlayer.setDataSource(url);
@@ -192,19 +210,22 @@ public class PlayActivity extends BaseActivity {
         }
         mediaPlayer.prepareAsync();
         mediaPlayer.setScreenOnWhilePlaying(true);
-        mediaPlayer.setOnPreparedListener(new IjkMediaPlayer.OnPreparedListener() {
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
-            public void onPrepared(IMediaPlayer mp) {
+            public void onPrepared(MediaPlayer mp) {
+                if (videoView.getSurfaceTexture() == null) {
+                    return;
+                }
                 mp.setSurface(new Surface(videoView.getSurfaceTexture()));
                 mp.start();
                 videoController.startPlay();
-                refreshVideoSize(videoView, (IjkMediaPlayer) mp);
+                refreshVideoSize(videoView, (MediaPlayer) mp);
             }
         });
     }
 
 
-    public void refreshVideoSize(TextureView textureView, IjkMediaPlayer ijkMediaPlayer) {
+    public void refreshVideoSize(TextureView textureView, MediaPlayer ijkMediaPlayer) {
         int videoWidth = ijkMediaPlayer.getVideoWidth();
         int videoHeight = ijkMediaPlayer.getVideoHeight();
         int surfaceWidth = getScreenWidth();
