@@ -52,8 +52,6 @@ public class SplashActivity extends BaseActivity {
                         return 0;
                     }
                 });
-                getSharedPreferences("data", MODE_PRIVATE).edit().putString("baseDataBean"
-                        , BaseApplication.getInstance().getGson().toJson(baseDataBeans)).apply();
                 NetDataManager.sBaseData.addAll(baseDataBeans);
                 MainActivity.start(SplashActivity.this);
                 finish();

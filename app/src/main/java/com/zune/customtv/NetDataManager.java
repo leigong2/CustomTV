@@ -25,13 +25,6 @@ import okhttp3.Response;
 public class NetDataManager {
     public static final List<BaseDataBean> sBaseData = new ArrayList<>();
     public static void getBaseData(CallBack<List<BaseDataBean>> callBack) {
-        File file = new File(BaseApplication.getInstance().getExternalFilesDir(null), "baseData.json");
-        long l = System.currentTimeMillis();
-        long lastModified = file.lastModified();
-        if (file.exists() && l - lastModified < 24 * 3600 * 1000L) {
-            parseJson(file, callBack);
-            return;
-        }
         //1.创建一个okhttpclient对象
         OkHttpClient okHttpClient = new OkHttpClient();
         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get

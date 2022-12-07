@@ -171,7 +171,7 @@ public class PlayActivity extends BaseActivity {
                                                     BaseApplication.getInstance().getHandler().post(new Runnable() {
                                                         @Override
                                                         public void run() {
-                                                            startPlayByVideoView(realMp4Url);
+                                                            startPlay(realMp4Url);
                                                         }
                                                     });
                                                 }
@@ -358,7 +358,7 @@ public class PlayActivity extends BaseActivity {
                         @Override
                         public void run() {
                             String mp4VideoUri = getMp4Url(mp4Bean);
-                            startPlayByVideoView(mp4VideoUri);
+                            startPlay(mp4VideoUri);
                         }
                     });
                 } catch (Exception e) {
