@@ -35,6 +35,7 @@ import com.zune.customtv.base.BaseApplication;
 import com.zune.customtv.bean.AiQingParser;
 import com.zune.customtv.bean.AiQingResponse;
 import com.zune.customtv.bean.Mp4Bean;
+import com.zune.customtv.utils.SSLSocketClient;
 import com.zune.customtv.utils.SurfaceControllerView;
 import com.zune.customtv.utils.YaoKongUtils;
 
@@ -89,7 +90,10 @@ public class PlayActivity extends BaseActivity {
                     super.run();
                     try {
                         //1.创建一个okhttpclient对象
-                        OkHttpClient okHttpClient0 = new OkHttpClient();
+                        OkHttpClient okHttpClient0 = new OkHttpClient.Builder()
+                                .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
+                                .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
+                                .build();
                         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                         Request request0 = new Request.Builder()
                                 .url("https://1717yun.com.zh188.net/0526/?url=" + mediaUrls.get(0))
@@ -103,9 +107,12 @@ public class PlayActivity extends BaseActivity {
                                 if (s0.contains("src=\"")) {
                                     String realWebUrl0 = s0.split("src=\"")[1].split(".html")[0] + ".html";
                                     //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
-                                    String url = "https://1717yun.com.zh188.net" + realWebUrl0.trim().substring(0, realWebUrl0.length() - 2);
+                                    String url = "https://1717yun.com.zh188.net" + realWebUrl0;
                                     //1.创建一个okhttpclient对象
-                                    OkHttpClient okHttpClient = new OkHttpClient();
+                                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                                            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
+                                            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
+                                            .build();
                                     //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                                     Request request = new Request.Builder()
                                             .url(url)
@@ -124,6 +131,8 @@ public class PlayActivity extends BaseActivity {
 
                                     //1.创建一个okhttpclient对象
                                     OkHttpClient okHttpClient2 = new OkHttpClient.Builder()
+                                            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
+                                            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
                                             .followRedirects(false)
                                             .build();
                                     Request request2 = new Request.Builder()
@@ -145,6 +154,8 @@ public class PlayActivity extends BaseActivity {
                                                 AiQingParser aiQingParser = BaseApplication.getInstance().getGson().fromJson(paramsJson, AiQingParser.class);
                                                 //1.创建一个okhttpclient对象
                                                 OkHttpClient okHttpClient3 = new OkHttpClient.Builder()
+                                                        .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
+                                                        .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
                                                         .followRedirects(false)
                                                         .build();
                                                 //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
