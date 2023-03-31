@@ -43,6 +43,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.X509TrustManager;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -64,6 +67,10 @@ public class PlayActivity extends BaseActivity {
     private ArrayList<String> mediaUrls;
     private int mCurrentPosition;
     private MediaPlayer mediaPlayer;
+    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory(), (X509TrustManager) SSLSocketClient.getTrustManager()[0])
+            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())
+            .build();
 
     public static void start(Context context, ArrayList<String> mediaUrl) {
         Intent intent = new Intent(context, PlayActivity.class);
@@ -89,17 +96,12 @@ public class PlayActivity extends BaseActivity {
                 public void run() {
                     super.run();
                     try {
-                        //1.创建一个okhttpclient对象
-                        OkHttpClient okHttpClient0 = new OkHttpClient.Builder()
-                                .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
-                                .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
-                                .build();
                         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                         Request request0 = new Request.Builder()
                                 .url("https://1717yun.com.zh188.net/0526/?url=" + mediaUrls.get(0))
                                 .build();
                         //3.创建一个Call对象，参数是request对象，发送请求
-                        Call call0 = okHttpClient0.newCall(request0);
+                        Call call0 = okHttpClient.newCall(request0);
                         Response response0 = call0.execute();
                         if (response0 != null && response0.body() != null) {
                             String string0 = response0.body().string();
@@ -108,11 +110,6 @@ public class PlayActivity extends BaseActivity {
                                     String realWebUrl0 = s0.split("src=\"")[1].split(".html")[0] + ".html";
                                     //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                                     String url = "https://1717yun.com.zh188.net" + realWebUrl0;
-                                    //1.创建一个okhttpclient对象
-                                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                                            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
-                                            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
-                                            .build();
                                     //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                                     Request request = new Request.Builder()
                                             .url(url)
@@ -124,22 +121,17 @@ public class PlayActivity extends BaseActivity {
                                         String string = response.body().string();
                                         for (String s : string.split("\n")) {
                                             if (s.contains("api.php?url=")) {
-                                                url = "https://1717yun.com.zh188.net" + s.split("src=\"")[1].substring(0, s.split("src=\"")[1].length() - 2) + "ml";;
+                                                String src = s.split("src=\"")[1].trim();
+                                                url = "https://1717yun.com.zh188.net" + src.substring(0, src.length() - 1);
                                             }
                                         }
                                     }
-
-                                    //1.创建一个okhttpclient对象
-                                    OkHttpClient okHttpClient2 = new OkHttpClient.Builder()
-                                            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
-                                            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
-                                            .followRedirects(false)
-                                            .build();
                                     Request request2 = new Request.Builder()
                                             .url(url)
+                                            .header("referer", url)
                                             .build();
                                     //3.创建一个Call对象，参数是request对象，发送请求
-                                    Call call2 = okHttpClient2.newCall(request2);
+                                    Call call2 = okHttpClient.newCall(request2);
                                     Response response2 = call2.execute();
                                     if (response2 != null && response2.body() != null) {
                                         String string2 = response2.body().string();
@@ -152,12 +144,6 @@ public class PlayActivity extends BaseActivity {
                                                 String paramsJson = s2.replaceAll("\'", "\"").replaceAll("form", "\"0\"")
                                                         .replaceAll("y\\.encode\\(other_l\\)", "\"\"");
                                                 AiQingParser aiQingParser = BaseApplication.getInstance().getGson().fromJson(paramsJson, AiQingParser.class);
-                                                //1.创建一个okhttpclient对象
-                                                OkHttpClient okHttpClient3 = new OkHttpClient.Builder()
-                                                        .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
-                                                        .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
-                                                        .followRedirects(false)
-                                                        .build();
                                                 //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                                                 RequestBody body = new FormBody.Builder()
                                                         .add("ios", aiQingParser.ios)
@@ -173,7 +159,7 @@ public class PlayActivity extends BaseActivity {
                                                         .post(body)
                                                         .build();
                                                 //3.创建一个Call对象，参数是request对象，发送请求
-                                                Call call3 = okHttpClient3.newCall(request3);
+                                                Call call3 = okHttpClient.newCall(request3);
                                                 Response response3 = call3.execute();
                                                 if (response3 != null && response3.body() != null) {
                                                     String string3 = response3.body().string();
@@ -341,8 +327,6 @@ public class PlayActivity extends BaseActivity {
         if (position >= mediaUrls.size()) {
             return;
         }
-        //1.创建一个okhttpclient对象
-        OkHttpClient okHttpClient = new OkHttpClient();
         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
         Request request = new Request.Builder()
                 .url(mediaUrls.get(position))
@@ -427,7 +411,7 @@ public class PlayActivity extends BaseActivity {
                     isPlayed = true;
                     BaseApplication.getInstance().getHandler().removeCallbacks(r);
                 } else if (isPlayed && currentPosition > 0) {
-                    BaseApplication.getInstance().getHandler().postDelayed(r, 1500);
+                    BaseApplication.getInstance().getHandler().postDelayed(r, 5000);
                 }
             }
         });

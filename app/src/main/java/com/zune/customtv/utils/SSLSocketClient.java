@@ -28,7 +28,7 @@ public class SSLSocketClient {
     }
 
     //获取TrustManager
-    private static TrustManager[] getTrustManager() {
+    public static TrustManager[] getTrustManager() {
         TrustManager[] trustAllCerts = new TrustManager[]{
                 new X509TrustManager() {
                     @Override
