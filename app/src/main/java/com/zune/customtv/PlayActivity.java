@@ -386,6 +386,7 @@ public class PlayActivity extends BaseActivity {
 
     private void startPlay(String mp4VideoUri) {
         PlayerView playerView = findViewById(R.id.player_view);
+        playerView.setVisibility(View.VISIBLE);
         player = new SimpleExoPlayer.Builder(BaseApplication.getInstance()).build();
         playerView.setPlayer(player);
         MediaItem mediaItem = MediaItem.fromUri(mp4VideoUri);
