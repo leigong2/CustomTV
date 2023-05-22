@@ -11,12 +11,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.ClientCertRequest;
 import android.webkit.CookieManager;
+import android.webkit.HttpAuthHandler;
+import android.webkit.RenderProcessGoneDetail;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -42,6 +47,10 @@ import com.zune.customtv.utils.YaoKongUtils;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
@@ -85,6 +94,9 @@ public class PlayActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        WebView webView = findViewById(R.id.web_view);
+//        initWebView(webView);
+//        webView.loadUrl("https://jx2022.laobandq.com/jiexi20210115/8090.php?url=https://v.qq.com/x/cover/mzc00200zixidqy/p0046443rsg.html");
         findViewById(R.id.back).setOnClickListener(v -> YaoKongUtils.back());
         findViewById(R.id.play).setOnClickListener(v -> YaoKongUtils.playOrPause());
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -98,87 +110,43 @@ public class PlayActivity extends BaseActivity {
                     try {
                         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                         Request request0 = new Request.Builder()
-                                .url("https://1717yun.com.zh188.net/0526/?url=" + mediaUrls.get(0))
+                                .url("https://1717yun.com.zh188.net/0907/index.php?url=" + mediaUrls.get(0))
+                                .addHeader("referer", "https://1717yun.com.zh188.net/0828/?url=" + mediaUrls.get(0))
                                 .build();
                         //3.创建一个Call对象，参数是request对象，发送请求
                         Call call0 = okHttpClient.newCall(request0);
                         Response response0 = call0.execute();
                         if (response0 != null && response0.body() != null) {
                             String string0 = response0.body().string();
-                            for (String s0 : string0.split("\n")) {
-                                if (s0.contains("src=\"")) {
-                                    String realWebUrl0 = s0.split("src=\"")[1].split(".html")[0] + ".html";
-                                    //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
-                                    String url = "https://1717yun.com.zh188.net" + realWebUrl0;
-                                    //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
-                                    Request request = new Request.Builder()
-                                            .url(url)
-                                            .build();
-                                    //3.创建一个Call对象，参数是request对象，发送请求
-                                    Call call = okHttpClient.newCall(request);
-                                    Response response = call.execute();
-                                    if (response != null && response.body() != null) {
-                                        String string = response.body().string();
-                                        for (String s : string.split("\n")) {
-                                            if (s.contains("api.php?url=")) {
-                                                String src = s.split("src=\"")[1].trim();
-                                                url = "https://1717yun.com.zh188.net" + src.substring(0, src.length() - 1);
-                                            }
-                                        }
+                            String referer = getKeyWords(string0, "'referer':'", "','ref'");
+                            String url = getKeyWords(string0, "'url':'", "','referer'");
+                           // https://1717yun.com.zh188.net/0907/api.php
+                            RequestBody body = new FormBody.Builder()
+                                    .add("ios", "")
+                                    .add("other", "")
+                                    .add("ref", "0")
+                                    .add("referer", referer)
+                                    .add("time", String.valueOf(System.currentTimeMillis() / 1000))
+                                    .add("type", "")
+                                    .add("url", url)
+                                    .build();
+                            Request request3 = new Request.Builder()
+                                    .url("https://1717yun.com.zh188.net/20220722/..index..php")
+                                    .post(body)
+                                    .build();
+                            //3.创建一个Call对象，参数是request对象，发送请求
+                            Call call3 = okHttpClient.newCall(request3);
+                            Response response3 = call3.execute();
+                            if (response3 != null && response3.body() != null) {
+                                String string3 = response3.body().string();
+                                AiQingResponse aiQingResponse = BaseApplication.getInstance().getGson().fromJson(string3, AiQingResponse.class);
+                                String realMp4Url = aiQingResponse.url;
+                                BaseApplication.getInstance().getHandler().post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startPlayByVideoView(realMp4Url);
                                     }
-                                    Request request2 = new Request.Builder()
-                                            .url(url)
-                                            .header("referer", url)
-                                            .build();
-                                    //3.创建一个Call对象，参数是request对象，发送请求
-                                    Call call2 = okHttpClient.newCall(request2);
-                                    Response response2 = call2.execute();
-                                    if (response2 != null && response2.body() != null) {
-                                        String string2 = response2.body().string();
-                                        String[] split = string2.split("\n");
-                                        for (String s1 : split) {
-                                            if (s1.contains("skin")) {
-                                                //("..index..php",{'url':'https://v.qq.com/x/cover/mzc00200nu3kdtu.html','referer':'','ref':form,'time':'1659159576','type':'','other':y.encode(other_l),'ref':form,'ios':''},function(data)
-                                                //{'url':'https://v.qq.com/x/cover/mzc00200nu3kdtu.html','referer':'','ref':form,'time':'1659159576','type':'','other':y.encode(other_l),'ref':form,'ios':''}
-                                                String s2 = s1.split("\\.\\.index\\.\\.php\",")[1].split(",function\\(data\\)\\{if\\(data.code==\"200\"\\)")[0];
-                                                String paramsJson = s2.replaceAll("\'", "\"").replaceAll("form", "\"0\"")
-                                                        .replaceAll("y\\.encode\\(other_l\\)", "\"\"");
-                                                AiQingParser aiQingParser = BaseApplication.getInstance().getGson().fromJson(paramsJson, AiQingParser.class);
-                                                //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
-                                                RequestBody body = new FormBody.Builder()
-                                                        .add("ios", aiQingParser.ios)
-                                                        .add("other", aiQingParser.other)
-                                                        .add("ref", aiQingParser.ref)
-                                                        .add("referer", aiQingParser.referer)
-                                                        .add("time", aiQingParser.time)
-                                                        .add("type", aiQingParser.type)
-                                                        .add("url", aiQingParser.url)
-                                                        .build();
-                                                Request request3 = new Request.Builder()
-                                                        .url("https://1717yun.com.zh188.net/20220722/..index..php")
-                                                        .post(body)
-                                                        .build();
-                                                //3.创建一个Call对象，参数是request对象，发送请求
-                                                Call call3 = okHttpClient.newCall(request3);
-                                                Response response3 = call3.execute();
-                                                if (response3 != null && response3.body() != null) {
-                                                    String string3 = response3.body().string();
-                                                    AiQingResponse aiQingResponse = BaseApplication.getInstance().getGson().fromJson(string3, AiQingResponse.class);
-                                                    String realMp4Url = aiQingResponse.url;
-                                                    BaseApplication.getInstance().getHandler().post(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            startPlay(realMp4Url);
-                                                        }
-                                                    });
-                                                }
-                                                break;
-                                            }
-                                        }
-                                        System.out.println(string2);
-                                    }
-                                    break;
-                                }
+                                });
                             }
                         }
                     } catch (Exception e) {
@@ -191,6 +159,27 @@ public class PlayActivity extends BaseActivity {
         playWithUrl(mCurrentPosition);
     }
 
+    /**
+     * 取出在before 和 after之间的字符串
+     * @param string
+     * @param before
+     * @param after
+     * @return
+     */
+    protected static String getKeyWords(String string, String before, String after) {
+        String p = before + "(.*?)" + after;
+        Pattern pattern = Pattern.compile(p, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(string.trim());
+        while (matcher.find()) {
+            String group = matcher.group();
+            if (!TextUtils.isEmpty(group)) {
+                String substring = group.substring(before.length());
+                return substring.substring(0, substring.length() - after.length());
+            }
+        }
+        return "";
+    }
+
     private void startPlayByVideoView(String url) {
         TextureView videoView = findViewById(R.id.video_view);
         SurfaceControllerView videoController = findViewById(R.id.video_controller);
@@ -201,7 +190,20 @@ public class PlayActivity extends BaseActivity {
 //        mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_clear", 1);
         mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
         try {
-            mediaPlayer.setDataSource(url);
+            Map<String, String> headers = new HashMap<>();
+            headers.put("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"");
+            headers.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36");
+            headers.put("sec-ch-ua-mobile", "?0");
+            headers.put("sec-ch-ua-platform", "\"Windows\"");
+            headers.put("Upgrade-Insecure-Requests", "1");
+            headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
+            headers.put("Sec-Fetch-Site", "none");
+            headers.put("Sec-Fetch-Mode", "navigate");
+            headers.put("Sec-Fetch-User", "?1");
+            headers.put("Sec-Fetch-Dest", "document");
+            headers.put("Accept-Encoding", "gzip, deflate, br");
+            headers.put("Accept-Language", "zh-CN,zh;q=0.9");
+            mediaPlayer.setDataSource(BaseApplication.getInstance(), Uri.parse(url), headers);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -307,19 +309,26 @@ public class PlayActivity extends BaseActivity {
         @Override
         public void onLoadResource(WebView view, String url) {
             super.onLoadResource(view, url);
-            view.loadUrl(
-                    "javascript:(       function() {\n" +
-                            "       document.getElementsByClassName('panel')[0].style.marginLeft='20px';\n" +
-                            "       document.getElementsByClassName('slide')[0].style.marginLeft='20px';\n" +
-                            "       document.getElementsByClassName('panel')[0].style.marginTop='20px';\n" +
-                            "       document.getElementsByClassName('slide')[0].style.marginTop='20px';\n" +
-                            "       document.getElementsByClassName('OK-jiexi')[0].style.backgroundColor='#0000';\n" +
-                            "       document.getElementsByClassName('OK-jiexi')[0].style.color ='#FFF';\n" +
-                            "       document.getElementsByClassName('OK-jiexi')[0].style.opacity ='0.4';\n" +
-                            "       document.body.getElementsByTagName('div')[1].style.marginTop='-56px';\n" +
-                            "       document.getElementById('bofang').click();\n" +
-                            "       })()"
-            );
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            return super.shouldOverrideUrlLoading(view, request);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return super.shouldOverrideUrlLoading(view, url);
+        }
+
+        @Override
+        public boolean onRenderProcessGone(WebView view, RenderProcessGoneDetail detail) {
+            return super.onRenderProcessGone(view, detail);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
         }
     }
 
