@@ -28,12 +28,18 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.drm.DefaultDrmSessionManagerProvider;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
+import com.google.android.exoplayer2.upstream.HttpDataSource;
 import com.google.gson.Gson;
 import com.zune.customtv.base.BaseActivity;
 import com.zune.customtv.base.BaseApplication;
@@ -120,7 +126,7 @@ public class PlayActivity extends BaseActivity {
                             String string0 = response0.body().string();
                             String referer = getKeyWords(string0, "'referer':'", "','ref'");
                             String url = getKeyWords(string0, "'url':'", "','referer'");
-                           // https://1717yun.com.zh188.net/0907/api.php
+                            // https://1717yun.com.zh188.net/0907/api.php
                             RequestBody body = new FormBody.Builder()
                                     .add("ios", "")
                                     .add("other", "")
@@ -144,7 +150,7 @@ public class PlayActivity extends BaseActivity {
                                 BaseApplication.getInstance().getHandler().post(new Runnable() {
                                     @Override
                                     public void run() {
-                                        startPlayByVideoView(realMp4Url);
+                                        startPlay(realMp4Url, true);
                                     }
                                 });
                             }
@@ -161,6 +167,7 @@ public class PlayActivity extends BaseActivity {
 
     /**
      * 取出在before 和 after之间的字符串
+     *
      * @param string
      * @param before
      * @param after
@@ -362,7 +369,7 @@ public class PlayActivity extends BaseActivity {
                         @Override
                         public void run() {
                             String mp4VideoUri = getMp4Url(mp4Bean);
-                            startPlay(mp4VideoUri);
+                            startPlay(mp4VideoUri, false);
                         }
                     });
                 } catch (Exception e) {
@@ -384,10 +391,45 @@ public class PlayActivity extends BaseActivity {
         }
     };
 
-    private void startPlay(String mp4VideoUri) {
+    private void startPlay(String mp4VideoUri, boolean withHeader) {
         PlayerView playerView = findViewById(R.id.player_view);
         playerView.setVisibility(View.VISIBLE);
-        player = new SimpleExoPlayer.Builder(BaseApplication.getInstance()).build();
+        SimpleExoPlayer.Builder builder = new SimpleExoPlayer.Builder(BaseApplication.getInstance());
+        if (withHeader) {
+            DefaultMediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(BaseApplication.getInstance());
+            DefaultDrmSessionManagerProvider provider = new DefaultDrmSessionManagerProvider();
+            provider.setDrmHttpDataSourceFactory(new HttpDataSource.Factory() {
+                @Override
+                public HttpDataSource createDataSource() {
+                    return new DefaultHttpDataSource("");
+                }
+
+                @Override
+                public HttpDataSource.RequestProperties getDefaultRequestProperties() {
+                    return null;
+                }
+
+                @Override
+                public HttpDataSource.Factory setDefaultRequestProperties(@NonNull Map<String, String> headers) {
+                    headers.put("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"");
+                    headers.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36");
+                    headers.put("sec-ch-ua-mobile", "?0");
+                    headers.put("sec-ch-ua-platform", "\"Windows\"");
+                    headers.put("Upgrade-Insecure-Requests", "1");
+                    headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
+                    headers.put("Sec-Fetch-Site", "none");
+                    headers.put("Sec-Fetch-Mode", "navigate");
+                    headers.put("Sec-Fetch-User", "?1");
+                    headers.put("Sec-Fetch-Dest", "document");
+                    headers.put("Accept-Encoding", "gzip, deflate, br");
+                    headers.put("Accept-Language", "zh-CN,zh;q=0.9");
+                    return this;
+                }
+            });
+            mediaSourceFactory.setDrmSessionManagerProvider(provider);
+            builder.setMediaSourceFactory(mediaSourceFactory);
+        }
+        player = builder.build();
         playerView.setPlayer(player);
         MediaItem mediaItem = MediaItem.fromUri(mp4VideoUri);
         player.setMediaItem(mediaItem);
