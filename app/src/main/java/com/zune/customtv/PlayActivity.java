@@ -9,24 +9,19 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.view.WindowManager;
-import android.webkit.ClientCertRequest;
 import android.webkit.CookieManager;
-import android.webkit.HttpAuthHandler;
 import android.webkit.RenderProcessGoneDetail;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -38,12 +33,9 @@ import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
-import com.google.gson.Gson;
 import com.zune.customtv.base.BaseActivity;
 import com.zune.customtv.base.BaseApplication;
-import com.zune.customtv.bean.AiQingParser;
 import com.zune.customtv.bean.AiQingResponse;
 import com.zune.customtv.bean.Mp4Bean;
 import com.zune.customtv.utils.SSLSocketClient;
@@ -52,26 +44,22 @@ import com.zune.customtv.utils.YaoKongUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okio.BufferedSink;
-import tv.danmaku.ijk.media.player.IMediaPlayer;
-import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 public class PlayActivity extends BaseActivity {
 
@@ -127,9 +115,13 @@ public class PlayActivity extends BaseActivity {
                             String referer = getKeyWords(string0, "'referer':'", "','ref'");
                             String url = getKeyWords(string0, "'url':'", "','referer'");
                             // https://1717yun.com.zh188.net/0907/api.php
+                            String other = "";
+                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                                other = Base64.getEncoder().encodeToString("https://v.qq.com/x/cover/mzc00200zixidqy/v0044he3k44.html".getBytes());
+                            }
                             RequestBody body = new FormBody.Builder()
                                     .add("ios", "")
-                                    .add("other", "")
+                                    .add("other", other)
                                     .add("ref", "0")
                                     .add("referer", referer)
                                     .add("time", String.valueOf(System.currentTimeMillis() / 1000))

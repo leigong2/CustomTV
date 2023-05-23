@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.net.ssl.SSLSocketFactory;
-
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -131,22 +129,33 @@ public class AiQingFragment extends BaseFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (recyclerView != null && recyclerView.getAdapter() != null) {
-                            recyclerView.getAdapter().notifyDataSetChanged();
-                        }
-                    }
-                });
             }
         }.start();
     }
 
+    private void refreshUi(int start, int count) {
+        mHandler.post(() -> {
+            if (recyclerView != null && recyclerView.getAdapter() != null) {
+                recyclerView.getAdapter().notifyItemRangeChanged(start, count);
+            }
+        });
+    }
+
     private void loadNextPage(int page) {
         try {
-            String url = "https://pbaccess.video.qq.com/trpc.videosearch.search_cgi.http/load_playsource_list_info?pageNum=" + page
-                    + "&id=488&dataType=3&pageContext=need_async%3Dtrue%26offset_begin%3D5%26tab_id%3D2_0_0_2022&scene=3&platform=2&appId=10718&site=qq&g_tk=1380698910&g_vstk=1660134240&g_actk=";
+            String url = "https://pbaccess.video.qq.com/trpc.videosearch.search_cgi.http/load_playsource_list_info?pageNum=" + page +
+                    "&id=mzc00200zixidqy" +
+                    "&dataType=2" +
+                    "&pageContext=need_async%3Dtrue%26offset_begin%3D5" +
+                    "&scene=3" +
+                    "&platform=2" +
+                    "&appId=10718" +
+                    "&site=qq" +
+                    "&vappid=34382579" +
+                    "&vsecret=e496b057758aeb04b3a2d623c952a1c47e04ffb0a01e19cf" +
+                    "&g_tk=" +
+                    "&g_vstk=" +
+                    "&g_actk=";
             //1.创建一个okhttpclient对象
             OkHttpClient okHttpClient = new OkHttpClient.Builder()
                     .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
@@ -180,6 +189,7 @@ public class AiQingFragment extends BaseFragment {
                     }
                     if (!temp.isEmpty()) {
                         mData.addAll(temp);
+                        refreshUi(mData.size() - temp.size(), temp.size());
                         loadNextPage(++page);
                     }
                 } catch (Exception e) {
