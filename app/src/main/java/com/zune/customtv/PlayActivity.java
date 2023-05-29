@@ -1,12 +1,14 @@
 package com.zune.customtv;
 
 import static com.google.android.exoplayer2.Player.STATE_ENDED;
+import static com.google.android.exoplayer2.upstream.cache.CacheDataSource.FLAG_IGNORE_CACHE_FOR_UNSET_LENGTH_REQUESTS;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.PlaybackParams;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
@@ -26,14 +28,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.google.android.exoplayer2.MediaItem;
+import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.drm.DefaultDrmSessionManagerProvider;
+import com.google.android.exoplayer2.database.DatabaseProvider;
+import com.google.android.exoplayer2.database.ExoDatabaseProvider;
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
 import com.google.android.exoplayer2.upstream.HttpDataSource;
+import com.google.android.exoplayer2.upstream.cache.Cache;
+import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory;
+import com.google.android.exoplayer2.upstream.cache.CacheEvictor;
+import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor;
+import com.google.android.exoplayer2.upstream.cache.SimpleCache;
+import com.google.android.exoplayer2.util.Util;
 import com.zune.customtv.base.BaseActivity;
 import com.zune.customtv.base.BaseApplication;
 import com.zune.customtv.bean.AiQingResponse;
@@ -42,6 +55,7 @@ import com.zune.customtv.utils.SSLSocketClient;
 import com.zune.customtv.utils.SurfaceControllerView;
 import com.zune.customtv.utils.YaoKongUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -63,6 +77,7 @@ import okhttp3.Response;
 
 public class PlayActivity extends BaseActivity {
 
+    public static final String ua = Util.getUserAgent(BaseApplication.getInstance(), "AppName");
     private SimpleExoPlayer player;
     private Mp4Bean mMp4Bean;
     private int currentPosition;
@@ -97,64 +112,125 @@ public class PlayActivity extends BaseActivity {
         tvChangeVideo = findViewById(R.id.tv_change_video);
         mediaUrls = getIntent().getStringArrayListExtra("mediaUrl");
         if (mediaUrls != null && mediaUrls.size() == 1 && !mediaUrls.get(0).contains("app.jw")) {
+            if (mediaUrls.get(0).endsWith(".m3u8")) {
+                startPlayByVideoView(mediaUrls.get(0));
+                return;
+            }
             new Thread() {
                 @Override
                 public void run() {
                     super.run();
-                    try {
-                        //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
-                        Request request0 = new Request.Builder()
-                                .url("https://1717yun.com.zh188.net/0907/index.php?url=" + mediaUrls.get(0))
-                                .addHeader("referer", "https://1717yun.com.zh188.net/0828/?url=" + mediaUrls.get(0))
-                                .build();
-                        //3.创建一个Call对象，参数是request对象，发送请求
-                        Call call0 = okHttpClient.newCall(request0);
-                        Response response0 = call0.execute();
-                        if (response0 != null && response0.body() != null) {
-                            String string0 = response0.body().string();
-                            String referer = getKeyWords(string0, "'referer':'", "','ref'");
-                            String url = getKeyWords(string0, "'url':'", "','referer'");
-                            // https://1717yun.com.zh188.net/0907/api.php
-                            String other = "";
-                            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                                other = Base64.getEncoder().encodeToString("https://v.qq.com/x/cover/mzc00200zixidqy/v0044he3k44.html".getBytes());
-                            }
-                            RequestBody body = new FormBody.Builder()
-                                    .add("ios", "")
-                                    .add("other", other)
-                                    .add("ref", "0")
-                                    .add("referer", referer)
-                                    .add("time", String.valueOf(System.currentTimeMillis() / 1000))
-                                    .add("type", "")
-                                    .add("url", url)
-                                    .build();
-                            Request request3 = new Request.Builder()
-                                    .url("https://1717yun.com.zh188.net/20220722/..index..php")
-                                    .post(body)
-                                    .build();
-                            //3.创建一个Call对象，参数是request对象，发送请求
-                            Call call3 = okHttpClient.newCall(request3);
-                            Response response3 = call3.execute();
-                            if (response3 != null && response3.body() != null) {
-                                String string3 = response3.body().string();
-                                AiQingResponse aiQingResponse = BaseApplication.getInstance().getGson().fromJson(string3, AiQingResponse.class);
-                                String realMp4Url = aiQingResponse.url;
-                                BaseApplication.getInstance().getHandler().post(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        startPlay(realMp4Url, true);
-                                    }
-                                });
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    parseSecond(mediaUrls.get(0));
                 }
             }.start();
             return;
         }
         playWithUrl(mCurrentPosition);
+    }
+
+    private void parseFirst(String s) {
+        try {
+            //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+            Request request0 = new Request.Builder()
+                    .url("https://1717yun.com.zh188.net/0907/index.php?url=" + s)
+                    .addHeader("referer", "https://1717yun.com.zh188.net/0828/?url=" + s)
+                    .build();
+            //3.创建一个Call对象，参数是request对象，发送请求
+            Call call0 = okHttpClient.newCall(request0);
+            Response response0 = call0.execute();
+            if (response0 != null && response0.body() != null) {
+                String string0 = response0.body().string();
+                String referer = getKeyWords(string0, "'referer':'", "','ref'");
+                String url = getKeyWords(string0, "'url':'", "','referer'");
+                // https://1717yun.com.zh188.net/0907/api.php
+                String other = "";
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    other = Base64.getEncoder().encodeToString(url.getBytes());
+                }
+                RequestBody body = new FormBody.Builder()
+                        .add("ios", "")
+                        .add("other", other)
+                        .add("ref", "0")
+                        .add("referer", referer)
+                        .add("time", String.valueOf(System.currentTimeMillis() / 1000))
+                        .add("type", "")
+                        .add("url", url)
+                        .build();
+                Request request3 = new Request.Builder()
+                        .url("https://1717yun.com.zh188.net/20220722/..index..php")
+                        .post(body)
+                        .build();
+                //3.创建一个Call对象，参数是request对象，发送请求
+                Call call3 = okHttpClient.newCall(request3);
+                Response response3 = call3.execute();
+                if (response3 != null && response3.body() != null) {
+                    String string3 = response3.body().string();
+                    AiQingResponse aiQingResponse = BaseApplication.getInstance().getGson().fromJson(string3, AiQingResponse.class);
+                    String realMp4Url = aiQingResponse.url;
+                    BaseApplication.getInstance().getHandler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            startPlay(realMp4Url, true);
+                        }
+                    });
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            parseSecond(mediaUrls.get(0));
+        }
+    }
+
+    private void parseSecond(String s) {
+        try {
+            //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+            Request request0 = new Request.Builder()
+                    .url("https://jx2022.laobandq.com/20221120/?url=" + s)
+                    .addHeader("referer", "https://jx2022.laobandq.com/jiexi20210115/8090.php?url=" + s)
+                    .build();
+            //3.创建一个Call对象，参数是request对象，发送请求
+            Call call0 = okHttpClient.newCall(request0);
+            Response response0 = call0.execute();
+            if (response0 != null && response0.body() != null) {
+                String string0 = response0.body().string();
+                String referer = getKeyWords(string0, "'referer':'", "','ref'");
+                String url = getKeyWords(string0, "'url':'", "','referer'");
+                // https://1717yun.com.zh188.net/0907/api.php
+                String other = "";
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    other = Base64.getEncoder().encodeToString(url.getBytes());
+                }
+                RequestBody body = new FormBody.Builder()
+                        .add("ios", "")
+                        .add("other", other)
+                        .add("ref", "0")
+                        .add("referer", referer)
+                        .add("time", String.valueOf(System.currentTimeMillis() / 1000))
+                        .add("type", "")
+                        .add("url", url)
+                        .build();
+                Request request3 = new Request.Builder()
+                        .url("https://jx2022.laobandq.com/20221120/%E3%80%80%E3%80%80.%E3%80%80.php")
+                        .post(body)
+                        .build();
+                //3.创建一个Call对象，参数是request对象，发送请求
+                Call call3 = okHttpClient.newCall(request3);
+                Response response3 = call3.execute();
+                if (response3 != null && response3.body() != null) {
+                    String string3 = response3.body().string();
+                    AiQingResponse aiQingResponse = BaseApplication.getInstance().getGson().fromJson(string3, AiQingResponse.class);
+                    String realMp4Url = aiQingResponse.url;
+                    BaseApplication.getInstance().getHandler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            startPlayByVideoView(realMp4Url);
+                        }
+                    });
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -191,7 +267,7 @@ public class PlayActivity extends BaseActivity {
         try {
             Map<String, String> headers = new HashMap<>();
             headers.put("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"");
-            headers.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36");
+            headers.put("User-Agent", ua);
             headers.put("sec-ch-ua-mobile", "?0");
             headers.put("sec-ch-ua-platform", "\"Windows\"");
             headers.put("Upgrade-Insecure-Requests", "1");
@@ -203,7 +279,13 @@ public class PlayActivity extends BaseActivity {
             headers.put("Accept-Encoding", "gzip, deflate, br");
             headers.put("Accept-Language", "zh-CN,zh;q=0.9");
             mediaPlayer.setDataSource(BaseApplication.getInstance(), Uri.parse(url), headers);
-        } catch (IOException e) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                PlaybackParams params = new PlaybackParams();
+                params.setSpeed(1);
+                params.setPitch(1);
+                mediaPlayer.setPlaybackParams(params);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
         mediaPlayer.prepareAsync();
@@ -387,44 +469,52 @@ public class PlayActivity extends BaseActivity {
         PlayerView playerView = findViewById(R.id.player_view);
         playerView.setVisibility(View.VISIBLE);
         SimpleExoPlayer.Builder builder = new SimpleExoPlayer.Builder(BaseApplication.getInstance());
-        if (withHeader) {
-            DefaultMediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(BaseApplication.getInstance());
-            DefaultDrmSessionManagerProvider provider = new DefaultDrmSessionManagerProvider();
-            provider.setDrmHttpDataSourceFactory(new HttpDataSource.Factory() {
-                @Override
-                public HttpDataSource createDataSource() {
-                    return new DefaultHttpDataSource("");
-                }
-
-                @Override
-                public HttpDataSource.RequestProperties getDefaultRequestProperties() {
-                    return null;
-                }
-
-                @Override
-                public HttpDataSource.Factory setDefaultRequestProperties(@NonNull Map<String, String> headers) {
-                    headers.put("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"");
-                    headers.put("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36");
-                    headers.put("sec-ch-ua-mobile", "?0");
-                    headers.put("sec-ch-ua-platform", "\"Windows\"");
-                    headers.put("Upgrade-Insecure-Requests", "1");
-                    headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
-                    headers.put("Sec-Fetch-Site", "none");
-                    headers.put("Sec-Fetch-Mode", "navigate");
-                    headers.put("Sec-Fetch-User", "?1");
-                    headers.put("Sec-Fetch-Dest", "document");
-                    headers.put("Accept-Encoding", "gzip, deflate, br");
-                    headers.put("Accept-Language", "zh-CN,zh;q=0.9");
-                    return this;
-                }
-            });
-            mediaSourceFactory.setDrmSessionManagerProvider(provider);
-            builder.setMediaSourceFactory(mediaSourceFactory);
-        }
         player = builder.build();
+        if (withHeader) {
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this, ua);
+            File cacheFile = new File(getCacheDir(), "video");
+            CacheEvictor evictor = new LeastRecentlyUsedCacheEvictor(20 * 1024 * 1024);
+            DatabaseProvider databaseProvider = new ExoDatabaseProvider(this);
+            Cache cache = new SimpleCache(cacheFile, evictor, databaseProvider);
+            CacheDataSourceFactory cacheFactory = new CacheDataSourceFactory(cache, dataSourceFactory, FLAG_IGNORE_CACHE_FOR_UNSET_LENGTH_REQUESTS);
+            ProgressiveMediaSource mediaSource = new ProgressiveMediaSource.Factory(cacheFactory)
+                    .setDrmHttpDataSourceFactory(new HttpDataSource.Factory() {
+                        @Override
+                        public HttpDataSource createDataSource() {
+                            return new DefaultHttpDataSource("");
+                        }
+
+                        @Override
+                        public HttpDataSource.RequestProperties getDefaultRequestProperties() {
+                            return null;
+                        }
+
+                        @Override
+                        public HttpDataSource.Factory setDefaultRequestProperties(@NonNull Map<String, String> headers) {
+                            headers.put("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"");
+                            headers.put("User-Agent", ua);
+                            headers.put("sec-ch-ua-mobile", "?0");
+                            headers.put("sec-ch-ua-platform", "\"Windows\"");
+                            headers.put("Upgrade-Insecure-Requests", "1");
+                            headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
+                            headers.put("Sec-Fetch-Site", "none");
+                            headers.put("Sec-Fetch-Mode", "navigate");
+                            headers.put("Sec-Fetch-User", "?1");
+                            headers.put("Sec-Fetch-Dest", "document");
+                            headers.put("Accept-Encoding", "gzip, deflate, br");
+                            headers.put("Accept-Language", "zh-CN,zh;q=0.9");
+                            return this;
+                        }
+                    })
+                    .createMediaSource(MediaItem.fromUri(mp4VideoUri));
+            player.setMediaSource(mediaSource, true);
+        } else {
+            MediaItem mediaItem = MediaItem.fromUri(mp4VideoUri);
+            player.setMediaItem(mediaItem);
+        }
+        PlaybackParameters params = new PlaybackParameters(5,5);
+        player.setPlaybackParameters(params);
         playerView.setPlayer(player);
-        MediaItem mediaItem = MediaItem.fromUri(mp4VideoUri);
-        player.setMediaItem(mediaItem);
         player.prepare();
         player.setPlayWhenReady(true);
         player.addListener(new Player.Listener() {
@@ -434,6 +524,9 @@ public class PlayActivity extends BaseActivity {
             @Override
             public void onPlaybackStateChanged(int playbackState) {
                 if (playbackState == STATE_ENDED) {
+                    if (withHeader) {
+                        return;
+                    }
                     System.out.println("zune: onPlaybackStateChanged = " + playbackState);
                     mIsPlaying = true;
                     isPlayEnd = true;
@@ -450,6 +543,9 @@ public class PlayActivity extends BaseActivity {
                 }
                 mIsPlaying = isPlaying;
                 System.out.println("zune: isPlaying = " + isPlaying);
+                if (withHeader) {
+                    return;
+                }
                 if (isPlaying) {
                     tvChangeVideo.setText("");
                     isPlayed = true;
@@ -464,6 +560,14 @@ public class PlayActivity extends BaseActivity {
     @Override
     public void finish() {
         super.finish();
+        if (player != null) {
+            player.stop();
+            player.release();
+        }
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+        }
         BaseApplication.getInstance().getHandler().removeCallbacks(r);
     }
 
@@ -504,18 +608,5 @@ public class PlayActivity extends BaseActivity {
         Mp4Bean.FilesDTO.CHSDTOX.MP4DTO mp4DTO = mp4Bean.files.CHS.MP4.get(Math.max(0, mp4Bean.files.CHS.MP4.size() - 1));
         System.out.printf("视频卡顿切换视频源%s%n", mp4DTO.frameHeight);
         return mp4DTO.file.url;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (player != null) {
-            player.stop();
-            player.release();
-        }
-        if (mediaPlayer != null) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-        }
     }
 }

@@ -3,6 +3,7 @@ package com.zune.customtv.fragment;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +24,12 @@ import com.zune.customtv.bean.BaseDataBean;
 import com.zune.customtv.utils.SSLSocketClient;
 import com.zune.customtv.utils.Utils;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.OkHttpClient;
@@ -87,6 +91,110 @@ public class AiQingFragment extends BaseFragment {
     }
 
     private void loadData() {
+        mData.clear();
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    //1.创建一个okhttpclient对象
+                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
+                            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
+                            .build();
+                    //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+                    Request request = new Request.Builder()
+                            .url("https://waipian10.com/video/176972/")
+                            .build();
+                    //3.创建一个Call对象，参数是request对象，发送请求
+                    Call call = okHttpClient.newCall(request);
+                    Response response = call.execute();
+                    if (response != null && response.body() != null) {
+                        String string = response.body().string();
+                        List<String> keyWords = getKeyWords(string, "<a class=\"module-play-list-link\"", "</a>");
+                        Log.i("zune: ", "keyWords = " + keyWords);
+                        Collections.reverse(keyWords);
+                        for (String keyWord : keyWords) {
+                            // href="/play/176972-2-40/" title="播放爱情保卫战202320230118"><span>20230118</span>
+                            String url = getKeyWord(keyWord, "href=\"", "\" title=\"");
+                            if (url.contains("/play/176972-2")) {
+                                String title = getKeyWord(keyWord, "<span>", "</span>");
+                                Request request2 = new Request.Builder()
+                                        .url("https://waipian10.com" + url)
+                                        .build();
+                                Call call2 = okHttpClient.newCall(request2);
+                                Response response2 = call2.execute();
+                                if (response2 != null && response2.body() != null) {
+                                    String string2 = response2.body().string();
+                                    String json = getKeyWord(string2, "var player_aaaa=", "</script><script type=\"text/javascript\"");
+                                    String urlSplit = getKeyWord(json, "\"url\":\"", "\",\"url_next\"");
+                                    String decode = URLDecoder.decode(urlSplit, "UTF-8");
+                                    String playUrl = decode.split(".m3u8")[0] + ".m3u8";
+                                    BaseDataBean.ODTO o = new BaseDataBean.ODTO();
+                                    o.firstPublished = "";
+                                    o.title = title;
+                                    o.key = playUrl;
+                                    BaseDataBean b = new BaseDataBean();
+                                    b.o = o;
+                                    mData.add(b);
+                                    refreshUi(mData.size() - 1, mData.size());
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    /**
+     * 取出在before 和 after之间的字符串
+     *
+     * @param string
+     * @param before
+     * @param after
+     * @return
+     */
+    protected static List<String> getKeyWords(String string, String before, String after) {
+        List<String> list = new ArrayList<>();
+        String p = before + "(.*?)" + after;
+        Pattern pattern = Pattern.compile(p, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(string.trim());
+        while (matcher.find()) {
+            String group = matcher.group();
+            if (!TextUtils.isEmpty(group)) {
+                String substring = group.substring(before.length());
+                list.add(substring.substring(0, substring.length() - after.length()));
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 取出在before 和 after之间的字符串
+     *
+     * @param string
+     * @param before
+     * @param after
+     * @return
+     */
+    protected static String getKeyWord(String string, String before, String after) {
+        String p = before + "(.*?)" + after;
+        Pattern pattern = Pattern.compile(p, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(string.trim());
+        while (matcher.find()) {
+            String group = matcher.group();
+            if (!TextUtils.isEmpty(group)) {
+                String substring = group.substring(before.length());
+                return substring.substring(0, substring.length() - after.length());
+            }
+        }
+        return "";
+    }
+
+    private void loadData2() {
         mData.clear();
         new Thread() {
             @Override
