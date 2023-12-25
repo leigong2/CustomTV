@@ -17,6 +17,7 @@
             android:foregroundServiceType="mediaProjection" />
         <activity
             android:name="com.activity.TouPingReceiveActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.Base.FullScreen"  />
     </application>
 </manifest>

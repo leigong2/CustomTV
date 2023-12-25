@@ -1,6 +1,5 @@
 package com.encode
 
-import android.content.ContentValues.TAG
 import android.hardware.display.DisplayManager
 import android.media.MediaCodec
 import android.media.MediaCodecInfo
@@ -13,7 +12,6 @@ import org.java_websocket.server.WebSocketServer
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.nio.ByteBuffer
-import java.util.Arrays
 import kotlin.experimental.and
 
 object ScreenEncoder {
@@ -131,7 +129,7 @@ object ScreenEncoder {
         } else if (type == NAL_SLICE /* || type == NAL_SLICE_IDR */) {
             val bytes = ByteArray(vBufferInfo.size)
             byteBuffer[bytes]
-            if (this::webSocket.isInitialized) {
+            if (this::webSocket.isInitialized && webSocket.isOpen) {
                 webSocket.send(bytes)
             }
         } else if (type == NAL_SLICE_IDR) {
@@ -141,7 +139,7 @@ object ScreenEncoder {
             val newBuf = ByteArray(sps_pps_buf.size + bytes.size)
             System.arraycopy(sps_pps_buf, 0, newBuf, 0, sps_pps_buf.size)
             System.arraycopy(bytes, 0, newBuf, sps_pps_buf.size, bytes.size)
-            if (this::webSocket.isInitialized) {
+            if (this::webSocket.isInitialized && webSocket.isOpen) {
                 webSocket.send(newBuf)
             }
         }
@@ -213,14 +211,14 @@ object ScreenEncoder {
             System.arraycopy(h265_vps_pps_sps, 0, newBytes, 0, h265_vps_pps_sps.size)
             System.arraycopy(bytes, 0, newBytes, h265_vps_pps_sps.size, bytes.size)
             /*zune: 解码数据发送给远端*/
-            if (this::webSocket.isInitialized) {
+            if (this::webSocket.isInitialized && webSocket.isOpen) {
                 webSocket.send(newBytes)
             }
         } else {
             val bytes = ByteArray(bufferInfo.size)
             byteBuffer[bytes]
             /*zune: 解码数据发送给远端*/
-            if (this::webSocket.isInitialized) {
+            if (this::webSocket.isInitialized && webSocket.isOpen) {
                 webSocket.send(bytes)
             }
         }
