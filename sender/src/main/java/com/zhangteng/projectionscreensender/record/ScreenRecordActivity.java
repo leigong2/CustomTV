@@ -8,18 +8,19 @@ import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.util.Log;
 
+import com.zhangteng.projectionscreensender.ScreenService;
 import com.zhangteng.projectionscreensender.configuration.VideoConfiguration;
-import com.zhangteng.projectionscreensender.controller.ScreenVideoVideoController;
 import com.zhangteng.projectionscreensender.controller.StreamController;
 import com.zhangteng.projectionscreensender.packer.Packer;
 import com.zhangteng.projectionscreensender.sender.Sender;
+
+import java.util.Objects;
 
 /**
  * Created by swing on 2018/8/21.
  */
 public class ScreenRecordActivity extends Activity {
     private static final int RECORD_REQUEST_CODE = 101;
-    private StreamController mStreamController;
     private MediaProjectionManager mMediaProjectionManage;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -37,9 +38,14 @@ public class ScreenRecordActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RECORD_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                ScreenVideoVideoController videoController = new ScreenVideoVideoController(mMediaProjectionManage, resultCode, data);
-                mStreamController = new StreamController(videoController);
-                requestRecordSuccess();
+                Intent service = new Intent(this, com.zhangteng.projectionscreensender.ScreenService.class);
+                service.putExtra("code", resultCode);
+                service.putExtra("data", data);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(service);
+                } else {
+                    startService(service);
+                }
             } else {
                 requestRecordFail();
             }
@@ -55,53 +61,86 @@ public class ScreenRecordActivity extends Activity {
     }
 
     public void setVideoConfiguration(VideoConfiguration videoConfiguration) {
-        if (mStreamController != null) {
-            mStreamController.setVideoConfiguration(videoConfiguration);
+        try {
+            StreamController controller = Objects.requireNonNull(ScreenService.getSelf()).get().mStreamController;
+            if (controller != null) {
+                controller.setVideoConfiguration(videoConfiguration);
+            }
+        } catch (Exception ignore) {
         }
     }
 
     protected void startRecording() {
-        if (mStreamController != null) {
-            mStreamController.start();
+        try {
+            StreamController controller = Objects.requireNonNull(ScreenService.getSelf()).get().mStreamController;
+            if (controller != null) {
+                controller.start();
+            }
+        } catch (Exception ignore) {
         }
     }
 
     protected void stopRecording() {
-        if (mStreamController != null) {
-            mStreamController.stop();
+        try {
+            StreamController controller = Objects.requireNonNull(ScreenService.getSelf()).get().mStreamController;
+            if (controller != null) {
+                controller.stop();
+            }
+        } catch (Exception ignore) {
         }
     }
 
     protected void pauseRecording() {
-        if (mStreamController != null) {
-            mStreamController.pause();
+        try {
+            StreamController controller = Objects.requireNonNull(ScreenService.getSelf()).get().mStreamController;
+            if (controller != null) {
+                controller.pause();
+            }
+        } catch (Exception ignore) {
         }
     }
 
 
     protected void resumeRecording() {
-        if (mStreamController != null) {
-            mStreamController.resume();
+        try {
+            StreamController controller = Objects.requireNonNull(ScreenService.getSelf()).get().mStreamController;
+            if (controller != null) {
+                controller.resume();
+            }
+        } catch (Exception ignore) {
         }
     }
 
     protected boolean setRecordBps(int bps) {
-        if (mStreamController != null) {
-            return mStreamController.setVideoBps(bps);
-        } else {
-            return false;
+        try {
+            StreamController controller = Objects.requireNonNull(ScreenService.getSelf()).get().mStreamController;
+            if (controller != null) {
+                return controller.setVideoBps(bps);
+            } else {
+                return false;
+            }
+        } catch (Exception ignore) {
         }
+        return false;
     }
 
     protected void setRecordPacker(Packer packer) {
-        if (mStreamController != null) {
-            mStreamController.setPacker(packer);
+        try {
+            StreamController controller = Objects.requireNonNull(ScreenService.getSelf()).get().mStreamController;
+            if (controller != null) {
+                controller.setPacker(packer);
+            }
+        } catch (Exception ignore) {
         }
     }
 
     protected void setRecordSender(Sender sender) {
-        if (mStreamController != null) {
-            mStreamController.setSender(sender);
+        try {
+            StreamController controller = Objects.requireNonNull(ScreenService.getSelf()).get().mStreamController;
+            if (controller != null) {
+                controller.setSender(sender);
+            }
+        } catch (Exception ignore) {
         }
     }
 

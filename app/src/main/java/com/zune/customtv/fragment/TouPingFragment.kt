@@ -1,10 +1,13 @@
 package com.zune.customtv.fragment
+import android.content.Intent
 import android.view.View
 import android.widget.EditText
 import com.base.base.BaseFragment
 import com.translate.postscreen.TouPingPostActivity
 import com.zune.customtv.R
 import com.translate.postscreen.TouPingReceiveActivity
+import com.zhangteng.projectionscreenplayer.PlayerActivity
+import com.zhangteng.projectionscreensender.ProjectionScreenActivity
 
 class TouPingFragment: BaseFragment() {
 
@@ -22,10 +25,10 @@ class TouPingFragment: BaseFragment() {
         view.findViewById<View>(R.id.receive)?.onFocusChangeListener =
             View.OnFocusChangeListener { v, hasFocus -> v?.setBackgroundResource(if (hasFocus) R.drawable.bg_select else R.drawable.bg_normal) }
         view.findViewById<View>(R.id.post)?.setOnClickListener {
-            TouPingPostActivity.start(requireContext())
+            startActivity(Intent(requireContext(), ProjectionScreenActivity::class.java))
         }
         view.findViewById<View>(R.id.receive)?.setOnClickListener {
-            TouPingReceiveActivity.start(editText.text.toString(), requireContext())
+            startActivity(Intent(requireContext(), PlayerActivity::class.java))
         }
     }
 }

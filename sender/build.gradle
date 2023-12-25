@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace 'com.translate.postscreen'
+    namespace 'com.zhangteng.projectionscreensender'
     compileSdk 33
 
     defaultConfig {
@@ -31,5 +31,4 @@ android {
 
 dependencies {
     api project(':base')
-    api rootProject.ext.dependencies["websocket"]
 }

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.zhangteng.projectionscreensender.R;
 import com.zhangteng.projectionscreensender.constant.Constant;
 import com.zhangteng.projectionscreensender.configuration.VideoConfiguration;
 import com.zhangteng.projectionscreensender.packer.TcpPacker;
@@ -18,11 +17,14 @@ import com.zhangteng.projectionscreensender.sender.TcpSender;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 /**
  * Created by swing on 2018/8/21.
  */
 public class ProjectionScreenActivity extends ScreenRecordActivity implements OnSenderListener {
+
+    public static WeakReference<ProjectionScreenActivity> getSelf = null;
     private Button btn_start;
     private String ip;
     private VideoConfiguration mVideoConfiguration;
@@ -37,6 +39,7 @@ public class ProjectionScreenActivity extends ScreenRecordActivity implements On
         setContentView(R.layout.activity_projection_screen);
         ip = Constant.ip;
         initialView();
+        getSelf = new WeakReference<>(this);
     }
 
     private void initialView() {
@@ -140,6 +143,7 @@ public class ProjectionScreenActivity extends ScreenRecordActivity implements On
     @Override
     protected void onDestroy() {
         tcpSender.stop();
+        getSelf = null;
         super.onDestroy();
     }
 }

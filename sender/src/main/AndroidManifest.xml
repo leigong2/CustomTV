@@ -9,5 +9,10 @@
 
     <application>
         <activity android:name=".ProjectionScreenActivity"/>
+        <service
+            android:name=".ScreenService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="mediaProjection" />
     </application>
 </manifest>

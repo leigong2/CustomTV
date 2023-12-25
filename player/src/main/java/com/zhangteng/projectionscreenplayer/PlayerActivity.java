@@ -2,12 +2,13 @@ package com.zhangteng.projectionscreenplayer;
 
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.zhangteng.projectionscreenplayer.MediaCodec.VideoMediaCodec;
 import com.zhangteng.projectionscreenplayer.constant.Constant;
