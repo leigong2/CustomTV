@@ -1,17 +1,14 @@
-package com.translate.postscreen
+package com.activity
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.view.View
 import android.view.WindowManager
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.base.base.BaseActivity
-import com.translate.postscreen.service.ScreenService
+import com.service.ScreenService
+import com.translate.postscreen.R
 
 
 /**
@@ -39,13 +36,6 @@ class TouPingPostActivity : BaseActivity(){
 
     // 请求开始录屏
     private fun startProjection() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            val permission = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.RECORD_AUDIO)
-            if (permission != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this@TouPingPostActivity, arrayOf(Manifest.permission.RECORD_AUDIO), 1)
-                return
-            }
-        }
         startActivityForResult(mediaProjectionManager.createScreenCaptureIntent(), 1001)
         mediaProjectionManager.createScreenCaptureIntent()
     }

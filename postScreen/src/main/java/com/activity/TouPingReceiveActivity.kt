@@ -1,16 +1,16 @@
-package com.translate.postscreen
+package com.activity
 
 import android.content.Context
 import android.content.Intent
-import android.view.Surface
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.WindowManager
 import com.base.base.BaseActivity
+import com.decode.ScreenDecoder
+import com.translate.postscreen.R
 
 
 class TouPingReceiveActivity : BaseActivity() {
-    private lateinit var mSocketClientManager: SocketClientManager
 
     companion object {
         fun start(ip: String, context: Context) {
@@ -31,7 +31,7 @@ class TouPingReceiveActivity : BaseActivity() {
                 holder.addCallback(object : SurfaceHolder.Callback {
                     override fun surfaceCreated(holder: SurfaceHolder) {
                         // 连接到服务端
-                        initSocketManager(ip, holder.surface);
+                        ScreenDecoder.start(ip, holder.surface)
                     }
 
                     override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {
@@ -44,13 +44,8 @@ class TouPingReceiveActivity : BaseActivity() {
         }
     }
 
-    private fun initSocketManager(ip: String, surface: Surface) {
-        mSocketClientManager = SocketClientManager()
-        mSocketClientManager.start(ip, surface)
-    }
-
     override fun onDestroy() {
-        mSocketClientManager.stop()
+        ScreenDecoder.release()
         super.onDestroy()
     }
 }

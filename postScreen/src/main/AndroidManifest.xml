@@ -7,16 +7,16 @@
         android:allowBackup="true"
         android:requestLegacyExternalStorage="true">
         <activity
-            android:name="com.translate.postscreen.TouPingPostActivity"
+            android:name="com.activity.TouPingPostActivity"
             android:screenOrientation="landscape" />
 
         <service
-            android:name="com.zhangteng.projectionscreensender.ScreenService"
+            android:name="com.service.ScreenService"
             android:enabled="true"
             android:exported="true"
             android:foregroundServiceType="mediaProjection" />
         <activity
-            android:name="com.translate.postscreen.TouPingReceiveActivity"
+            android:name="com.activity.TouPingReceiveActivity"
             android:screenOrientation="landscape" />
     </application>
 </manifest>
