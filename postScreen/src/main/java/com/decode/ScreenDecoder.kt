@@ -27,19 +27,35 @@ object ScreenDecoder {
             override fun onMessage(bytes: ByteBuffer) {
                 val buf = ByteArray(bytes.remaining())
                 bytes[buf]
-                decodeH265Data(buf)
+                decodeH264Data(buf)
             }
             override fun onClose(code: Int, reason: String?, remote: Boolean) {}
             override fun onError(ex: Exception?) {}
         }
         webSocketClient.connect()
-        initH265MediaCodec(surface)
+        startH264MediaCodec(surface)
+    }
+
+
+    // 配置MediaCodec
+    private fun startH264MediaCodec(surface: Surface) {
+        mediaCodec = MediaCodec.createDecoderByType(MediaFormat.MIMETYPE_VIDEO_AVC)
+        val mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, VIDEO_WIDTH, VIDEO_HEIGHT)
+        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)
+        mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT)
+        mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, SCREEN_FRAME_RATE)
+        mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, SCREEN_FRAME_INTERVAL)
+        val headerSps = byteArrayOf(0, 0, 0, 1, 103, 66, -128, 31, -38, 1, 64, 22, -24, 6, -48, -95, 53)
+        val headerPps = byteArrayOf(0, 0 ,0, 1, 104, -50, 6, -30)
+        mediaFormat.setByteBuffer("csd-0", ByteBuffer.wrap(headerSps));
+        mediaFormat.setByteBuffer("csd-1", ByteBuffer.wrap(headerPps));
+        mediaCodec.configure(mediaFormat, surface, null, 0)
         mediaCodec.start()
     }
 
 
     // 配置MediaCodec
-    private fun initH265MediaCodec(surface: Surface) {
+    private fun startH265MediaCodec(surface: Surface) {
         mediaCodec = MediaCodec.createDecoderByType(MediaFormat.MIMETYPE_VIDEO_HEVC)
         val mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_HEVC, VIDEO_WIDTH, VIDEO_HEIGHT)
         mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)
@@ -47,6 +63,27 @@ object ScreenDecoder {
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, SCREEN_FRAME_RATE)
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, SCREEN_FRAME_INTERVAL)
         mediaCodec.configure(mediaFormat, surface, null, 0)
+        mediaCodec.start()
+    }
+
+    /*zune: H264解码*/
+    private fun decodeH264Data(data: ByteArray) {
+        val inputBuffers: Array<ByteBuffer> = mediaCodec.getInputBuffers()
+        val inputBufferIndex: Int = mediaCodec.dequeueInputBuffer(100)
+        if (inputBufferIndex >= 0) {
+            val inputBuffer = inputBuffers[inputBufferIndex]
+            inputBuffer.clear()
+            inputBuffer.put(data, 0, data.size)
+            mediaCodec.queueInputBuffer(inputBufferIndex, 0, data.size, System.currentTimeMillis(), 0)
+        } else {
+            return
+        }
+        val bufferInfo = MediaCodec.BufferInfo()
+        var outputBufferIndex: Int = mediaCodec.dequeueOutputBuffer(bufferInfo, 100)
+        while (outputBufferIndex >= 0) {
+            mediaCodec.releaseOutputBuffer(outputBufferIndex, true)
+            outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)
+        }
     }
 
     /*zune: H265解码*/

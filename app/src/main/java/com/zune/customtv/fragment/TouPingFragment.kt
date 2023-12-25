@@ -14,7 +14,7 @@ class TouPingFragment: BaseFragment() {
 
     override fun initView(view: View?) {
         val editText = view?.findViewById<EditText>(R.id.setIp)?:return
-        editText.setText("192.168.24.41")
+        editText.setText("192.168.1.6")
         editText.onFocusChangeListener =
             View.OnFocusChangeListener { v, hasFocus -> v?.setBackgroundResource(if (hasFocus) R.drawable.bg_select else R.drawable.bg_normal) }
         view.findViewById<View>(R.id.post)?.onFocusChangeListener =

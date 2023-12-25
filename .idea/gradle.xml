@@ -14,9 +14,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/ijkplayer" />
-            <option value="$PROJECT_DIR$/player" />
             <option value="$PROJECT_DIR$/postScreen" />
-            <option value="$PROJECT_DIR$/sender" />
           </set>
         </option>
       </GradleProjectSettings>

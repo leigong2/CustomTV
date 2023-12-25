@@ -1,5 +1,6 @@
 package com.encode
 
+import android.content.ContentValues.TAG
 import android.hardware.display.DisplayManager
 import android.media.MediaCodec
 import android.media.MediaCodecInfo
@@ -12,6 +13,8 @@ import org.java_websocket.server.WebSocketServer
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.nio.ByteBuffer
+import java.util.Arrays
+import kotlin.experimental.and
 
 object ScreenEncoder {
     //不同手机支持的编码最大分辨率不同
@@ -23,6 +26,12 @@ object ScreenEncoder {
     private const val ENCODE_TIME_OUT: Long = 10000 //超时时间
     private const val TYPE_FRAME_INTERVAL = 19 // I帧
     private const val TYPE_FRAME_VPS = 32// vps帧
+
+    private const val NAL_SLICE:Byte = 1
+    private const val NAL_SLICE_IDR:Byte = 5
+    private const val NAL_SPS:Byte = 7
+    private lateinit var sps_pps_buf: ByteArray
+
     private const val port = 50000   //端口
     private lateinit var mediaProjection: MediaProjection
     private lateinit var mediaCodec: MediaCodec
@@ -54,10 +63,90 @@ object ScreenEncoder {
             }
         }
         webSocketServer.start()
-        initH265MediaCodec()
+        initH264MediaCodec()
         isPlaying = true
-        Thread { startEncode() }.start()
+        Thread { startH264Encode() }.start()
     }
+
+    /*zune: 初始化mediaCodeC*/
+    private fun initH264MediaCodec() {
+        val mediaFormat = MediaFormat.createVideoFormat(
+            MediaFormat.MIMETYPE_VIDEO_AVC,
+            VIDEO_WIDTH,
+            VIDEO_HEIGHT
+        )
+        mediaFormat.setInteger(
+            MediaFormat.KEY_COLOR_FORMAT,
+            MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface
+        )
+        mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT)
+        mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, SCREEN_FRAME_RATE)
+        mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, SCREEN_FRAME_INTERVAL)
+        try {
+            mediaCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_VIDEO_AVC)
+            mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
+            val surface = mediaCodec.createInputSurface()
+            mediaProjection.createVirtualDisplay(
+                "ScreenRecorder",
+                VIDEO_WIDTH,
+                VIDEO_HEIGHT,
+                1,
+                DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
+                surface,
+                null,
+                null
+            )
+            mediaCodec.start()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun startH264Encode() {
+        val bufferInfo = MediaCodec.BufferInfo()
+        while (isPlaying) {
+            val outPutBufferId = mediaCodec.dequeueOutputBuffer(bufferInfo, ENCODE_TIME_OUT)
+            if (outPutBufferId >= 0) {
+                mediaCodec.getOutputBuffer(outPutBufferId)?.apply {
+                    encodeH264Data(this, bufferInfo)
+                }
+                mediaCodec.releaseOutputBuffer(outPutBufferId, false)
+            }
+        }
+    }
+
+    private fun encodeH264Data(byteBuffer: ByteBuffer, vBufferInfo: MediaCodec.BufferInfo) {
+        var offset = 4
+        //判断帧的类型
+        if (byteBuffer[2].toInt() == 0x01) {
+            offset = 3
+        }
+        val type: Byte = byteBuffer[offset] and 0x1f
+        /*如果送来的流的第一帧Frame有pps和sps，可以不需要配置format.setByteBuffer的”csd-0” （sps） 和”csd-1”（pps）；
+          否则必须配置相应的pps和sps,通常情况下sps和pps如下
+          SPS帧和 PPS帧合在了一起发送,PS为 [4，len-8] PPS为后4个字节*/
+        if (type == NAL_SPS) {
+            sps_pps_buf = ByteArray(vBufferInfo.size)
+            byteBuffer.get(sps_pps_buf)
+        } else if (type == NAL_SLICE /* || type == NAL_SLICE_IDR */) {
+            val bytes = ByteArray(vBufferInfo.size)
+            byteBuffer[bytes]
+            if (this::webSocket.isInitialized) {
+                webSocket.send(bytes)
+            }
+        } else if (type == NAL_SLICE_IDR) {
+            // I帧，前面添加sps和pps
+            val bytes = ByteArray(vBufferInfo.size)
+            byteBuffer[bytes]
+            val newBuf = ByteArray(sps_pps_buf.size + bytes.size)
+            System.arraycopy(sps_pps_buf, 0, newBuf, 0, sps_pps_buf.size)
+            System.arraycopy(bytes, 0, newBuf, sps_pps_buf.size, bytes.size)
+            if (this::webSocket.isInitialized) {
+                webSocket.send(newBuf)
+            }
+        }
+    }
+
 
     /*zune: 初始化mediaCodeC*/
     private fun initH265MediaCodec() {
@@ -87,14 +176,14 @@ object ScreenEncoder {
                 null,
                 null
             )
+            mediaCodec.start()
         } catch (e: IOException) {
             e.printStackTrace()
         }
     }
 
     /*zune: 开始编码*/
-    private fun startEncode() {
-        mediaCodec.start()
+    private fun startH265Encode() {
         val bufferInfo = MediaCodec.BufferInfo()
         while (isPlaying) {
             val outPutBufferId = mediaCodec.dequeueOutputBuffer(bufferInfo, ENCODE_TIME_OUT)

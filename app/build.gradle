@@ -42,6 +42,4 @@ dependencies {
     api  fileTree(dir: 'libs', include: ['*.jar'])
     api project(':ijkplayer')
     api project(':postScreen')
-    api project(':player')
-    api project(':sender')
 }
