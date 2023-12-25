@@ -21,8 +21,8 @@ import com.github.stuxuhai.jpinyin.PinyinHelper;
 import com.zune.customtv.NetDataManager;
 import com.zune.customtv.PlayActivity;
 import com.zune.customtv.R;
-import com.zune.customtv.base.BaseConstant;
-import com.zune.customtv.base.BaseFragment;
+import com.base.base.BaseConstant;
+import com.base.base.BaseFragment;
 import com.zune.customtv.bean.BaseDataBean;
 import com.zune.customtv.utils.Utils;
 

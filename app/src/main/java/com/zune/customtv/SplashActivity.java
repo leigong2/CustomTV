@@ -5,9 +5,9 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
-import com.zune.customtv.base.BaseActivity;
-import com.zune.customtv.base.BaseApplication;
-import com.zune.customtv.base.CallBack;
+import com.base.base.BaseActivity;
+import com.base.base.BaseApplication;
+import com.base.base.CallBack;
 import com.zune.customtv.bean.BaseDataBean;
 
 import java.text.SimpleDateFormat;

@@ -18,7 +18,6 @@ object WebUtils {
             settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         }
         settings.allowFileAccess = false
-        settings.setAppCacheEnabled(true)
         settings.cacheMode = WebSettings.LOAD_DEFAULT
         settings.javaScriptEnabled = true
         settings.loadWithOverviewMode = true

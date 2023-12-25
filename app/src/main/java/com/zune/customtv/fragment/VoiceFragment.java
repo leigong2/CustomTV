@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.zune.customtv.NetDataManager;
 import com.zune.customtv.R;
-import com.zune.customtv.base.BaseFragment;
+import com.base.base.BaseFragment;
 import com.zune.customtv.bean.BaseDataBean;
 
 public class VoiceFragment extends BaseFragment {

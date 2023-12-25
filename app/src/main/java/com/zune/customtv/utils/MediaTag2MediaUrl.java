@@ -1,8 +1,7 @@
 package com.zune.customtv.utils;
 
-import com.zune.customtv.base.BaseConstant;
+import com.base.base.BaseConstant;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MediaTag2MediaUrl {

@@ -23,7 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.zune.customtv.R;
-import com.zune.customtv.base.BaseApplication;
+import com.base.base.BaseApplication;
 
 public class SurfaceControllerView extends FrameLayout {
 

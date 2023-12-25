@@ -1,6 +1,6 @@
 package com.zune.customtv.utils;
 
-import com.zune.customtv.base.BaseApplication;
+import com.base.base.BaseApplication;
 
 public class Utils {
     public static String getDurationDate(String duration) {

@@ -13,9 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.zune.customtv.base.BaseActivity;
+import com.base.base.BaseActivity;
 import com.zune.customtv.fragment.AiQingFragment;
 import com.zune.customtv.fragment.HomeFragment;
+import com.zune.customtv.fragment.TouPingFragment;
 import com.zune.customtv.fragment.VideoFragment;
 import com.zune.customtv.fragment.VoiceFragment;
 
@@ -29,7 +30,7 @@ public class MainActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    private String[] titles = new String[]{"首页", "影片", "音乐和录音", "爱情保卫战"};
+    private String[] titles = new String[]{"首页", "影片", "音乐和录音", "爱情保卫战","投屏"};
     private List<Fragment> mFragments = new ArrayList<>();
 
     @Override
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity {
         mFragments.add(new VideoFragment());
         mFragments.add(new VoiceFragment());
         mFragments.add(new AiQingFragment());
+        mFragments.add(new TouPingFragment());
         LinearLayout tabLayout = findViewById(R.id.tab_layout);
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {

@@ -1,9 +1,9 @@
 package com.zune.customtv;
 
 import com.google.gson.Gson;
-import com.zune.customtv.base.BaseApplication;
-import com.zune.customtv.base.BaseConstant;
-import com.zune.customtv.base.CallBack;
+import com.base.base.BaseApplication;
+import com.base.base.BaseConstant;
+import com.base.base.CallBack;
 import com.zune.customtv.bean.BaseDataBean;
 import com.zune.customtv.utils.GzipUtils;
 

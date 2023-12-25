@@ -1,3 +1,7 @@
 rootProject.name = "CustomTV"
 include ':app'
 include ':ijkplayer'
+include ':postScreen'
+include ':base'
+include ':sender'
+include ':player'

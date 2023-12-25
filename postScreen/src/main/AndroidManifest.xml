@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.translate.postscreen">
+
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <application
+        android:allowBackup="true"
+        android:requestLegacyExternalStorage="true">
+        <activity
+            android:name="com.translate.postscreen.TouPingPostActivity"
+            android:screenOrientation="landscape" />
+
+        <service
+            android:name="com.translate.postscreen.service.ScreenService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="mediaProjection" />
+        <activity
+            android:name="com.translate.postscreen.TouPingReceiveActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name="net.yrom.screenrecorder.MainActivity"
+            android:screenOrientation="landscape" />
+    </application>
+</manifest>
