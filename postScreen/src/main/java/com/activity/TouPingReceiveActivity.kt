@@ -5,7 +5,9 @@ import android.content.Intent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.WindowManager
+import android.widget.TextView
 import com.base.base.BaseActivity
+import com.base.base.BaseApplication
 import com.decode.RecordDecoder
 import com.decode.ScreenDecoder
 import com.translate.postscreen.R
@@ -32,6 +34,7 @@ class TouPingReceiveActivity : BaseActivity() {
                 holder.addCallback(object : SurfaceHolder.Callback {
                     override fun surfaceCreated(holder: SurfaceHolder) {
                         // 连接到服务端
+                        (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("开始连接到服务端:${ip}\n")
                         ScreenDecoder.start(ip, holder.surface)
                     }
 

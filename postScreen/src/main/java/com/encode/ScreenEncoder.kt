@@ -6,6 +6,10 @@ import android.media.MediaCodecInfo
 import android.media.MediaFormat
 import android.media.projection.MediaProjection
 import android.util.Log
+import android.widget.TextView
+import com.activity.TouPingPostActivity
+import com.base.base.BaseApplication
+import com.translate.postscreen.R
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer
@@ -39,27 +43,32 @@ object ScreenEncoder {
     private var isPlaying = true
 
     fun start(mediaProjection: MediaProjection) {
+        if (this::webSocketServer.isInitialized) {
+            return
+        }
         this.mediaProjection = mediaProjection
-        if (!this::webSocketServer.isInitialized) {
-            webSocketServer = object : WebSocketServer(InetSocketAddress(port)) {
-                override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
-                    Log.d("ScreenEncoder", "onOpen")
-                    conn?.apply { webSocket = this }
-                }
+        val inetSocketAddress = InetSocketAddress(port)
+        webSocketServer = object : WebSocketServer(inetSocketAddress) {
+            override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
+                Log.e("我是一条鱼：", "有人连接进来了ip:${conn?.remoteSocketAddress}" )
+                conn?.apply { webSocket = this }
+            }
 
-                override fun onClose(
-                    conn: WebSocket?,
-                    code: Int,
-                    reason: String?,
-                    remote: Boolean
-                ) {
-                }
+            override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
+                Log.e("我是一条鱼：", "远端关闭" )
+                loged = true
+            }
 
-                override fun onMessage(conn: WebSocket?, message: String?) {}
-                override fun onError(conn: WebSocket?, ex: Exception?) {}
-                override fun onStart() {}
+            override fun onMessage(conn: WebSocket?, message: String?) {}
+            override fun onError(conn: WebSocket?, ex: Exception?) {
+                Log.e("我是一条鱼：", "异常断开，error:${ex}" )
+            }
+            override fun onStart() {
+                Log.e("我是一条鱼：", "远端启动" )
             }
         }
+        Log.e("我是一条鱼：", "开启远端服务ip:${inetSocketAddress}" )
+
         webSocketServer.start()
         initH264MediaCodec()
         isPlaying = true
@@ -95,7 +104,9 @@ object ScreenEncoder {
                 null
             )
             mediaCodec.start()
+            Log.e("我是一条鱼：", "H264初始化完成" )
         } catch (e: IOException) {
+            Log.e("我是一条鱼：", "H264初始化失败" )
             e.printStackTrace()
         }
     }
@@ -112,6 +123,8 @@ object ScreenEncoder {
             }
         }
     }
+
+    private var loged = false
 
     private fun encodeH264Data(byteBuffer: ByteBuffer, vBufferInfo: MediaCodec.BufferInfo) {
         var offset = 4
@@ -141,6 +154,10 @@ object ScreenEncoder {
             System.arraycopy(bytes, 0, newBuf, sps_pps_buf.size, bytes.size)
             if (this::webSocket.isInitialized && webSocket.isOpen) {
                 webSocket.send(newBuf)
+            }
+            if (!loged) {
+                loged = true
+                Log.e("我是一条鱼：", "H264编码完成" )
             }
         }
     }

@@ -10,9 +10,13 @@ import android.graphics.BitmapFactory
 import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
+import android.widget.TextView
 import com.encode.ScreenEncoder
 import com.translate.postscreen.R
 import com.activity.TouPingPostActivity
+import com.activity.TouPingReceiveActivity
+import com.base.base.BaseApplication
 import com.encode.RecordEncoder
 
 
@@ -40,6 +44,9 @@ class ScreenService : Service() {
 
     // 录屏开始后进行编码推流
     private fun startProject(resultCode: Int, data: Intent) {
+//        (BaseApplication.getInstance().topActivity as? TouPingPostActivity)?.findViewById<TextView>(
+//            R.id.info)?.append("录屏服务开启\n")
+        Log.e("我是一条鱼：", "录屏服务开启" )
         val mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         mediaProjectionManager.getMediaProjection(resultCode, data
         )?.apply {
