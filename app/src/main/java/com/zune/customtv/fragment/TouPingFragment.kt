@@ -1,10 +1,15 @@
 package com.zune.customtv.fragment
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.view.View
 import android.widget.EditText
-import com.base.base.BaseFragment
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.activity.TouPingPostActivity
-import com.zune.customtv.R
 import com.activity.TouPingReceiveActivity
+import com.base.base.BaseFragment
+import com.zune.customtv.R
 
 class TouPingFragment: BaseFragment() {
 
@@ -22,6 +27,20 @@ class TouPingFragment: BaseFragment() {
         view.findViewById<View>(R.id.receive)?.onFocusChangeListener =
             View.OnFocusChangeListener { v, hasFocus -> v?.setBackgroundResource(if (hasFocus) R.drawable.bg_select else R.drawable.bg_normal) }
         view.findViewById<View>(R.id.post)?.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= 23) {
+                val permission = ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.RECORD_AUDIO
+                )
+                if (permission != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                        requireActivity(),
+                        arrayOf<String>(Manifest.permission.RECORD_AUDIO),
+                        1
+                    )
+                    return@setOnClickListener
+                }
+            }
             TouPingPostActivity.start(requireContext())
         }
         view.findViewById<View>(R.id.receive)?.setOnClickListener {

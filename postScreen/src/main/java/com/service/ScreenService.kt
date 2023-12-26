@@ -13,8 +13,7 @@ import android.os.IBinder
 import com.encode.ScreenEncoder
 import com.translate.postscreen.R
 import com.activity.TouPingPostActivity
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import com.encode.RecordEncoder
 
 
 class ScreenService : Service() {
@@ -45,6 +44,7 @@ class ScreenService : Service() {
         mediaProjectionManager.getMediaProjection(resultCode, data
         )?.apply {
             ScreenEncoder.start(this)
+//            RecordEncoder.start()
         }
     }
 
@@ -85,6 +85,7 @@ class ScreenService : Service() {
 
     override fun onDestroy() {
         ScreenEncoder.close()
+//        RecordEncoder.close()
         super.onDestroy()
     }
 }

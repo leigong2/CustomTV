@@ -6,6 +6,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.WindowManager
 import com.base.base.BaseActivity
+import com.decode.RecordDecoder
 import com.decode.ScreenDecoder
 import com.translate.postscreen.R
 
@@ -41,11 +42,13 @@ class TouPingReceiveActivity : BaseActivity() {
                     }
                 })
             }
+//            RecordDecoder.start(ip)
         }
     }
 
     override fun onDestroy() {
         ScreenDecoder.release()
+//        RecordDecoder.release()
         super.onDestroy()
     }
 }
