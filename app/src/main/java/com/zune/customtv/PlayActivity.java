@@ -511,7 +511,7 @@ public class PlayActivity extends BaseActivity {
             MediaItem mediaItem = MediaItem.fromUri(mp4VideoUri);
             player.setMediaItem(mediaItem);
         }
-        PlaybackParameters params = new PlaybackParameters(5,5);
+        PlaybackParameters params = new PlaybackParameters(1,1);
         player.setPlaybackParameters(params);
         playerView.setPlayer(player);
         player.prepare();

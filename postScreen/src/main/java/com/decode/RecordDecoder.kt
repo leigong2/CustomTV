@@ -8,6 +8,7 @@ import org.java_websocket.handshake.ServerHandshake
 import java.net.URI
 import java.nio.ByteBuffer
 
+@Deprecated("H264无法完成声音的投屏")
 object RecordDecoder {
     private const val RECORD_FRAME_BIT = 96000  // 比特率（比特/秒）
     private const val port = 40000   //端口

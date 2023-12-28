@@ -44,14 +44,11 @@ class ScreenService : Service() {
 
     // 录屏开始后进行编码推流
     private fun startProject(resultCode: Int, data: Intent) {
-//        (BaseApplication.getInstance().topActivity as? TouPingPostActivity)?.findViewById<TextView>(
-//            R.id.info)?.append("录屏服务开启\n")
         Log.e("我是一条鱼：", "录屏服务开启" )
         val mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         mediaProjectionManager.getMediaProjection(resultCode, data
         )?.apply {
-            ScreenEncoder.start(this)
-//            RecordEncoder.start()
+            ScreenEncoder.start(this, false)
         }
     }
 
@@ -92,7 +89,6 @@ class ScreenService : Service() {
 
     override fun onDestroy() {
         ScreenEncoder.close()
-//        RecordEncoder.close()
         super.onDestroy()
     }
 }

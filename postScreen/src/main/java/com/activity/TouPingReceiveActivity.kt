@@ -35,7 +35,7 @@ class TouPingReceiveActivity : BaseActivity() {
                     override fun surfaceCreated(holder: SurfaceHolder) {
                         // 连接到服务端
                         (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("开始连接到服务端:${ip}\n")
-                        ScreenDecoder.start(ip, holder.surface)
+                        ScreenDecoder.start(ip, holder.surface, false)
                     }
 
                     override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {

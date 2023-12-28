@@ -19,7 +19,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:padding="16dp"
         tools:text="我是 一条鱼"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

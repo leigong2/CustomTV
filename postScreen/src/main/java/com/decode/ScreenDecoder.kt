@@ -25,17 +25,20 @@ object ScreenDecoder {
     private lateinit var mediaCodec: MediaCodec
     private lateinit var webSocketClient: WebSocketClient
 
-    fun start(ip: String, surface: Surface) {
+    fun start(ip: String, surface: Surface, withH265: Boolean) {
         webSocketClient = object : WebSocketClient(URI("ws://${ip}:${port}")) {
             override fun onOpen(handshakedata: ServerHandshake?) {
-                (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(
-                    R.id.info)?.append("远端开启成功:${ip}\n")
+                (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("远端开启成功:${ip}\n")
             }
             override fun onMessage(message: String?) {}
             override fun onMessage(bytes: ByteBuffer) {
                 val buf = ByteArray(bytes.remaining())
                 bytes[buf]
-                decodeH264Data(buf)
+                if (withH265) {
+                    decodeH265Data(buf)
+                } else {
+                    decodeH264Data(buf)
+                }
             }
             override fun onClose(code: Int, reason: String?, remote: Boolean) {
                 BaseApplication.getInstance().handler.post {
@@ -44,12 +47,17 @@ object ScreenDecoder {
                 loged = false
             }
             override fun onError(ex: Exception?) {
-                (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(
-                    R.id.info)?.append("远端开启失败:${ex} $ip\n")
+                BaseApplication.getInstance().handler.post {
+                    (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("远端开启失败:${ex} $ip\n")
+                }
             }
         }
         webSocketClient.connect()
-        startH264MediaCodec(surface)
+        if (withH265) {
+            startH265MediaCodec(surface)
+        } else {
+            startH264MediaCodec(surface)
+        }
     }
 
 
@@ -67,8 +75,7 @@ object ScreenDecoder {
         mediaFormat.setByteBuffer("csd-1", ByteBuffer.wrap(headerPps));
         mediaCodec.configure(mediaFormat, surface, null, 0)
         mediaCodec.start()
-        (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(
-            R.id.info)?.append("H264初始化完成\n")
+        (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("H264初始化完成\n")
     }
 
 

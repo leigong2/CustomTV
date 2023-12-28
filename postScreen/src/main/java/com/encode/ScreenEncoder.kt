@@ -42,7 +42,7 @@ object ScreenEncoder {
     private lateinit var h265_vps_pps_sps: ByteArray  // 记录vps pps sps
     private var isPlaying = true
 
-    fun start(mediaProjection: MediaProjection) {
+    fun start(mediaProjection: MediaProjection, withH265: Boolean) {
         if (this::webSocketServer.isInitialized) {
             return
         }
@@ -70,39 +70,28 @@ object ScreenEncoder {
         Log.e("我是一条鱼：", "开启远端服务ip:${inetSocketAddress}" )
 
         webSocketServer.start()
-        initH264MediaCodec()
         isPlaying = true
-        Thread { startH264Encode() }.start()
+        if (withH265) {
+            initH265MediaCodec()
+            Thread { startH265Encode() }.start()
+        } else {
+            initH264MediaCodec()
+            Thread { startH264Encode() }.start()
+        }
     }
 
     /*zune: 初始化mediaCodeC*/
     private fun initH264MediaCodec() {
-        val mediaFormat = MediaFormat.createVideoFormat(
-            MediaFormat.MIMETYPE_VIDEO_AVC,
-            VIDEO_WIDTH,
-            VIDEO_HEIGHT
-        )
-        mediaFormat.setInteger(
-            MediaFormat.KEY_COLOR_FORMAT,
-            MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface
-        )
+        mediaCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_VIDEO_AVC)
+        val mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, VIDEO_WIDTH, VIDEO_HEIGHT)
+        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT)
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, SCREEN_FRAME_RATE)
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, SCREEN_FRAME_INTERVAL)
         try {
-            mediaCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_VIDEO_AVC)
             mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
             val surface = mediaCodec.createInputSurface()
-            mediaProjection.createVirtualDisplay(
-                "ScreenRecorder",
-                VIDEO_WIDTH,
-                VIDEO_HEIGHT,
-                1,
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
-                surface,
-                null,
-                null
-            )
+            mediaProjection.createVirtualDisplay("ScreenRecorder", VIDEO_WIDTH, VIDEO_HEIGHT, 1, DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC, surface, null, null)
             mediaCodec.start()
             Log.e("我是一条鱼：", "H264初始化完成" )
         } catch (e: IOException) {
@@ -165,15 +154,8 @@ object ScreenEncoder {
 
     /*zune: 初始化mediaCodeC*/
     private fun initH265MediaCodec() {
-        val mediaFormat = MediaFormat.createVideoFormat(
-            MediaFormat.MIMETYPE_VIDEO_HEVC,
-            VIDEO_WIDTH,
-            VIDEO_HEIGHT
-        )
-        mediaFormat.setInteger(
-            MediaFormat.KEY_COLOR_FORMAT,
-            MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface
-        )
+        val mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_HEVC, VIDEO_WIDTH, VIDEO_HEIGHT)
+        mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT)
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, SCREEN_FRAME_RATE)
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, SCREEN_FRAME_INTERVAL)
@@ -181,16 +163,7 @@ object ScreenEncoder {
             mediaCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_VIDEO_HEVC)
             mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
             val surface = mediaCodec.createInputSurface()
-            mediaProjection.createVirtualDisplay(
-                "ScreenRecorder",
-                VIDEO_WIDTH,
-                VIDEO_HEIGHT,
-                1,
-                DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC,
-                surface,
-                null,
-                null
-            )
+            mediaProjection.createVirtualDisplay("ScreenRecorder", VIDEO_WIDTH, VIDEO_HEIGHT, 1, DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC, surface, null, null)
             mediaCodec.start()
         } catch (e: IOException) {
             e.printStackTrace()

@@ -14,6 +14,7 @@ import java.net.InetSocketAddress
 import java.nio.ByteBuffer
 
 
+@Deprecated("H264无法完成声音的投屏")
 object RecordEncoder {
     //不同手机支持的编码最大分辨率不同
     private const val RECORD_FRAME_BIT = 96000  // 比特率（比特/秒）
