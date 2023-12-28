@@ -15,8 +15,8 @@ import java.nio.ByteBuffer
 import kotlin.math.log
 
 object ScreenDecoder {
-    private const val VIDEO_WIDTH = 2400
-    private const val VIDEO_HEIGHT = 1080
+    var VIDEO_WIDTH = 1080
+    var VIDEO_HEIGHT = 2400
     private const val SCREEN_FRAME_BIT = 2400 * 1080  // 比特率（比特/秒）
     private const val SCREEN_FRAME_RATE = 20  //帧率
     private const val SCREEN_FRAME_INTERVAL = 1  //I帧的频率
@@ -141,5 +141,9 @@ object ScreenDecoder {
     fun release() {
         webSocketClient.close()
         mediaCodec.release()
+    }
+
+    fun sendOrientation(orientation: Int) {
+        webSocketClient.send(orientation.toString())
     }
 }

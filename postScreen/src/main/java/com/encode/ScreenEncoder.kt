@@ -1,5 +1,6 @@
 package com.encode
 
+import android.content.res.Configuration
 import android.hardware.display.DisplayManager
 import android.media.MediaCodec
 import android.media.MediaCodecInfo
@@ -16,12 +17,13 @@ import org.java_websocket.server.WebSocketServer
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.nio.ByteBuffer
+import java.util.Objects
 import kotlin.experimental.and
 
 object ScreenEncoder {
     //不同手机支持的编码最大分辨率不同
-    private const val VIDEO_WIDTH = 2400
-    private const val VIDEO_HEIGHT = 1080
+    var VIDEO_WIDTH = 1080
+    var VIDEO_HEIGHT = 2400
     private const val SCREEN_FRAME_BIT = 2400 * 1080  // 比特率（比特/秒）
     private const val SCREEN_FRAME_RATE = 20  //帧率
     private const val SCREEN_FRAME_INTERVAL = 1  //I帧的频率
@@ -41,6 +43,7 @@ object ScreenEncoder {
     private lateinit var webSocket: WebSocket
     private lateinit var h265_vps_pps_sps: ByteArray  // 记录vps pps sps
     private var isPlaying = true
+    private var isChangeOrientation = false
 
     fun start(mediaProjection: MediaProjection, withH265: Boolean) {
         if (this::webSocketServer.isInitialized) {
@@ -59,7 +62,22 @@ object ScreenEncoder {
                 loged = true
             }
 
-            override fun onMessage(conn: WebSocket?, message: String?) {}
+            override fun onMessage(conn: WebSocket?, message: String?) {
+                if (Objects.equals(message, Configuration.ORIENTATION_LANDSCAPE.toString())) {
+                    VIDEO_WIDTH = 2400
+                    VIDEO_HEIGHT = 1080
+                } else if (Objects.equals(message, Configuration.ORIENTATION_PORTRAIT.toString())) {
+                    VIDEO_WIDTH = 1080
+                    VIDEO_HEIGHT = 2400
+                }
+                isChangeOrientation = true
+                if (withH265) {
+                    initH265MediaCodec()
+                } else {
+                    initH264MediaCodec()
+                }
+                isChangeOrientation = false
+            }
             override fun onError(conn: WebSocket?, ex: Exception?) {
                 Log.e("我是一条鱼：", "异常断开，error:${ex}" )
             }
@@ -82,6 +100,9 @@ object ScreenEncoder {
 
     /*zune: 初始化mediaCodeC*/
     private fun initH264MediaCodec() {
+        if (this::mediaCodec.isInitialized) {
+            mediaCodec.stop()
+        }
         mediaCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_VIDEO_AVC)
         val mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, VIDEO_WIDTH, VIDEO_HEIGHT)
         mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)
@@ -103,6 +124,9 @@ object ScreenEncoder {
     private fun startH264Encode() {
         val bufferInfo = MediaCodec.BufferInfo()
         while (isPlaying) {
+            if (isChangeOrientation) {
+                continue
+            }
             val outPutBufferId = mediaCodec.dequeueOutputBuffer(bufferInfo, ENCODE_TIME_OUT)
             if (outPutBufferId >= 0) {
                 mediaCodec.getOutputBuffer(outPutBufferId)?.apply {
@@ -174,6 +198,9 @@ object ScreenEncoder {
     private fun startH265Encode() {
         val bufferInfo = MediaCodec.BufferInfo()
         while (isPlaying) {
+            if (isChangeOrientation) {
+                continue
+            }
             val outPutBufferId = mediaCodec.dequeueOutputBuffer(bufferInfo, ENCODE_TIME_OUT)
             if (outPutBufferId >= 0) {
                 mediaCodec.getOutputBuffer(outPutBufferId)?.apply {

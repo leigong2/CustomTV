@@ -2,6 +2,7 @@ package com.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.WindowManager
@@ -47,6 +48,21 @@ class TouPingReceiveActivity : BaseActivity() {
             }
 //            RecordDecoder.start(ip)
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            // 横屏
+            ScreenDecoder.VIDEO_WIDTH = 2400
+            ScreenDecoder.VIDEO_HEIGHT = 1080
+        } else {
+            // 竖屏
+            ScreenDecoder.VIDEO_WIDTH = 1080
+            ScreenDecoder.VIDEO_HEIGHT = 2400
+        }
+        ScreenDecoder.sendOrientation(newConfig.orientation)
+        initView()
     }
 
     override fun onDestroy() {

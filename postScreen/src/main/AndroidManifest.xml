@@ -8,7 +8,9 @@
         android:requestLegacyExternalStorage="true">
         <activity
             android:name="com.activity.TouPingPostActivity"
-            android:screenOrientation="landscape" />
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:exported="true"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.service.ScreenService"
@@ -17,7 +19,9 @@
             android:foregroundServiceType="mediaProjection" />
         <activity
             android:name="com.activity.TouPingReceiveActivity"
-            android:screenOrientation="landscape"
-            android:theme="@style/AppTheme.Base.FullScreen"  />
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Base.FullScreen" />
     </application>
 </manifest>
