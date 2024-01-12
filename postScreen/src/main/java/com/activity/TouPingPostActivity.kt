@@ -7,9 +7,11 @@ import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import com.base.base.BaseActivity
+import com.base.base.BaseApplication
 import com.encode.RecordEncoder
 import com.service.ScreenService
 import com.translate.postscreen.R
+import java.io.File
 
 
 /**
@@ -28,6 +30,9 @@ class TouPingPostActivity : BaseActivity(){
     }
 
     override fun initView() {
+        File(BaseApplication.getInstance().getExternalFilesDir(""), "record").listFiles()?.forEach {
+            it.delete()
+        }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         findViewById<View>(R.id.start).setOnClickListener {

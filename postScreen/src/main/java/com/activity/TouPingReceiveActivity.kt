@@ -80,6 +80,9 @@ class TouPingReceiveActivity : BaseActivity() {
         File(BaseApplication.getInstance().filesDir, "receive").listFiles()?.apply {
             val files = arrayListOf<File>(*this)
             files.sortBy { it.lastModified() }
+            if (files.size <= 1) {
+                return
+            }
             firstPlayerView.setVideoPath(files[1].path)
             firstPlayerView.seekTo(0)
             firstPlayerView.start()
