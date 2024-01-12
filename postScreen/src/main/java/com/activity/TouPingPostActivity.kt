@@ -7,6 +7,7 @@ import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import com.base.base.BaseActivity
+import com.encode.RecordEncoder
 import com.service.ScreenService
 import com.translate.postscreen.R
 

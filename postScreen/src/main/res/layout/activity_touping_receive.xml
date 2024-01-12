@@ -5,11 +5,15 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/firstPlayerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" />
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/secondPlayerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/info"

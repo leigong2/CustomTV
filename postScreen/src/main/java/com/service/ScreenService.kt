@@ -11,13 +11,13 @@ import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
-import android.widget.TextView
 import com.encode.ScreenEncoder
 import com.translate.postscreen.R
 import com.activity.TouPingPostActivity
-import com.activity.TouPingReceiveActivity
 import com.base.base.BaseApplication
-import com.encode.RecordEncoder
+import com.screen.ScreenRecordHelper
+import com.screen.post.WebSocketPost
+import java.io.File
 
 
 class ScreenService : Service() {
@@ -38,8 +38,51 @@ class ScreenService : Service() {
             flags,
             startId
         )
-        startProject(resultCode, resultData)
+//        startProject(resultCode, resultData)
+//        RecordEncoder.start()
+        WebSocketPost.init()
+        startRecordScreenAndInMic(resultData)
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    private fun startRecordScreenAndInMic(resultData: Intent) {
+        ScreenRecordHelper(this, object : ScreenRecordHelper.OnVideoRecordListener{
+            override fun onBeforeRecord() {
+                Log.i("zuneRecord: ", "onBeforeRecord");
+            }
+
+            override fun onStartRecord() {
+                Log.i("zuneRecord: ", "onStartRecord");
+            }
+
+            override fun onPauseRecord() {
+                Log.i("zuneRecord: ", "onPauseRecord");
+            }
+
+            override fun onCancelRecord() {
+                Log.i("zuneRecord: ", "onCancelRecord");
+            }
+
+            override fun onEndRecord() {
+                Log.i("zuneRecord: ", "onEndRecord");
+            }
+        }, resultData).apply {
+            Log.i("zuneRecord: ", "startRecord");
+            startRecord(ScreenRecordingAudioSource.INTERNAL)
+            BaseApplication.getInstance().handler.postDelayed({
+                Log.i("zuneRecord: ", "stopRecord");
+                stopRecord()
+                source?.let {
+                    saveFile(it, object : ScreenRecordHelper.CallBack {
+                        override fun startFileCommand(path: String) {
+                            Log.i("zuneRecord: 文件路径", path)
+                            startRecordScreenAndInMic(resultData)
+                            WebSocketPost.post(path)
+                        }
+                    })
+                }
+            }, 5000)
+        }
     }
 
     // 录屏开始后进行编码推流
@@ -88,7 +131,9 @@ class ScreenService : Service() {
     }
 
     override fun onDestroy() {
-        ScreenEncoder.close()
+//        ScreenEncoder.close()
+//        RecordEncoder.close()
+        WebSocketPost.stopConnect()
         super.onDestroy()
     }
 }

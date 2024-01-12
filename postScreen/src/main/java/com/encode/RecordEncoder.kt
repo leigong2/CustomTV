@@ -57,11 +57,11 @@ object RecordEncoder {
 
     /*zune: 初始化mediaCodeC*/
     private fun initRecordMediaCodec() {
+        mediaCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_AUDIO_AAC)
         val mediaFormat = MediaFormat.createAudioFormat(MediaFormat.MIMETYPE_AUDIO_AAC, 44100, 1)
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, RECORD_FRAME_BIT)
         mediaFormat.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 8192)
         try {
-            mediaCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_AUDIO_AAC)
             mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
             mediaCodec.start()
         } catch (e: IOException) {
@@ -76,13 +76,7 @@ object RecordEncoder {
         val channelConfig: Int = AudioFormat.CHANNEL_IN_MONO
         val audioFormat: Int = AudioFormat.ENCODING_PCM_16BIT
         val minBufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat)
-        recorder = AudioRecord(
-            audioSource,
-            sampleRate,
-            channelConfig,
-            audioFormat,
-            Math.max(minBufferSize, 2048)
-        )
+        recorder = AudioRecord(audioSource, sampleRate, channelConfig, audioFormat, Math.max(minBufferSize, 2048))
     }
 
     private fun startRecordEncode() {

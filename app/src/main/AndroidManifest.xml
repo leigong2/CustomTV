@@ -69,29 +69,6 @@
             android:name=".VideoListActivity"
             android:screenOrientation="landscape" />
 
-        <activity
-            android:name="com.jafir.player.MainActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize">
-        </activity>
-        <activity android:name="com.jafir.player.DropScreenActivity" />
-        <activity android:name="com.jafir.player.RecordVideoListActivity" />
-
-        <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.jafir.player.my.package.name.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-
-        <service
-            android:name="com.pockettv.dropscreen.service.SystemService"
-            android:exported="false" />
-        <service
-            android:name="com.pockettv.dropscreen.service.ClingUpnpService"
-            android:exported="false" />
     </application>
 
 </manifest>
