@@ -122,7 +122,7 @@ class ScreenService : Service() {
             val channel = NotificationChannel(
                 "notification_id",
                 "notification_name",
-                NotificationManager.IMPORTANCE_LOW
+                NotificationManager.IMPORTANCE_HIGH
             )
             notificationManager.createNotificationChannel(channel)
         }
@@ -131,6 +131,7 @@ class ScreenService : Service() {
     }
 
     override fun onDestroy() {
+        Log.e("我是一条鱼：", "服务被终止" )
 //        ScreenEncoder.close()
 //        RecordEncoder.close()
         WebSocketPost.stopConnect()

@@ -12,7 +12,7 @@ import java.net.InetSocketAddress
 object WebSocketPost {
     private const val port = 40000   //端口
     private lateinit var webSocketServer: WebSocketServer
-    private lateinit var webSocket: WebSocket
+    private var webSocket: WebSocket? = null
     fun init() {
         val inetSocketAddress = InetSocketAddress(port)
         webSocketServer = object : WebSocketServer(inetSocketAddress) {
@@ -23,6 +23,7 @@ object WebSocketPost {
 
             override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
                 Log.e("我是一条鱼：", "远端关闭" )
+                webSocket  = null
             }
 
             override fun onMessage(conn: WebSocket?, message: String?) {
@@ -54,14 +55,12 @@ object WebSocketPost {
     }
 
     private fun sendMsg(bytes: ByteArray) {
-        if (this::webSocket.isInitialized) {
-            webSocket.send(bytes)
-        }
+        webSocket?.send(bytes)
     }
 
     fun stopConnect() {
         if (this::webSocketServer.isInitialized) {
-            webSocketServer.stop()
+            webSocketServer?.stop()
         }
     }
 }

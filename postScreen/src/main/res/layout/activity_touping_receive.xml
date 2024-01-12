@@ -1,29 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/firstPlayerView"
+    <FrameLayout
+        android:orientation="horizontal"
+        android:id="@+id/first"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/secondPlayerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <VideoView
+            android:id="@+id/secondPlayerView"
+            android:layout_gravity="center"
+            android:layout_width="1dp"
+            android:layout_height="1dp" />
+
+        <VideoView
+            android:id="@+id/firstPlayerView"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
 
     <TextView
         android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:textColor="#f00"
         android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:padding="16dp"
-        tools:text="我是 一条鱼"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="我是 一条鱼" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
