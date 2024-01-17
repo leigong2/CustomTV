@@ -9,6 +9,9 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.net.URI
 import java.nio.ByteBuffer
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 object WebSocketReceiver {
     private const val port = 40000   //端口
@@ -41,6 +44,7 @@ object WebSocketReceiver {
      * 接收到的文件缓存3个，第一个用于播放，第二个用户缓存，第三个是下载；当下载好之后，删掉第一个，第二个用于播放，第三个用于缓存，开始下载第四个
      * 分别命名是0-1-2
      */
+    private val sdf: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
     private fun receive(buf: ByteArray) {
         if (String(buf) == "#END#") {
             if (outputStream != null) {
@@ -58,7 +62,7 @@ object WebSocketReceiver {
             if (!fileDir.exists()) {
                 fileDir.mkdirs()
             }
-            val file = File(fileDir, "${System.currentTimeMillis()}.ts")
+            val file = File(fileDir, "${sdf.format(Date(System.currentTimeMillis()))}.ts")
             if (!file.exists()) {
                 file.createNewFile()
             }

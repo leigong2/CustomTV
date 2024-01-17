@@ -4,24 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Point
-import android.net.Uri
+import android.media.MediaPlayer
 import android.os.Build
+import android.text.TextUtils
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.TextureView
 import android.view.WindowManager
+import android.widget.ScrollView
 import android.widget.TextView
-import android.widget.VideoView
+import com.Ext.bindMediaToTexture
+import com.Ext.prepareMediaPlayer
 import com.base.base.BaseActivity
 import com.base.base.BaseApplication
 import com.decode.ScreenDecoder
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.ui.PlayerView
 import com.screen.receive.WebSocketReceiver
 import com.translate.postscreen.R
 import java.io.File
+import java.util.Collections
 
 
 class TouPingReceiveActivity : BaseActivity() {
@@ -38,8 +37,8 @@ class TouPingReceiveActivity : BaseActivity() {
     }
 
     private var playingIndex = 0;
-    private lateinit var firstPlayerView:VideoView
-    private lateinit var secondPlayerView:VideoView
+    private var currentMediaPlayer: MediaPlayer = MediaPlayer()
+    private var nextMediaPlayer: MediaPlayer = MediaPlayer()
 
     override fun initView() {
         File(BaseApplication.getInstance().filesDir, "receive").listFiles()?.apply {
@@ -47,54 +46,149 @@ class TouPingReceiveActivity : BaseActivity() {
                 file.delete()
             }
         }
-        firstPlayerView = findViewById(R.id.firstPlayerView)
-//        secondPlayerView = findViewById(R.id.secondPlayerView)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        val currentTextureView = findViewById<TextureView>(R.id.currentTextureView)
+        val nextTextureView = findViewById<TextureView>(R.id.nextTextureView)
+        currentMediaPlayer.bindMediaToTexture(currentTextureView)
+        nextMediaPlayer.bindMediaToTexture(nextTextureView)
+        currentMediaPlayer.setOnInfoListener { _, _, _ ->
+            val path = getNextPath()
+            if (TextUtils.isEmpty(path)) {
+                appendLog("next 无法准备：${"path = empty"}")
+                return@setOnInfoListener false
+            }
+            nextMediaPlayer.prepareMediaPlayer(path)
+            nextMediaPlayer.start()
+            BaseApplication.getInstance().handler.postDelayed({
+                nextMediaPlayer.seekTo(0)
+                nextMediaPlayer.pause()
+                appendLog("next 准备完毕：${path}")
+            }, 16)
+            return@setOnInfoListener false
+        }
+        nextMediaPlayer.setOnInfoListener { _, _, _ ->
+            val path = getNextPath()
+            if (TextUtils.isEmpty(path)) {
+                appendLog("current 无法准备：${"path = empty"}")
+                return@setOnInfoListener false
+            }
+            currentMediaPlayer.prepareMediaPlayer(path)
+            currentMediaPlayer.start()
+            BaseApplication.getInstance().handler.postDelayed({
+                currentMediaPlayer.seekTo(0)
+                currentMediaPlayer.pause()
+                appendLog("current 准备完毕：${path}")
+            }, 16)
+            return@setOnInfoListener false
+        }
+        currentMediaPlayer.setOnCompletionListener {
+            val currentPosition = it.currentPosition
+            if (currentPosition > 0) {
+                switchTextureView(currentTextureView, nextTextureView, 1)
+                nextMediaPlayer.start()
+                appendLog("current 播放完毕，开始播放 next：${""}")
+                deletePlayedFile()
+            }
+        }
+        nextMediaPlayer.setOnCompletionListener {
+            val currentPosition = it.currentPosition
+            if (currentPosition > 0) {
+                switchTextureView(currentTextureView, nextTextureView, 0)
+                currentMediaPlayer.start()
+                appendLog("next 播放完毕，开始播放 current：${""}")
+                deletePlayedFile()
+            }
+        }
         intent.getStringExtra("ip")?.also { ip ->
-            resetSize(firstPlayerView)
-//            resetSize(secondPlayerView)
-            firstPlayerView.setOnCompletionListener { playSingleNext() }
-//            secondPlayerView.setOnCompletionListener { playNext() }
             (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("开始连接到服务端:${ip}\n")
             WebSocketReceiver.onReceiveFileComplete = {
+                appendLog("接收到文件：${it.path}")
                 val size = it.parentFile?.listFiles()?.size?:0
-                if (size >= 3 && playingIndex == 0) {
+                if (size > 3 && playingIndex == 0) {
                     it.parentFile?.listFiles()?.apply {
                         val files = arrayListOf<File>(*this)
-                        files.sortBy { it.lastModified() }
+                        files.sortWith { p0, p1 ->
+                            val p0Time = p0?.lastModified() ?: 0
+                            val p1Time = p1?.lastModified() ?: 0
+                            (p0Time - p1Time).toInt()
+                        }
                         BaseApplication.getInstance().handler.post {
-                            firstPlayerView.setVideoPath(files[0].path)
-//                            secondPlayerView.setVideoPath(files[1].path)
-                            firstPlayerView.seekTo(0)
-                            firstPlayerView.start()
+                            currentMediaPlayer.prepareMediaPlayer(files[0].path)
+                            currentMediaPlayer.start()
+                            appendLog("current 开始播放文件：${files[0].path}")
                             playingIndex = 1
                         }
                     }
                 }
             }
             WebSocketReceiver.init(ip)
+            appendLog("${ip}已初始化，请等待")
         }
     }
 
-    private fun playSingleNext() {
+    private fun deletePlayedFile() {
         File(BaseApplication.getInstance().filesDir, "receive").listFiles()?.apply {
             val files = arrayListOf<File>(*this)
-            files.sortBy { it.lastModified() }
-            if (files.size <= 1) {
-                return
+            files.sortWith { p0, p1 ->
+                val p0Time = p0?.lastModified() ?: 0
+                val p1Time = p1?.lastModified() ?: 0
+                (p0Time - p1Time).toInt()
             }
-            firstPlayerView.setVideoPath(files[1].path)
-            firstPlayerView.seekTo(0)
-            firstPlayerView.start()
-            files[0].delete()
+            if (files.size > 0) {
+                files[0].delete()
+                appendLog("删除播放过的文件：${files[0].path}")
+            }
         }
     }
 
-    private fun resetSize(videoView: VideoView) {
-        val currentRatio = getScreenWidth().toFloat() / getScreenHeight()
-        val videoRatio = 1080f / 1920
+    private fun getNextPath(): String {
+        File(BaseApplication.getInstance().filesDir, "receive").listFiles()?.apply {
+            val files = arrayListOf<File>(*this)
+            if (files.size <= 0) {
+                appendLog("当前共有文件：${"empty"}")
+                return ""
+            }
+            files.sortWith { p0, p1 ->
+                val p0Time = p0?.lastModified() ?: 0
+                val p1Time = p1?.lastModified() ?: 0
+                (p0Time - p1Time).toInt()
+            }
+            val sb = StringBuilder()
+            for (file in files) {
+                sb.append(file.name).append(",")
+            }
+            appendLog("当前共有文件：${sb.substring(0, sb.length - 1)}")
+            return files[0].path
+        }
+        return ""
+    }
+
+    private fun switchTextureView(
+        currentTextureView: TextureView,
+        nextTextureView: TextureView,
+        index: Int
+    ) {
+        if (index == 0) {
+            resetSize(currentTextureView)
+            hideView(nextTextureView)
+        } else {
+            resetSize(nextTextureView)
+            hideView(currentTextureView)
+        }
+    }
+
+    private fun hideView(videoView: TextureView) {
         val params = videoView.layoutParams
-        if (currentRatio < videoRatio) {
+        params.height = 1
+        params.width = 1
+        videoView.layoutParams = params
+    }
+
+    private fun resetSize(videoView: TextureView) {
+        val currentRatio = getScreenWidth().toFloat() / getScreenHeight()
+        val videoRatio = 1920f / 1080
+        val params = videoView.layoutParams
+        if (currentRatio > videoRatio) {
             params.height = getScreenHeight()
             params.width = (getScreenHeight() * videoRatio).toInt()
         } else {
@@ -102,118 +196,6 @@ class TouPingReceiveActivity : BaseActivity() {
             params.height = (getScreenWidth() / videoRatio).toInt()
         }
         videoView.layoutParams = params
-    }
-
-    private fun playNext() {
-        File(BaseApplication.getInstance().filesDir, "receive").listFiles()?.apply {
-            val files = arrayListOf<File>(*this)
-            files.sortBy { it.lastModified() }
-            if (playingIndex == 1) {
-                val f = firstPlayerView.layoutParams
-                f.height = 1
-                f.width = 1
-                firstPlayerView.layoutParams = f
-                resetSize(secondPlayerView)
-                secondPlayerView.seekTo(0)
-                secondPlayerView.start()
-                playingIndex = 2
-                firstPlayerView.setVideoPath(files[2].path)
-                Log.i("zunePlayer: ", "firstPlayerView: path = ${files[2].path}");
-                firstPlayerView.seekTo(0)
-            } else {
-                resetSize(firstPlayerView)
-                val s = secondPlayerView.layoutParams
-                s.height = 1
-                s.width = 1
-                secondPlayerView.layoutParams = s
-                firstPlayerView.seekTo(0)
-                firstPlayerView.start()
-                playingIndex = 1
-                secondPlayerView.setVideoPath(files[2].path)
-                Log.i("zunePlayer: ", "secondPlayerView: path = ${files[2].path}");
-                secondPlayerView.seekTo(0)
-            }
-            files[0].delete()
-        }
-    }
-
-    private fun playFile(
-        firstPlayer: SimpleExoPlayer,
-        secondPlayer: SimpleExoPlayer,
-        position: Int,
-        rootView: ViewGroup
-    ) {
-//        BaseApplication.getInstance().handler.post {
-//            if (position == 0) {
-//                firstPlayer.seekTo(0)
-//                firstPlayer.play()
-//                Log.i("zunePlayer: ", "playFile: ${position}, firstPlayer， $preCount");
-//            } else {
-//                secondPlayer.seekTo(0)
-//                secondPlayer.play()
-//                Log.i("zunePlayer: ", "playFile: ${position}, secondPlayer， $preCount");
-//            }
-//            val firstPlayerView = findViewById<PlayerView>(R.id.firstPlayerView)
-//            val secondPlayerView = findViewById<PlayerView>(R.id.secondPlayerView)
-//            firstPlayerView.hideController()
-//            secondPlayerView.hideController()
-//            val firstView: View = rootView.getChildAt(0)
-//            val secondView: View = rootView.getChildAt(1)
-//            if (position == 0) {
-//                firstView.alpha = 1f
-//                secondView.alpha = 0f
-//            } else {
-//                firstView.alpha = 1f
-//                secondView.alpha = 0f
-//            }
-//            val delay = if (position == 0) firstPlayer.duration else secondPlayer.duration
-//            Log.i("zunePlayer: ", "delay: ${delay}");
-//            BaseApplication.getInstance().handler.postDelayed({
-//                File(BaseApplication.getInstance().filesDir, "receive").listFiles()?.apply {
-//                    val files = arrayListOf<File>(*this)
-//                    files.sortBy { it.lastModified() }
-//                    if (files.size < preCount) {
-//                        return@apply
-//                    }
-//                    firstPlayerView.hideController()
-//                    secondPlayerView.hideController()
-//                    if (position == 0) {
-//                        val file = files[preCount++]
-//                        prepareFile(file, firstPlayer, firstPlayerView)
-//                        Log.i("zunePlayer: ", "prepare: ${file.name}, firstPlayer， $preCount");
-//                        playFile(firstPlayer, secondPlayer, 1, rootView)
-//                    } else {
-//                        val file = files[preCount++]
-//                        prepareFile(file, secondPlayer, secondPlayerView)
-//                        Log.i("zunePlayer: ", "prepare: ${file.name}, secondPlayer， $preCount");
-//                        playFile(firstPlayer, secondPlayer, 0, rootView)
-//                    }
-//                }
-//            }, delay)
-//        }
-    }
-
-    private fun prepareFile(file: File, player: SimpleExoPlayer, playerView: PlayerView) {
-        val mediaItem: MediaItem = MediaItem.fromUri(Uri.fromFile(file))
-        player.setMediaItem(mediaItem)
-        player.prepare()
-        playerView.hideController()
-    }
-
-    private fun switchPlayerView(rootView: ViewGroup) {
-        val firstView: View = rootView.getChildAt(0)
-        val firstLayoutParams = firstView.layoutParams
-        val secondView: View = rootView.getChildAt(1)
-        val secondLayoutParams = secondView.layoutParams
-        secondView.layoutParams = firstLayoutParams
-        firstView.layoutParams = secondLayoutParams
-        if (firstView.id == R.id.firstPlayerView) {
-            rootView.removeView(secondView)
-            rootView.addView(secondView, 0)
-        } else {
-            rootView.removeView(firstView)
-            rootView.addView(firstView, 1)
-        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -244,7 +226,7 @@ class TouPingReceiveActivity : BaseActivity() {
      *
      * @return the width of screen, in pixel
      */
-    fun getScreenWidth(): Int {
+    private fun getScreenWidth(): Int {
         val wm = BaseApplication.getInstance().getSystemService(WINDOW_SERVICE) as WindowManager
             ?: return BaseApplication.getInstance().resources.displayMetrics.widthPixels
         val point = Point()
@@ -261,7 +243,7 @@ class TouPingReceiveActivity : BaseActivity() {
      *
      * @return the height of screen, in pixel
      */
-    fun getScreenHeight(): Int {
+    private fun getScreenHeight(): Int {
         val wm = BaseApplication.getInstance().getSystemService(WINDOW_SERVICE) as WindowManager
             ?: return BaseApplication.getInstance().resources.displayMetrics.heightPixels
         val point = Point()
@@ -271,5 +253,15 @@ class TouPingReceiveActivity : BaseActivity() {
             wm.defaultDisplay.getSize(point)
         }
         return point.y
+    }
+
+    private fun appendLog(text: String) {
+        Log.i("zune appendLog: ", text)
+        BaseApplication.getInstance().handler.post {
+            findViewById<TextView>(R.id.info).apply {
+                append("$text${"\n"}")
+                (parent as ScrollView).fullScroll(ScrollView.FOCUS_DOWN)
+            }
+        }
     }
 }

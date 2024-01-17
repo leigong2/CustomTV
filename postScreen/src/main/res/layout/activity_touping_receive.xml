@@ -6,39 +6,45 @@
     android:layout_height="match_parent">
 
     <FrameLayout
-        android:orientation="horizontal"
-        android:id="@+id/first"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <VideoView
-            android:id="@+id/secondPlayerView"
-            android:layout_gravity="center"
-            android:layout_width="1dp"
-            android:layout_height="1dp" />
-
-        <VideoView
-            android:id="@+id/firstPlayerView"
-            android:layout_gravity="center"
+        <TextureView
+            android:id="@+id/currentTextureView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <TextureView
+            android:id="@+id/nextTextureView"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center" />
 
     </FrameLayout>
 
-
-    <TextView
-        android:id="@+id/info"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textColor="#f00"
-        android:textSize="16sp"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="我是 一条鱼" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/info"
+            android:alpha="0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textColor="#f00"
+            android:textSize="16sp"
+            tools:text="我是 一条鱼" />
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
