@@ -125,6 +125,7 @@ class ScreenRecordHelper constructor(
                 mAudio?.end()
             }
         }
+        clearAll()
     }
 
     private fun getFormatTime(time: Long): String? {

@@ -38,9 +38,9 @@ class ScreenService : Service() {
             flags,
             startId
         )
-        startProject(resultCode, resultData)
+//        startProject(resultCode, resultData)
 //        WebSocketPost.init()
-//        startRecordScreenAndInMic(resultData)
+        startRecordScreenAndInMic(resultData)
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -71,11 +71,11 @@ class ScreenService : Service() {
             BaseApplication.getInstance().handler.postDelayed({
                 Log.i("zuneRecord: ", "stopRecord");
                 stopRecord()
+                startRecordScreenAndInMic(resultData)
                 source?.let {
                     saveFile(it, object : ScreenRecordHelper.CallBack {
                         override fun startFileCommand(path: String) {
                             Log.i("zuneRecord: 文件路径", path)
-                            startRecordScreenAndInMic(resultData)
                             WebSocketPost.post(path)
                         }
                     })

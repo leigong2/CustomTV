@@ -48,12 +48,6 @@ class TouPingReceiveActivity : BaseActivity() {
                 file.delete()
             }
         }
-        if (BuildConfig.DEBUG) {
-            intent.getStringExtra("ip")?.also { ip ->
-                RecordDecoder.start(ip)
-            }
-            return
-        }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val currentTextureView = findViewById<TextureView>(R.id.currentTextureView)
         val nextTextureView = findViewById<TextureView>(R.id.nextTextureView)
