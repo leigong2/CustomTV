@@ -16,8 +16,10 @@ import com.Ext.bindMediaToTexture
 import com.Ext.prepareMediaPlayer
 import com.base.base.BaseActivity
 import com.base.base.BaseApplication
+import com.decode.RecordDecoder
 import com.decode.ScreenDecoder
 import com.screen.receive.WebSocketReceiver
+import com.translate.postscreen.BuildConfig
 import com.translate.postscreen.R
 import java.io.File
 import java.util.Collections
@@ -45,6 +47,12 @@ class TouPingReceiveActivity : BaseActivity() {
             for (file in this) {
                 file.delete()
             }
+        }
+        if (BuildConfig.DEBUG) {
+            intent.getStringExtra("ip")?.also { ip ->
+                RecordDecoder.start(ip)
+            }
+            return
         }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val currentTextureView = findViewById<TextureView>(R.id.currentTextureView)

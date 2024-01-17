@@ -1,5 +1,8 @@
 package com.decode
 
+import android.media.AudioFormat
+import android.media.AudioManager
+import android.media.AudioTrack
 import android.media.MediaCodec
 import android.media.MediaFormat
 import android.util.Log
@@ -13,6 +16,7 @@ object RecordDecoder {
     private const val RECORD_FRAME_BIT = 96000  // 比特率（比特/秒）
     private const val port = 40000   //端口
     private lateinit var mediaCodec: MediaCodec
+    private lateinit var audioTrack: AudioTrack
     private lateinit var webSocketClient: WebSocketClient
 
     fun start(ip: String) {
@@ -35,22 +39,26 @@ object RecordDecoder {
         }
         webSocketClient.connect()
         startRecordMediaCodec()
+        startPlay()
     }
 
     private fun decodeRecordData(data: ByteArray) {
         val inputBuffers: Array<ByteBuffer> = mediaCodec.getInputBuffers()
-        val inputBufferIndex: Int = mediaCodec.dequeueInputBuffer(100)
+        val inputBufferIndex: Int = mediaCodec.dequeueInputBuffer(10000)
         if (inputBufferIndex >= 0) {
-            val inputBuffer = inputBuffers[inputBufferIndex]
+            val inputBuffer = mediaCodec.getInputBuffer(inputBufferIndex)?:inputBuffers[inputBufferIndex]
             inputBuffer.clear()
             inputBuffer.put(data, 0, data.size)
-            mediaCodec.queueInputBuffer(inputBufferIndex, 0, data.size, System.currentTimeMillis(), 0)
+            mediaCodec.queueInputBuffer(inputBufferIndex, 0, data.size, 10000, 0)
         } else {
             return
         }
         val bufferInfo = MediaCodec.BufferInfo()
-        var outputBufferIndex: Int = mediaCodec.dequeueOutputBuffer(bufferInfo, 100)
+        var outputBufferIndex: Int = mediaCodec.dequeueOutputBuffer(bufferInfo, 10000)
+        var chunkPCM: ByteArray
         while (outputBufferIndex >= 0) {
+            chunkPCM = ByteArray(bufferInfo.size)
+            audioTrack.write(chunkPCM, 0, bufferInfo.size)
             mediaCodec.releaseOutputBuffer(outputBufferIndex, true)
             outputBufferIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)
         }
@@ -71,6 +79,21 @@ object RecordDecoder {
         mediaCodec.configure(mediaFormat, null, null, 0)
         mediaCodec.start()
     }
+
+    private fun startPlay() {
+        val streamType = AudioManager.STREAM_MUSIC
+        val sampleRate = 44100
+        val channelConfig = AudioFormat.CHANNEL_OUT_MONO
+        val audioFormat = AudioFormat.ENCODING_PCM_16BIT
+        val mode = AudioTrack.MODE_STREAM
+        val minBufferSize = AudioTrack.getMinBufferSize(sampleRate, channelConfig, audioFormat)
+        audioTrack = AudioTrack(
+            streamType, sampleRate, channelConfig, audioFormat,
+            Math.max(minBufferSize, 2048), mode
+        )
+        audioTrack.play()
+    }
+
 
     fun release() {
         webSocketClient.close()

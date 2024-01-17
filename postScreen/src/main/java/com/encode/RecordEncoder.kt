@@ -1,11 +1,18 @@
 package com.encode
 
+import android.app.Service
+import android.media.AudioAttributes
 import android.media.AudioFormat
+import android.media.AudioPlaybackCaptureConfiguration
 import android.media.AudioRecord
 import android.media.MediaCodec
 import android.media.MediaFormat
 import android.media.MediaRecorder
+import android.media.projection.MediaProjection
+import android.media.projection.MediaProjectionManager
+import android.os.Build
 import android.util.Log
+import com.base.base.BaseApplication
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer
@@ -27,8 +34,8 @@ object RecordEncoder {
     private lateinit var webSocket: WebSocket
     private var isPlaying = true
 
-    fun start() {
-        initAudioRecord()
+    fun start(mediaProjection: MediaProjection) {
+        initAudioRecord(mediaProjection)
         if (!this::webSocketServer.isInitialized) {
             webSocketServer = object : WebSocketServer(InetSocketAddress(port)) {
                 override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
@@ -70,13 +77,31 @@ object RecordEncoder {
     }
 
     /*zune: 初始化麦克风*/
-    private fun initAudioRecord() {
-        val audioSource = MediaRecorder.AudioSource.MIC
-        val sampleRate = 44100
-        val channelConfig: Int = AudioFormat.CHANNEL_IN_MONO
-        val audioFormat: Int = AudioFormat.ENCODING_PCM_16BIT
-        val minBufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat)
-        recorder = AudioRecord(audioSource, sampleRate, channelConfig, audioFormat, Math.max(minBufferSize, 2048))
+    private fun initAudioRecord(mediaProjection: MediaProjection) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            //数据编码方式
+            val format = AudioFormat.Builder()
+                .setEncoding(AudioFormat.ENCODING_PCM_16BIT)
+                .setSampleRate(44100)
+                .setChannelMask(AudioFormat.CHANNEL_OUT_MONO)
+                .build()
+            val playbackConfig = AudioPlaybackCaptureConfiguration.Builder(mediaProjection)
+                .addMatchingUsage(AudioAttributes.USAGE_MEDIA)
+                .addMatchingUsage(AudioAttributes.USAGE_UNKNOWN)
+                .addMatchingUsage(AudioAttributes.USAGE_GAME)
+                .build()
+            recorder = AudioRecord.Builder()
+                .setAudioFormat(format)
+                .setAudioPlaybackCaptureConfig(playbackConfig)
+                .build()
+        } else {
+            val audioSource = MediaRecorder.AudioSource.MIC
+            val sampleRate = 44100
+            val channelConfig: Int = AudioFormat.CHANNEL_OUT_MONO
+            val audioFormat: Int = AudioFormat.ENCODING_PCM_16BIT
+            val minBufferSize = AudioRecord.getMinBufferSize(sampleRate, channelConfig, audioFormat)
+            recorder = AudioRecord(audioSource, sampleRate, channelConfig, audioFormat, Math.max(minBufferSize, 2048))
+        }
     }
 
     private fun startRecordEncode() {
@@ -117,6 +142,7 @@ object RecordEncoder {
             addADTStoPacket(44100, chunkAudio, outPacketSize) //添加ADTS
             outputBuffer[chunkAudio, 7, outBitSize] //将编码得到的AAC数据 取出到byte[]中 偏移量offset=7
             outputBuffer.position(bufferInfo.offset)
+            Log.i("RecordEncoder: ", chunkAudio.toString())
             if (this::webSocket.isInitialized && webSocket.isOpen) {
                 webSocket.send(chunkAudio)
             }

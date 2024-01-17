@@ -15,9 +15,9 @@ import com.encode.ScreenEncoder
 import com.translate.postscreen.R
 import com.activity.TouPingPostActivity
 import com.base.base.BaseApplication
+import com.encode.RecordEncoder
 import com.screen.ScreenRecordHelper
 import com.screen.post.WebSocketPost
-import java.io.File
 
 
 class ScreenService : Service() {
@@ -38,10 +38,9 @@ class ScreenService : Service() {
             flags,
             startId
         )
-//        startProject(resultCode, resultData)
-//        RecordEncoder.start()
-        WebSocketPost.init()
-        startRecordScreenAndInMic(resultData)
+        startProject(resultCode, resultData)
+//        WebSocketPost.init()
+//        startRecordScreenAndInMic(resultData)
         return super.onStartCommand(intent, flags, startId)
     }
 
@@ -91,6 +90,7 @@ class ScreenService : Service() {
         val mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         mediaProjectionManager.getMediaProjection(resultCode, data
         )?.apply {
+            RecordEncoder.start(this)
             ScreenEncoder.start(this, false)
         }
     }

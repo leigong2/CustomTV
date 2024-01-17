@@ -31,6 +31,11 @@ public class SplashActivity extends BaseActivity {
             abiStr.append(abi);
             abiStr.append(',');
         }
+        if (BuildConfig.DEBUG) {
+            MainActivity.start(SplashActivity.this);
+            finish();
+            return;
+        }
         Toast.makeText(this, "CPU: " + abiStr, Toast.LENGTH_LONG).show();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
         NetDataManager.getBaseData(new CallBack<List<BaseDataBean>>() {
