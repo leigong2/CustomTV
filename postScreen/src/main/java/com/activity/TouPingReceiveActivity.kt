@@ -16,10 +16,8 @@ import com.Ext.bindMediaToTexture
 import com.Ext.prepareMediaPlayer
 import com.base.base.BaseActivity
 import com.base.base.BaseApplication
-import com.decode.RecordDecoder
 import com.decode.ScreenDecoder
 import com.screen.receive.WebSocketReceiver
-import com.translate.postscreen.BuildConfig
 import com.translate.postscreen.R
 import java.io.File
 import java.util.Collections

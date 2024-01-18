@@ -15,9 +15,9 @@ import com.encode.ScreenEncoder
 import com.translate.postscreen.R
 import com.activity.TouPingPostActivity
 import com.base.base.BaseApplication
-import com.encode.RecordEncoder
 import com.screen.ScreenRecordHelper
 import com.screen.post.WebSocketPost
+import java.io.File
 
 
 class ScreenService : Service() {
@@ -39,7 +39,8 @@ class ScreenService : Service() {
             startId
         )
 //        startProject(resultCode, resultData)
-//        WebSocketPost.init()
+//        RecordEncoder.start()
+        WebSocketPost.init()
         startRecordScreenAndInMic(resultData)
         return super.onStartCommand(intent, flags, startId)
     }
@@ -70,8 +71,8 @@ class ScreenService : Service() {
             startRecord(ScreenRecordingAudioSource.INTERNAL)
             BaseApplication.getInstance().handler.postDelayed({
                 Log.i("zuneRecord: ", "stopRecord");
-                stopRecord()
                 startRecordScreenAndInMic(resultData)
+                stopRecord()
                 source?.let {
                     saveFile(it, object : ScreenRecordHelper.CallBack {
                         override fun startFileCommand(path: String) {
@@ -90,7 +91,6 @@ class ScreenService : Service() {
         val mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         mediaProjectionManager.getMediaProjection(resultCode, data
         )?.apply {
-            RecordEncoder.start(this)
             ScreenEncoder.start(this, false)
         }
     }
