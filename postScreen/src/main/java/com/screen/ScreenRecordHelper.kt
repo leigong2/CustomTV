@@ -23,7 +23,7 @@ import java.util.Locale
 class ScreenRecordHelper constructor(
     private var context: Context,
     private val listener: OnVideoRecordListener?,
-    data: Intent?
+    data: Intent
 ) {
     private val settings: Settings by lazy { Settings.getInstance(context) }
     private var mediaProjectionManager: MediaProjectionManager? = null
@@ -40,7 +40,7 @@ class ScreenRecordHelper constructor(
     init {
         Log.d(TAG, "init: com.screen.ScreenRecordHelper")
         mediaProjectionManager = context.getSystemService(Context.MEDIA_PROJECTION_SERVICE) as? MediaProjectionManager
-        mediaProjection = mediaProjectionManager?.getMediaProjection(RESULT_OK, data!!)
+        mediaProjection = mediaProjectionManager?.getMediaProjection(RESULT_OK, data)
         mAudio = ScreenInternalAudioRecorder(mediaProjection, true)
     }
 

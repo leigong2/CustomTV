@@ -86,6 +86,7 @@ class TouPingReceiveActivity : BaseActivity() {
             if (currentPosition > 0) {
                 switchTextureView(currentTextureView, nextTextureView, 1)
                 nextMediaPlayer.start()
+                playingIndex = 0
                 appendLog("current 播放完毕，开始播放 next：${""}")
                 deletePlayedFile()
             }
@@ -95,6 +96,7 @@ class TouPingReceiveActivity : BaseActivity() {
             if (currentPosition > 0) {
                 switchTextureView(currentTextureView, nextTextureView, 0)
                 currentMediaPlayer.start()
+                playingIndex = 1
                 appendLog("next 播放完毕，开始播放 current：${""}")
                 deletePlayedFile()
             }
@@ -217,6 +219,10 @@ class TouPingReceiveActivity : BaseActivity() {
 //        ScreenDecoder.release()
 //        RecordDecoder.release()
         WebSocketReceiver.release()
+        currentMediaPlayer.stop()
+        currentMediaPlayer.release()
+        nextMediaPlayer.stop()
+        nextMediaPlayer.release()
         super.onDestroy()
     }
 
