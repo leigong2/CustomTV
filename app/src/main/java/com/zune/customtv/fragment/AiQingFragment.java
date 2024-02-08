@@ -104,7 +104,7 @@ public class AiQingFragment extends BaseFragment {
                             .build();
                     //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                     Request request = new Request.Builder()
-                            .url("https://waipian10.com/video/176972/")
+                            .url("https://waipian10.com/video/200846/")
                             .build();
                     //3.创建一个Call对象，参数是request对象，发送请求
                     Call call = okHttpClient.newCall(request);
