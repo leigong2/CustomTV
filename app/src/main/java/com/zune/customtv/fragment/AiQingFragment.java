@@ -87,7 +87,7 @@ public class AiQingFragment extends BaseFragment {
                 return mData.size();
             }
         });
-        loadData();
+        loadData2();
     }
 
     private void loadData() {

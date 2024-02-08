@@ -27,6 +27,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.base.base.BaseActivity;
+import com.base.base.BaseApplication;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.PlaybackParameters;
 import com.google.android.exoplayer2.Player;
@@ -47,8 +49,6 @@ import com.google.android.exoplayer2.upstream.cache.CacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.SimpleCache;
 import com.google.android.exoplayer2.util.Util;
-import com.base.base.BaseActivity;
-import com.base.base.BaseApplication;
 import com.zune.customtv.bean.AiQingResponse;
 import com.zune.customtv.bean.Mp4Bean;
 import com.zune.customtv.utils.SSLSocketClient;
@@ -103,7 +103,6 @@ public class PlayActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        WebView webView = findViewById(R.id.web_view);
 //        initWebView(webView);
 //        webView.loadUrl("https://jx2022.laobandq.com/jiexi20210115/8090.php?url=https://v.qq.com/x/cover/mzc00200zixidqy/p0046443rsg.html");
         findViewById(R.id.back).setOnClickListener(v -> YaoKongUtils.back());
@@ -116,16 +115,16 @@ public class PlayActivity extends BaseActivity {
                 startPlayByVideoView(mediaUrls.get(0));
                 return;
             }
-            new Thread() {
-                @Override
-                public void run() {
-                    super.run();
-                    parseSecond(mediaUrls.get(0));
-                }
-            }.start();
+            parseThird(mediaUrls.get(0));
             return;
         }
         playWithUrl(mCurrentPosition);
+    }
+
+    private void parseThird(String s) {
+        WebView webView = findViewById(R.id.web_view);
+        initWebView(webView);
+        webView.loadUrl("https://jx.jsonplayer.com/player/?url=" + s);
     }
 
     private void parseFirst(String s) {
@@ -389,6 +388,13 @@ public class PlayActivity extends BaseActivity {
         @Override
         public void onLoadResource(WebView view, String url) {
             super.onLoadResource(view, url);
+            if (url.startsWith("https://110.42.2.247:9092")) {
+                view.loadUrl("javascript:(function(){" +
+                        "var objs = document.getElementById(\"yzmplayer-icon yzmplayer-play-icon\");" +
+                        "document.getElementsByClassName('yzmplayer-controller')[0].style.marginBottom='-40px';" +
+                        " objs.click(); "+
+                        "})()");
+            }
         }
 
         @Override
