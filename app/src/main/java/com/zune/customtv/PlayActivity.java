@@ -572,6 +572,20 @@ public class PlayActivity extends BaseActivity {
             mediaPlayer.release();
         }
         BaseApplication.getInstance().getHandler().removeCallbacks(r);
+        if (getCacheDir() == null) {
+            return;
+        }
+        delete(getCacheDir());
+    }
+
+    private void delete(File cacheDir) {
+        if (cacheDir.isDirectory() && cacheDir.listFiles() != null && cacheDir.listFiles().length > 0) {
+            for (File file : cacheDir.listFiles()) {
+                delete(file);
+            }
+        } else {
+            cacheDir.delete();
+        }
     }
 
     private void changeSmallerSource(long currentPosition) {
