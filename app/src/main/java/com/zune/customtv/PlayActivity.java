@@ -49,11 +49,16 @@ import com.google.android.exoplayer2.upstream.cache.CacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.SimpleCache;
 import com.google.android.exoplayer2.util.Util;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.zune.customtv.bean.AiQingResponse;
 import com.zune.customtv.bean.Mp4Bean;
 import com.zune.customtv.utils.SSLSocketClient;
 import com.zune.customtv.utils.SurfaceControllerView;
 import com.zune.customtv.utils.YaoKongUtils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -115,16 +120,45 @@ public class PlayActivity extends BaseActivity {
                 startPlayByVideoView(mediaUrls.get(0));
                 return;
             }
-            parseThird(mediaUrls.get(0));
+            new Thread(){
+                @Override
+                public void run() {
+                    super.run();
+                    parseForth(mediaUrls.get(0));
+                }
+            }.start();
             return;
         }
         playWithUrl(mCurrentPosition);
     }
 
+    private void parseForth(String s) {
+        String url = "https://m1-a1.cloud.nnpp.vip:2223/api/v/?z=f5917cff1d8f2dc50c8e6bf1773e207d&jx=" + s + "&s1ig=11400&g=";
+        try {
+            //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+            Request request0 = new Request.Builder()
+                    .url(url)
+                    .build();
+            //3.创建一个Call对象，参数是request对象，发送请求
+            Call call0 = okHttpClient.newCall(request0);
+            Response response0 = call0.execute();
+            if (response0 != null && response0.body() != null) {
+                String json = response0.body().string();
+                JSONObject jsonObject = new JSONObject(json);
+                JSONArray data = jsonObject.getJSONArray("data");
+                String realMp4Url = data.getJSONObject(0).getJSONObject("source").getJSONArray("eps").getJSONObject(0).getString("url");
+                BaseApplication.getInstance().getHandler().post(() -> startPlayByVideoView(realMp4Url));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            parseSecond(mediaUrls.get(0));
+        }
+    }
+
     private void parseThird(String s) {
         WebView webView = findViewById(R.id.web_view);
         initWebView(webView);
-        webView.loadUrl("https://jx.jsonplayer.com/player/?url=" + s);
+        webView.loadUrl("https://player.mrgaocloud.com/player/?url=" + s);
     }
 
     private void parseFirst(String s) {
@@ -390,7 +424,7 @@ public class PlayActivity extends BaseActivity {
                 view.loadUrl("javascript:(function(){" +
                         "var objs = document.getElementById(\"yzmplayer-icon yzmplayer-play-icon\");" +
                         "document.getElementsByClassName('yzmplayer-controller')[0].style.marginBottom='-40px';" +
-                        " objs.click(); "+
+                        " objs.click(); " +
                         "})()");
             }
         }
@@ -402,6 +436,9 @@ public class PlayActivity extends BaseActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.endsWith(".m3u8")) {
+                System.out.println();
+            }
             return super.shouldOverrideUrlLoading(view, url);
         }
 
@@ -515,7 +552,7 @@ public class PlayActivity extends BaseActivity {
             MediaItem mediaItem = MediaItem.fromUri(mp4VideoUri);
             player.setMediaItem(mediaItem);
         }
-        PlaybackParameters params = new PlaybackParameters(1,1);
+        PlaybackParameters params = new PlaybackParameters(1, 1);
         player.setPlaybackParameters(params);
         playerView.setPlayer(player);
         player.prepare();
