@@ -7,25 +7,25 @@
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/player_view"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_change_video"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:padding="20dp"
         android:layout_marginTop="40dp"
+        android:padding="20dp"
+        android:textColor="@color/white"
         tools:text="视频卡顿切换视频源" />
 
     <TextureView
         android:id="@+id/video_view"
-        android:layout_gravity="center"
-        android:visibility="visible"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="visible" />
 
     <com.zune.customtv.utils.SurfaceControllerView
         android:id="@+id/video_controller"
@@ -37,26 +37,34 @@
 
     <Button
         android:id="@+id/back"
-        android:visibility="gone"
-        android:text="返回"
-        android:layout_marginTop="32dp"
-        android:layout_marginLeft="32dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="32dp"
+        android:text="返回"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/play"
-        android:text="播放/暂停"
-        android:visibility="gone"
-        android:layout_marginTop="92dp"
-        android:layout_marginLeft="32dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="92dp"
+        android:text="播放/暂停"
+        android:visibility="gone" />
 
     <WebView
         android:id="@+id/web_view"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/ivLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@mipmap/icon_loading_white"
+        android:visibility="gone" />
 
 </FrameLayout>

@@ -2,7 +2,10 @@ package com.zune.customtv;
 
 import static com.google.android.exoplayer2.Player.STATE_ENDED;
 import static com.google.android.exoplayer2.upstream.cache.CacheDataSource.FLAG_IGNORE_CACHE_FOR_UNSET_LENGTH_REQUESTS;
+import static com.zune.customtv.PlayActivityExt.hideLoading;
+import static com.zune.customtv.PlayActivityExt.showLoading;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Point;
@@ -49,8 +52,6 @@ import com.google.android.exoplayer2.upstream.cache.CacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.SimpleCache;
 import com.google.android.exoplayer2.util.Util;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import com.zune.customtv.bean.AiQingResponse;
 import com.zune.customtv.bean.Mp4Bean;
 import com.zune.customtv.utils.SSLSocketClient;
@@ -117,7 +118,7 @@ public class PlayActivity extends BaseActivity {
         mediaUrls = getIntent().getStringArrayListExtra("mediaUrl");
         if (mediaUrls != null && mediaUrls.size() == 1 && !mediaUrls.get(0).contains("app.jw")) {
             if (mediaUrls.get(0).endsWith(".m3u8")) {
-                startPlayByVideoView(mediaUrls.get(0));
+                startPlayByVideoView(mediaUrls.get(0), null, null);
                 return;
             }
             new Thread(){
@@ -147,7 +148,7 @@ public class PlayActivity extends BaseActivity {
                 JSONObject jsonObject = new JSONObject(json);
                 JSONArray data = jsonObject.getJSONArray("data");
                 String realMp4Url = data.getJSONObject(0).getJSONObject("source").getJSONArray("eps").getJSONObject(0).getString("url");
-                BaseApplication.getInstance().getHandler().post(() -> startPlayByVideoView(realMp4Url));
+                BaseApplication.getInstance().getHandler().post(() -> startPlayByVideoView(realMp4Url, null, null));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -256,7 +257,7 @@ public class PlayActivity extends BaseActivity {
                     BaseApplication.getInstance().getHandler().post(new Runnable() {
                         @Override
                         public void run() {
-                            startPlayByVideoView(realMp4Url);
+                            startPlayByVideoView(realMp4Url, null, null);
                         }
                     });
                 }
@@ -288,7 +289,7 @@ public class PlayActivity extends BaseActivity {
         return "";
     }
 
-    private void startPlayByVideoView(String url) {
+    private void startPlayByVideoView(String url, ObjectAnimator oa, String pubName) {
         TextureView videoView = findViewById(R.id.video_view);
         SurfaceControllerView videoController = findViewById(R.id.video_controller);
         videoView.setVisibility(View.VISIBLE);
@@ -323,14 +324,30 @@ public class PlayActivity extends BaseActivity {
         }
         mediaPlayer.prepareAsync();
         mediaPlayer.setScreenOnWhilePlaying(true);
+        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                if (isLoading) {
+                    return;
+                }
+                mediaPlayer.seekTo(0);
+                mediaPlayer.reset();
+                playWithUrl(++mCurrentPosition);
+            }
+        });
         mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
+                isLoading = false;
+                hideLoading(findViewById(R.id.ivLoading), oa);
                 if (videoView.getSurfaceTexture() == null) {
                     return;
                 }
                 mp.setSurface(new Surface(videoView.getSurfaceTexture()));
                 mp.start();
+                if (pubName != null) {
+                    videoController.setTitle(pubName);
+                }
                 videoController.startPlay();
                 refreshVideoSize(videoView, (MediaPlayer) mp);
             }
@@ -453,8 +470,14 @@ public class PlayActivity extends BaseActivity {
         }
     }
 
+    private boolean isLoading = false;
+
     private void playWithUrl(int position) {
+        ObjectAnimator oa = showLoading(findViewById(R.id.ivLoading));
+        isLoading = true;
         if (position >= mediaUrls.size()) {
+            isLoading = false;
+            hideLoading(findViewById(R.id.ivLoading), oa);
             return;
         }
         //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
@@ -468,11 +491,15 @@ public class PlayActivity extends BaseActivity {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.i("zune: ", e.toString());
+                isLoading = false;
+                hideLoading(findViewById(R.id.ivLoading), oa);
             }
 
             @Override
             public void onResponse(Call call, Response response) {
                 if (response.body() == null) {
+                    isLoading = false;
+                    hideLoading(findViewById(R.id.ivLoading), oa);
                     return;
                 }
                 try {
@@ -483,7 +510,7 @@ public class PlayActivity extends BaseActivity {
                         @Override
                         public void run() {
                             String mp4VideoUri = getMp4Url(mp4Bean);
-                            startPlay(mp4VideoUri, false);
+                            startPlayByVideoView(mp4VideoUri, oa, mp4Bean.files.CHS.MP4.get(0).title);
                         }
                     });
                 } catch (Exception e) {

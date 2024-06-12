@@ -31,11 +31,6 @@ public class SplashActivity extends BaseActivity {
             abiStr.append(abi);
             abiStr.append(',');
         }
-        if (BuildConfig.DEBUG) {
-            MainActivity.start(SplashActivity.this);
-            finish();
-            return;
-        }
         Toast.makeText(this, "CPU: " + abiStr, Toast.LENGTH_LONG).show();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
         NetDataManager.getBaseData(new CallBack<List<BaseDataBean>>() {
@@ -66,7 +61,7 @@ public class SplashActivity extends BaseActivity {
             public void onFail(String fail) {
                 String string = getSharedPreferences("data", MODE_PRIVATE).getString("baseDataBean", "");
                 if (TextUtils.isEmpty(string)) {
-                    Toast.makeText(SplashActivity.this, "网络异常，请重试", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SplashActivity.this, "网络异常，请重试" + fail, Toast.LENGTH_SHORT).show();
                 } else {
                     List<BaseDataBean> o = BaseApplication.getInstance().getGson().fromJson(string, new TypeToken<List<BaseDataBean>>() {
                     }.getType());
