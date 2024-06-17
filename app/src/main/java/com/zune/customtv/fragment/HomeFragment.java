@@ -97,7 +97,7 @@ public class HomeFragment extends BaseFragment {
                     ArrayList<String> urls  = new ArrayList<>();
                     for (int i = position; i < position + 10; i++) {
                         if (i >= mData.size()) {
-                            return;
+                            break;
                         }
                         BaseDataBean dataBean = mData.get(i);
                         StringBuilder sb = new StringBuilder(BaseConstant.URL_GET_MEDIA);
