@@ -24,6 +24,9 @@ import com.zune.customtv.bean.BaseDataBean;
 import com.zune.customtv.utils.SSLSocketClient;
 import com.zune.customtv.utils.Utils;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -87,7 +90,50 @@ public class AiQingFragment extends BaseFragment {
                 return mData.size();
             }
         });
-        loadData2();
+        loadData3();
+    }
+
+    private void loadData3() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    //1.创建一个okhttpclient对象
+                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                            .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
+                            .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
+                            .build();
+                    //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+                    Request request = new Request.Builder()
+                            .url("https://iuys2.cc/voddetail/151872.html")
+                            .build();
+                    //3.创建一个Call对象，参数是request对象，发送请求
+                    Call call = okHttpClient.newCall(request);
+                    Response response = call.execute();
+                    if (response != null && response.body() != null) {
+                        String string = response.body().string();
+                        List<String> keyWords = getKeyWords(string, "/vodplay/151872-1", "</a></li>");
+                        for (String keyWord : keyWords) {
+                            String[] split = keyWord.split("\">");
+                            String url = "https://iuys2.cc/vodplay/151872-1"+split[0];
+                            String title = split[1];
+                            BaseDataBean.ODTO o = new BaseDataBean.ODTO();
+                            o.firstPublished = "";
+                            o.title = title;
+                            o.key = url;
+                            BaseDataBean b = new BaseDataBean();
+                            b.o = o;
+                            mData.add(b);
+                        }
+                        Collections.reverse(mData);
+                        refreshUi(0, mData.size());
+                    }
+                } catch (Exception ignore) {
+                    System.out.println();
+                }
+            }
+        }.start();
     }
 
     private void loadData() {

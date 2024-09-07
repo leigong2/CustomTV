@@ -53,6 +53,7 @@ import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvicto
 import com.google.android.exoplayer2.upstream.cache.SimpleCache;
 import com.google.android.exoplayer2.util.Util;
 import com.zune.customtv.bean.AiQingResponse;
+import com.zune.customtv.bean.BaseDataBean;
 import com.zune.customtv.bean.Mp4Bean;
 import com.zune.customtv.utils.SSLSocketClient;
 import com.zune.customtv.utils.SurfaceControllerView;
@@ -125,12 +126,37 @@ public class PlayActivity extends BaseActivity {
                 @Override
                 public void run() {
                     super.run();
-                    parseForth(mediaUrls.get(0));
+                    parseFifth(mediaUrls.get(0) + "?_=" + System.currentTimeMillis());
                 }
             }.start();
             return;
         }
         playWithUrl(mCurrentPosition);
+    }
+
+    private void parseFifth(String s) {
+        try {
+            //1.创建一个okhttpclient对象
+            OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                    .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())//配置
+                    .hostnameVerifier(SSLSocketClient.getHostnameVerifier())//配置
+                    .build();
+            //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
+            Request request = new Request.Builder()
+                    .url(s)
+                    .build();
+            //3.创建一个Call对象，参数是request对象，发送请求
+            Call call = okHttpClient.newCall(request);
+            Response response = call.execute();
+            if (response != null && response.body() != null) {
+                String json = response.body().string();
+                String keyWords = getKeyWords(json, "player_aaaa=", "</script>");
+                JSONObject jsonObject = new JSONObject(keyWords);
+                String url = jsonObject.getString("url");
+                BaseApplication.getInstance().getHandler().post(() -> startPlayByVideoView(url, null, null));
+            }
+        } catch (Exception ignore) {
+        }
     }
 
     private void parseForth(String s) {
