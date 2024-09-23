@@ -7,6 +7,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import android.view.WindowManager
 import android.widget.TextView
+import com.Config.withH265
 import com.base.base.BaseActivity
 import com.base.base.BaseApplication
 import com.decode.RecordDecoder
@@ -35,8 +36,10 @@ class TouPingReceiveActivity : BaseActivity() {
                 holder.addCallback(object : SurfaceHolder.Callback {
                     override fun surfaceCreated(holder: SurfaceHolder) {
                         // 连接到服务端
-                        (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("开始连接到服务端:${ip}\n")
-                        ScreenDecoder.start(ip, holder.surface, false)
+                        BaseApplication.getInstance().handler.post {
+                            (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("开始连接到服务端:${ip}\n")
+                            ScreenDecoder.start(ip, holder.surface, withH265)
+                        }
                     }
 
                     override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {

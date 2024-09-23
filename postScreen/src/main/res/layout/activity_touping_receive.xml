@@ -5,11 +5,17 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <SurfaceView
-        android:id="@+id/surfaceView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
+        <SurfaceView
+            android:id="@+id/surfaceView"
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/info"

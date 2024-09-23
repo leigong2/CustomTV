@@ -8,6 +8,7 @@ import android.media.MediaFormat
 import android.media.projection.MediaProjection
 import android.util.Log
 import android.widget.TextView
+import com.ScreenUtils
 import com.activity.TouPingPostActivity
 import com.base.base.BaseApplication
 import com.translate.postscreen.R
@@ -54,7 +55,11 @@ object ScreenEncoder {
         webSocketServer = object : WebSocketServer(inetSocketAddress) {
             override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
                 Log.e("我是一条鱼：", "有人连接进来了ip:${conn?.remoteSocketAddress}" )
-                conn?.apply { webSocket = this }
+                conn?.apply {
+                    webSocket = this
+                    val json = "{\"width\":${ScreenUtils.getScreenWidth()},\"height\":${ScreenUtils.getScreenHeight()}}"
+                    webSocket.send(json)
+                }
             }
 
             override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {

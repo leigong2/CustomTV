@@ -12,6 +12,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import android.widget.TextView
+import com.Config.withH265
 import com.encode.ScreenEncoder
 import com.translate.postscreen.R
 import com.activity.TouPingPostActivity
@@ -48,7 +49,7 @@ class ScreenService : Service() {
         val mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         mediaProjectionManager.getMediaProjection(resultCode, data
         )?.apply {
-            ScreenEncoder.start(this, false)
+            ScreenEncoder.start(this, withH265)
         }
     }
 

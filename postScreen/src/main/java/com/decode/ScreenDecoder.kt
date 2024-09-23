@@ -4,15 +4,18 @@ import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaFormat
 import android.view.Surface
+import android.view.SurfaceView
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.widget.TextView
+import com.ScreenUtils
 import com.activity.TouPingReceiveActivity
 import com.base.base.BaseApplication
 import com.translate.postscreen.R
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
+import org.json.JSONObject
 import java.net.URI
 import java.nio.ByteBuffer
-import kotlin.math.log
 
 object ScreenDecoder {
     var VIDEO_WIDTH = 1080
@@ -28,9 +31,24 @@ object ScreenDecoder {
     fun start(ip: String, surface: Surface, withH265: Boolean) {
         webSocketClient = object : WebSocketClient(URI("ws://${ip}:${port}")) {
             override fun onOpen(handshakedata: ServerHandshake?) {
-                (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("远端开启成功:${ip}\n")
+                BaseApplication.getInstance().handler.post {
+                    (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("远端开启成功:${ip}\n")
+                }
             }
-            override fun onMessage(message: String?) {}
+            override fun onMessage(message: String?) {
+                message?.also { json ->
+                    val jsonObject = JSONObject(json)
+                    val width = jsonObject.get("width")
+                    val height = jsonObject.get("height")
+                    VIDEO_WIDTH = width.toString().toInt()
+                    VIDEO_HEIGHT = height.toString().toInt()
+                    BaseApplication.getInstance().handler.post {
+                        (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<SurfaceView>(R.id.surfaceView)?.also {surfaceView ->
+                            resetSurfaceView(surfaceView, VIDEO_WIDTH, VIDEO_HEIGHT)
+                        }
+                    }
+                }
+            }
             override fun onMessage(bytes: ByteBuffer) {
                 val buf = ByteArray(bytes.remaining())
                 bytes[buf]
@@ -57,6 +75,22 @@ object ScreenDecoder {
             startH265MediaCodec(surface)
         } else {
             startH264MediaCodec(surface)
+        }
+    }
+
+    private fun resetSurfaceView(surfaceView: SurfaceView, videoWidth: Int, videoHeight: Int) {
+        val screenWidth = ScreenUtils.getScreenWidth()
+        val screenHeight = ScreenUtils.getScreenHeight()
+        if (videoWidth / videoHeight.toFloat() > screenWidth / screenHeight.toFloat()) {
+            val layoutParams = surfaceView.layoutParams
+            layoutParams.width = MATCH_PARENT
+            layoutParams.height = (screenWidth.toFloat() / videoWidth * videoHeight).toInt()
+            surfaceView.layoutParams = layoutParams
+        } else {
+            val layoutParams = surfaceView.layoutParams
+            layoutParams.height = MATCH_PARENT
+            layoutParams.width = (screenHeight.toFloat() / videoHeight * videoWidth).toInt()
+            surfaceView.layoutParams = layoutParams
         }
     }
 
