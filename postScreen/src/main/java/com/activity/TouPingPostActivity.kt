@@ -8,7 +8,6 @@ import android.view.View
 import android.view.WindowManager
 import com.base.base.BaseActivity
 import com.base.base.BaseApplication
-import com.encode.RecordEncoder
 import com.service.ScreenService
 import com.translate.postscreen.R
 import java.io.File
