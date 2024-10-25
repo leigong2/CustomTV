@@ -1,7 +1,6 @@
 package com.zune.customtv;
 
-import static com.google.android.exoplayer2.Player.STATE_ENDED;
-import static com.google.android.exoplayer2.upstream.cache.CacheDataSource.FLAG_IGNORE_CACHE_FOR_UNSET_LENGTH_REQUESTS;
+import static androidx.media3.common.Player.STATE_ENDED;
 import static com.zune.customtv.PlayActivityExt.hideLoading;
 import static com.zune.customtv.PlayActivityExt.showLoading;
 
@@ -28,32 +27,19 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
+import androidx.media3.common.MediaItem;
+import androidx.media3.common.PlaybackParameters;
+import androidx.media3.common.Player;
+import androidx.media3.common.util.UnstableApi;
+import androidx.media3.common.util.Util;
+import androidx.media3.exoplayer.ExoPlayer;
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory;
+import androidx.media3.exoplayer.source.MediaSource;
+import androidx.media3.ui.PlayerView;
 
 import com.base.base.BaseActivity;
 import com.base.base.BaseApplication;
-import com.google.android.exoplayer2.MediaItem;
-import com.google.android.exoplayer2.PlaybackParameters;
-import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.database.DatabaseProvider;
-import com.google.android.exoplayer2.database.ExoDatabaseProvider;
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
-import com.google.android.exoplayer2.upstream.HttpDataSource;
-import com.google.android.exoplayer2.upstream.cache.Cache;
-import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory;
-import com.google.android.exoplayer2.upstream.cache.CacheEvictor;
-import com.google.android.exoplayer2.upstream.cache.LeastRecentlyUsedCacheEvictor;
-import com.google.android.exoplayer2.upstream.cache.SimpleCache;
-import com.google.android.exoplayer2.util.Util;
 import com.zune.customtv.bean.AiQingResponse;
-import com.zune.customtv.bean.BaseDataBean;
 import com.zune.customtv.bean.Mp4Bean;
 import com.zune.customtv.utils.SSLSocketClient;
 import com.zune.customtv.utils.SurfaceControllerView;
@@ -82,10 +68,10 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class PlayActivity extends BaseActivity {
+@UnstableApi public class PlayActivity extends BaseActivity {
 
     public static final String ua = Util.getUserAgent(BaseApplication.getInstance(), "AppName");
-    private SimpleExoPlayer player;
+    private ExoPlayer player;
     private Mp4Bean mMp4Bean;
     private int currentPosition;
     private TextView tvChangeVideo;
@@ -561,50 +547,10 @@ public class PlayActivity extends BaseActivity {
     private void startPlay(String mp4VideoUri, boolean withHeader) {
         PlayerView playerView = findViewById(R.id.player_view);
         playerView.setVisibility(View.VISIBLE);
-        SimpleExoPlayer.Builder builder = new SimpleExoPlayer.Builder(BaseApplication.getInstance());
+        ExoPlayer.Builder builder = new ExoPlayer.Builder(BaseApplication.getInstance());
         player = builder.build();
-        if (withHeader) {
-            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(this, ua);
-            File cacheFile = new File(getCacheDir(), "video");
-            CacheEvictor evictor = new LeastRecentlyUsedCacheEvictor(20 * 1024 * 1024);
-            DatabaseProvider databaseProvider = new ExoDatabaseProvider(this);
-            Cache cache = new SimpleCache(cacheFile, evictor, databaseProvider);
-            CacheDataSourceFactory cacheFactory = new CacheDataSourceFactory(cache, dataSourceFactory, FLAG_IGNORE_CACHE_FOR_UNSET_LENGTH_REQUESTS);
-            ProgressiveMediaSource mediaSource = new ProgressiveMediaSource.Factory(cacheFactory)
-                    .setDrmHttpDataSourceFactory(new HttpDataSource.Factory() {
-                        @Override
-                        public HttpDataSource createDataSource() {
-                            return new DefaultHttpDataSource("");
-                        }
-
-                        @Override
-                        public HttpDataSource.RequestProperties getDefaultRequestProperties() {
-                            return null;
-                        }
-
-                        @Override
-                        public HttpDataSource.Factory setDefaultRequestProperties(@NonNull Map<String, String> headers) {
-                            headers.put("sec-ch-ua", "\"Google Chrome\";v=\"113\", \"Chromium\";v=\"113\", \"Not-A.Brand\";v=\"24\"");
-                            headers.put("User-Agent", ua);
-                            headers.put("sec-ch-ua-mobile", "?0");
-                            headers.put("sec-ch-ua-platform", "\"Windows\"");
-                            headers.put("Upgrade-Insecure-Requests", "1");
-                            headers.put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7");
-                            headers.put("Sec-Fetch-Site", "none");
-                            headers.put("Sec-Fetch-Mode", "navigate");
-                            headers.put("Sec-Fetch-User", "?1");
-                            headers.put("Sec-Fetch-Dest", "document");
-                            headers.put("Accept-Encoding", "gzip, deflate, br");
-                            headers.put("Accept-Language", "zh-CN,zh;q=0.9");
-                            return this;
-                        }
-                    })
-                    .createMediaSource(MediaItem.fromUri(mp4VideoUri));
-            player.setMediaSource(mediaSource, true);
-        } else {
-            MediaItem mediaItem = MediaItem.fromUri(mp4VideoUri);
-            player.setMediaItem(mediaItem);
-        }
+        MediaItem mediaItem = MediaItem.fromUri(mp4VideoUri);
+        player.setMediaItem(mediaItem);
         PlaybackParameters params = new PlaybackParameters(1, 1);
         player.setPlaybackParameters(params);
         playerView.setPlayer(player);

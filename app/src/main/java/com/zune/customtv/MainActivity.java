@@ -19,6 +19,7 @@ import com.zune.customtv.fragment.HomeFragment;
 import com.zune.customtv.fragment.TouPingFragment;
 import com.zune.customtv.fragment.VideoFragment;
 import com.zune.customtv.fragment.VoiceFragment;
+import com.zune.customtv.fragment.WatchTvFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class MainActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
-    private String[] titles = new String[]{"首页", "影片", "音乐和录音", "爱情保卫战","投屏"};
+    private String[] titles = new String[]{"看电视", "首页", "影片", "音乐和录音", "爱情保卫战","投屏"};
     private List<Fragment> mFragments = new ArrayList<>();
 
     @Override
@@ -41,6 +42,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         setTitle("影音资料");
+        mFragments.add(new WatchTvFragment());
         mFragments.add(new HomeFragment());
         mFragments.add(new VideoFragment());
         mFragments.add(new VoiceFragment());

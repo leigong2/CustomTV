@@ -23,9 +23,9 @@ import kotlin.experimental.and
 
 object ScreenEncoder {
     //不同手机支持的编码最大分辨率不同
-    var VIDEO_WIDTH = 1080
-    var VIDEO_HEIGHT = 2400
-    private const val SCREEN_FRAME_BIT = 2400 * 1080  // 比特率（比特/秒）
+    var VIDEO_WIDTH = ScreenUtils.getScreenWidth()
+    var VIDEO_HEIGHT = ScreenUtils.getScreenHeight()
+    private val SCREEN_FRAME_BIT = ScreenUtils.getScreenHeight().toFloat() * ScreenUtils.getScreenWidth()  // 比特率（比特/秒）
     private const val SCREEN_FRAME_RATE = 20  //帧率
     private const val SCREEN_FRAME_INTERVAL = 1  //I帧的频率
     private const val ENCODE_TIME_OUT: Long = 10000 //超时时间
@@ -69,11 +69,11 @@ object ScreenEncoder {
 
             override fun onMessage(conn: WebSocket?, message: String?) {
                 if (Objects.equals(message, Configuration.ORIENTATION_LANDSCAPE.toString())) {
-                    VIDEO_WIDTH = 2400
-                    VIDEO_HEIGHT = 1080
+                    VIDEO_WIDTH = ScreenUtils.getScreenHeight()
+                    VIDEO_HEIGHT = ScreenUtils.getScreenWidth()
                 } else if (Objects.equals(message, Configuration.ORIENTATION_PORTRAIT.toString())) {
-                    VIDEO_WIDTH = 1080
-                    VIDEO_HEIGHT = 2400
+                    VIDEO_WIDTH = ScreenUtils.getScreenWidth()
+                    VIDEO_HEIGHT = ScreenUtils.getScreenHeight()
                 }
                 isChangeOrientation = true
                 if (withH265) {
@@ -111,7 +111,7 @@ object ScreenEncoder {
         mediaCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_VIDEO_AVC)
         val mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_AVC, VIDEO_WIDTH, VIDEO_HEIGHT)
         mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)
-        mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT)
+        mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT.toInt())
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, SCREEN_FRAME_RATE)
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, SCREEN_FRAME_INTERVAL)
         try {
@@ -185,7 +185,7 @@ object ScreenEncoder {
     private fun initH265MediaCodec() {
         val mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_HEVC, VIDEO_WIDTH, VIDEO_HEIGHT)
         mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)
-        mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT)
+        mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT.toInt())
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, SCREEN_FRAME_RATE)
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, SCREEN_FRAME_INTERVAL)
         try {

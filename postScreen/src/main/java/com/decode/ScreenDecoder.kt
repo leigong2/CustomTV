@@ -18,9 +18,9 @@ import java.net.URI
 import java.nio.ByteBuffer
 
 object ScreenDecoder {
-    var VIDEO_WIDTH = 1080
-    var VIDEO_HEIGHT = 2400
-    private const val SCREEN_FRAME_BIT = 2400 * 1080  // 比特率（比特/秒）
+    var VIDEO_WIDTH = ScreenUtils.getScreenWidth()
+    var VIDEO_HEIGHT = ScreenUtils.getScreenHeight()
+    private val SCREEN_FRAME_BIT = ScreenUtils.getScreenHeight() * ScreenUtils.getScreenWidth()  // 比特率（比特/秒）
     private const val SCREEN_FRAME_RATE = 20  //帧率
     private const val SCREEN_FRAME_INTERVAL = 1  //I帧的频率
     private const val DECODE_TIME_OUT: Long = 10000 //超时时间

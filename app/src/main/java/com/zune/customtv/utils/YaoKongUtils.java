@@ -36,6 +36,32 @@ public class YaoKongUtils {
         }.start();
     }
 
+    //导航键 向上
+    public static void dpadUp() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                Message message = Message.obtain();
+                message.what = KeyEvent.KEYCODE_DPAD_UP;
+                mHandler.sendMessage(message);
+            }
+        }.start();
+    }
+
+    //导航键 向下
+    public static void dpadDown() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                Message message = Message.obtain();
+                message.what = KeyEvent.KEYCODE_DPAD_DOWN;
+                mHandler.sendMessage(message);
+            }
+        }.start();
+    }
+
     private static final Handler mHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message paramMessage) {
             switch (paramMessage.what) {
@@ -44,6 +70,12 @@ public class YaoKongUtils {
                     break;
                 case KeyEvent.KEYCODE_BACK:   //返回键
                     execByRuntime("input keyevent 4");
+                    break;
+                case KeyEvent.KEYCODE_DPAD_UP:   //导航键 向上
+                    execByRuntime("input keyevent 19");
+                    break;
+                case KeyEvent.KEYCODE_DPAD_DOWN:   //导航键 向下
+                    execByRuntime("input keyevent 20");
                     break;
             }
         }
