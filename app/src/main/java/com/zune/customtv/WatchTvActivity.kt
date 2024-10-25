@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.ScreenUtils
 import com.base.base.BaseActivity
 import com.base.base.BaseApplication
 import com.google.gson.GsonBuilder
@@ -149,6 +150,7 @@ class WatchTvActivity : BaseActivity() {
                     setSurface(Surface(surfaceTexture))
                     setDataSource(getCurrentUrl())
                     setOnPreparedListener { //这里可以调用start()方法开始播放视频
+                        resize(surface, it.videoWidth, it.videoHeight)
                         it.start()
                         loadComplete()
                     }
@@ -163,6 +165,20 @@ class WatchTvActivity : BaseActivity() {
                 loading()
             }
         }
+    }
+
+    private fun resize(surface: SurfaceVideoView, videoWidth: Int, videoHeight: Int) {
+        val screenWidth = ScreenUtils.getScreenWidth()
+        val screenHeight = ScreenUtils.getScreenHeight()
+        val layoutParams = surface.layoutParams
+        if (screenWidth / screenHeight.toFloat() > videoWidth / videoHeight.toFloat()) {
+            layoutParams.height = screenHeight
+            layoutParams.width = (screenHeight / videoHeight.toFloat() * videoWidth).toInt()
+        } else {
+            layoutParams.width = screenWidth
+            layoutParams.height = (screenWidth / videoWidth.toFloat() * videoHeight).toInt()
+        }
+        surface.layoutParams = layoutParams
     }
 
     private var anrCount = 0
