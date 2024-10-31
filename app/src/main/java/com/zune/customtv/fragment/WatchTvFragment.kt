@@ -26,6 +26,7 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
+import java.util.Collections
 
 class WatchTvFragment : Fragment() {
 
@@ -46,10 +47,10 @@ class WatchTvFragment : Fragment() {
     private fun initData() {
         lifecycleScope.launch {
             withContext(Dispatchers.IO) {
-                val file = File(BaseApplication.getInstance().getExternalFilesDir(""), "tvLiveM3u8.json");
+                val file = File(BaseApplication.getInstance().getExternalFilesDir(""), "tvSuccessfulLive.json");
                 val sb = StringBuilder()
-                if (!file.exists()) {
-                    val inputStream = resources.assets.open("tvLiveM3u8.json")
+                if (!file.exists() || true) {
+                    val inputStream = resources.assets.open("tvSuccessfulLive.json")
                     val data = ByteArray(1024)
                     var offset: Int
                     while (inputStream.read(data).also { offset = it } > -1) {
@@ -60,32 +61,101 @@ class WatchTvFragment : Fragment() {
                 } else {
                     sb.append(getFromLocal())
                 }
-                val list = GsonBuilder().create().fromJson<MutableMap<String, MutableList<MutableMap<String, Any>>>>(
+                val list = GsonBuilder().create().fromJson<MutableList<MutableMap<String, MutableList<MutableMap<String, Any>>>>>(
                     sb.toString(),
-                    object : TypeToken<MutableMap<String, MutableList<MutableMap<String, String>>>>() {}.type
+                    object : TypeToken<MutableList<MutableMap<String, MutableList<MutableMap<String, Any>>>>>() {}.type
                 )
-                for (key in list.keys) {
-                    val value = list[key] ?: arrayListOf()
-                    val urlBeans = ArrayList<UrlBean>()
-                    for (mutableMap in value) {
-                        val url = mutableMap["url"]?.toString() ?: ""
-                        val timeout = mutableMap["timeout"]?.toString()?.toInt() ?: 0
-                        val urlBean = UrlBean(url, timeout)
-                        urlBeans.add(urlBean)
+                val resultList = mergeList(list)
+                for (value in resultList) {
+                    for (key in value.keys) {
+                        if (!key.contains("CCTV") && !key.contains("卫视")) {
+                            continue
+                        }
+                        if (key.contains("伴音") || key.contains("Q群") || key.contains("听电视")) {
+                            continue
+                        }
+                        val mutableList = value[key]
+                        val urlBeans = ArrayList<UrlBean>()
+                        for (urls in (mutableList ?: mutableListOf())) {
+                            val url = urls["url"]?.toString() ?: ""
+                            val timeout = urls["timeout"]?.toString()?.toDouble()?.toInt() ?: 0
+                            val urlBean = UrlBean(url, timeout)
+                            urlBeans.add(urlBean)
+                        }
+                        val tvBean = TvBean(name = key, urls = urlBeans)
+                        mData.add(tvBean)
                     }
-                    val tvBean = TvBean(name = key, urls = urlBeans)
-                    mData.add(tvBean)
                 }
             }
+            mData.sortWith(Comparator { o1, o2 ->
+                if (o1.name.contains("CCTV") && !o2.name.contains("CCTV")) {
+                    return@Comparator -1
+                }
+                if (!o1.name.contains("CCTV") && o2.name.contains("CCTV")) {
+                    return@Comparator 1
+                }
+                if (o1.name.contains("CCTV") && o2.name.contains("CCTV")) {
+                    val  sbO1 = StringBuilder()
+                    for (char1 in o1.name) {
+                        if (char1 in '0'..'9') {
+                            sbO1.append(char1)
+                        }
+                    }
+                    val  sbO2 = StringBuilder()
+                    for (char2 in o2.name) {
+                        if (char2 in '0'..'9') {
+                            sbO2.append(char2)
+                        }
+                    }
+                    try {
+                        return@Comparator sbO1.toString().toInt() - sbO2.toString().toInt()
+                    } catch (ignore: Exception) {
+                    }
+                }
+                return@Comparator o1.name.compareTo(o2.name)
+            })
             view?.findViewById<RecyclerView>(R.id.recyclerView)?.adapter?.notifyDataSetChanged()
             delay(300)
             context?.let { WatchTvActivity.start(it, mLastPlayPosition) }
         }
     }
 
+    private fun mergeList(list: MutableList<MutableMap<String, MutableList<MutableMap<String, Any>>>>): MutableList<MutableMap<String, MutableList<MutableMap<String, Any>>>> {
+        val result : MutableList<MutableMap<String, MutableList<MutableMap<String, Any>>>> = ArrayList()
+        val resultKey = ArrayList<String>()
+        for (value in list) {
+            for (key in value.keys) {
+                val valueValue = value[key] ?: arrayListOf()
+                if (!key.contains("CCTV") && !key.contains("卫视")) {
+                    continue
+                }
+                if (key.contains("伴音") || key.contains("Q群") || key.contains("听电视")) {
+                    continue
+                }
+                if (resultKey.contains(key.replace("19201080", ""))) {
+                    result.forEach for1@{ valueResult ->
+                        for (keyResult in valueResult.keys) {
+                            if (key.replace("19201080", "") == keyResult.replace("19201080", "")) {
+                                val urls = valueResult[keyResult]?: arrayListOf()
+                                valueValue.addAll(urls)
+                                return@for1
+                            }
+                        }
+                    }
+                    continue
+                }
+                val hashMap = HashMap<String, MutableList<MutableMap<String, Any>>>()
+                hashMap[key.replace("19201080", "")] = valueValue
+                resultKey.add(key.replace("19201080", ""))
+                result.add(hashMap)
+            }
+        }
+        return result
+    }
+
     private suspend fun saveToLocal(sb: StringBuilder) {
         withContext(Dispatchers.IO) {
-            val file = File(BaseApplication.getInstance().getExternalFilesDir(""), "tvLiveM3u8.json");
+            val file = File(BaseApplication.getInstance().getExternalFilesDir(""), "tvSuccessfulLive.json");
             val fw = FileWriter(file)
             fw.write(sb.toString())
             fw.close()
@@ -94,7 +164,7 @@ class WatchTvFragment : Fragment() {
 
     private suspend fun getFromLocal() : String {
         return withContext(Dispatchers.IO) {
-            val file = File(BaseApplication.getInstance().getExternalFilesDir(""), "tvLiveM3u8.json");
+            val file = File(BaseApplication.getInstance().getExternalFilesDir(""), "tvSuccessfulLive.json");
             val fr = FileReader(file)
             val result = fr.readText()
             fr.close()

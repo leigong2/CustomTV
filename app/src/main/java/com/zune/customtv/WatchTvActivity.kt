@@ -21,6 +21,7 @@ import com.google.gson.reflect.TypeToken
 import com.zune.customtv.bean.TvBean
 import com.zune.customtv.bean.UrlBean
 import com.zune.customtv.fragment.WatchTvFragment
+import com.zune.customtv.fragment.WatchTvFragment.Companion
 import com.zune.customtv.utils.SurfaceVideoView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -44,6 +45,7 @@ class WatchTvActivity : BaseActivity() {
     }
 
     private lateinit var tvChangeVideo: TextView
+    private lateinit var tvNext: TextView
     private var data : ArrayList<TvBean> = arrayListOf()
     private var position = 0
     private var mData: ArrayList<UrlBean> = arrayListOf()
@@ -56,9 +58,6 @@ class WatchTvActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(layoutId)
         initView()
-        BaseApplication.getInstance().handler.postDelayed({
-//            playNext()
-        }, 5000)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -126,9 +125,14 @@ class WatchTvActivity : BaseActivity() {
     override fun initView() {
         WatchTvFragment.mData.let { data.addAll(it) }
         position = intent.getIntExtra("position", 0)
-        val p = data[position]
+        val realPosition = position.coerceAtMost(data.size - 1)
+        if (realPosition >= data.size || realPosition == -1) {
+            finish()
+            return
+        }
+        val p = data[realPosition]
         p.urls.sortBy {
-            it.timeout
+            it.timeout.toDouble().toInt()
         }
         p.urls.let { mData.addAll(it) }
         name = p.name
@@ -136,11 +140,17 @@ class WatchTvActivity : BaseActivity() {
         window.statusBarColor = 0
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         tvChangeVideo = findViewById(R.id.tv_change_video)
+        tvNext = findViewById(R.id.tv_next)
         tvChangeVideo.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             v.setBackgroundResource(if (hasFocus) R.drawable.bg_select else R.drawable.bg_normal)
             (v as TextView).setTextColor(ContextCompat.getColor(this@WatchTvActivity, if (hasFocus) R.color.white else R.color.half_white))
         }
         tvChangeVideo.setOnClickListener { changeNextSource() }
+        tvNext.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            v.setBackgroundResource(if (hasFocus) R.drawable.bg_select else R.drawable.bg_normal)
+            (v as TextView).setTextColor(ContextCompat.getColor(this@WatchTvActivity, if (hasFocus) R.color.white else R.color.half_white))
+        }
+        tvNext.setOnClickListener { playNext() }
         val surface: SurfaceVideoView = findViewById(R.id.player_view)
         surface.addCallBack()
         surface.callBack = { surfaceTexture ->
@@ -173,7 +183,11 @@ class WatchTvActivity : BaseActivity() {
         val layoutParams = surface.layoutParams
         if (screenWidth / screenHeight.toFloat() > videoWidth / videoHeight.toFloat()) {
             layoutParams.height = screenHeight
-            layoutParams.width = (screenHeight / videoHeight.toFloat() * videoWidth).toInt()
+            if (videoWidth / videoHeight.toFloat() < 16/9f) {
+                layoutParams.width = (screenHeight / 9.toFloat() * 16).toInt()
+            } else {
+                layoutParams.width = (screenHeight / videoHeight.toFloat() * videoWidth).toInt()
+            }
         } else {
             layoutParams.width = screenWidth
             layoutParams.height = (screenWidth / videoWidth.toFloat() * videoHeight).toInt()
@@ -227,7 +241,7 @@ class WatchTvActivity : BaseActivity() {
         }
         val data = mData[mCurrentPosition]
         println("我是一条鱼: 正在播放当前url = ${data.url}")
-        return data.url
+        return data.url.trim()
     }
 
     override fun getLayoutId(): Int {
@@ -250,6 +264,11 @@ class WatchTvActivity : BaseActivity() {
         anrCount = 0
         removeUrl(getCurrentUrl())
         ++mCurrentPosition
+        if (mCurrentPosition >= mData.size) {
+            Toast.makeText(this, "当前频道无可用源", Toast.LENGTH_SHORT).show();
+            finish();
+            return
+        }
         val currentUrl = getCurrentUrl()
         tvChangeVideo.text = String.format("视频卡顿切换视频源\n%s", currentUrl)
         mediaPlayer?.stop()
@@ -266,27 +285,29 @@ class WatchTvActivity : BaseActivity() {
     private fun removeUrl(currentUrl: String) {
         MainScope().launch {
             withContext(Dispatchers.IO) {
-                val file = File(BaseApplication.getInstance().getExternalFilesDir(""), "tvLiveM3u8.json");
+                val file = File(BaseApplication.getInstance().getExternalFilesDir(""), "tvSuccessfulLive.json");
                 val fr = FileReader(file)
-                val list = GsonBuilder().create().fromJson<MutableMap<String, MutableList<MutableMap<String, Any>>>>(
-                    fr.readText(),
-                    object : TypeToken<MutableMap<String, MutableList<MutableMap<String, String>>>>() {}.type
+                val readText = fr.readText()
+                val list = GsonBuilder().create().fromJson<MutableList<MutableMap<String, MutableList<MutableMap<String, Any>>>>>(
+                    readText,
+                    object : TypeToken<MutableList<MutableMap<String, MutableList<MutableMap<String, Any>>>>>() {}.type
                 )
                 fr.close()
-                for (key in list.keys) {
-                    val value = list[key] ?: arrayListOf()
-                    for (mutableMap in value) {
-                        val url = mutableMap["url"] ?: ""
-                        if (url == currentUrl) {
-                            mutableMap["timeout"] = 3000
-                            break
+                for (value in list) {
+                    for (key in value.keys) {
+                        val mutableList = value[key]
+                        for (urls in (mutableList ?: mutableListOf())) {
+                            val url = urls["url"]?.toString() ?: ""
+                            if (url == currentUrl) {
+                                urls["timeout"] = 5000;
+                            }
                         }
                     }
                 }
                 for (datum in WatchTvFragment.mData) {
                     for (url in datum.urls) {
                         if (url.url == currentUrl) {
-                            url.timeout = 3000
+                            url.timeout = 5000
                             break
                         }
                     }
