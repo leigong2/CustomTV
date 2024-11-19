@@ -8,9 +8,14 @@
     <uses-feature
         android:name="android.hardware.touchscreen"
         android:required="false" />
-    <activity
-        android:name="com.customtv.webplay.WebViewPlayActivity"
-        android:exported="true"
-        android:screenOrientation="landscape" />
+
+    <application
+        android:allowBackup="true"
+        android:requestLegacyExternalStorage="true">
+        <activity
+            android:name="com.customtv.webplay.WebViewPlayActivity"
+            android:exported="true"
+            android:screenOrientation="landscape" />
+    </application>
 
 </manifest>
