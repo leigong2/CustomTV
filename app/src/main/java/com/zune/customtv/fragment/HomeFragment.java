@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.github.stuxuhai.jpinyin.PinyinException;
 import com.github.stuxuhai.jpinyin.PinyinHelper;
+import com.screen.receive.WebSocketReceiver;
 import com.zune.customtv.NetDataManager;
 import com.zune.customtv.PlayActivity;
 import com.zune.customtv.R;
@@ -38,6 +39,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+//        WebSocketReceiver.INSTANCE.init("39.105.201.60");
         recyclerView = view.findViewById(R.id.recycler_view);
         EditText editText = view.findViewById(R.id.edit_text);
         View.OnFocusChangeListener l = new View.OnFocusChangeListener() {

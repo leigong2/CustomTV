@@ -89,7 +89,7 @@ class WatchTvActivity : BaseActivity() {
         mediaPlayer?.stop()
         mediaPlayer?.reset()
         try {
-            timeoutDuration = 3000L
+            timeoutDuration = 13000L
             mediaPlayer?.setDataSource(getCurrentUrl())
             mediaPlayer?.prepareAsync()
             loading()
@@ -113,7 +113,7 @@ class WatchTvActivity : BaseActivity() {
         mediaPlayer?.stop()
         mediaPlayer?.reset()
         try {
-            timeoutDuration = 3000L
+            timeoutDuration = 13000L
             mediaPlayer?.setDataSource(getCurrentUrl())
             mediaPlayer?.prepareAsync()
             loading()
@@ -236,7 +236,7 @@ class WatchTvActivity : BaseActivity() {
 
     private fun getCurrentUrl(): String {
         if (mData.size <= mCurrentPosition) {
-            timeoutDuration += 3000L
+            timeoutDuration += 13000L
             mCurrentPosition = 0
         }
         val data = mData[mCurrentPosition]
@@ -265,11 +265,21 @@ class WatchTvActivity : BaseActivity() {
         removeUrl(getCurrentUrl())
         ++mCurrentPosition
         if (mCurrentPosition >= mData.size) {
-            Toast.makeText(this, "当前频道无可用源", Toast.LENGTH_SHORT).show();
-            finish();
-            return
+            mCurrentPosition = 0
+            position++
+            val realPosition = position.coerceAtMost(data.size - 1)
+            val p = data[realPosition]
+            p.urls.sortBy {
+                it.timeout.toDouble().toInt()
+            }
+            mData.clear()
+            p.urls.let { mData.addAll(it) }
+            name = p.name
         }
         val currentUrl = getCurrentUrl()
+        if (currentUrl.isEmpty()) {
+            return
+        }
         tvChangeVideo.text = String.format("视频卡顿切换视频源\n%s", currentUrl)
         mediaPlayer?.stop()
         mediaPlayer?.reset()

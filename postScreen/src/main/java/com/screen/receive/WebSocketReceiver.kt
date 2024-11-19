@@ -14,7 +14,7 @@ import java.util.Date
 import java.util.Locale
 
 object WebSocketReceiver {
-    private const val port = 40000   //端口
+    private const val port = 8282   //端口
     private lateinit var webSocketClient: WebSocketClient
     private var outputStream: OutputStream? = null
     private var tempFile: File? = null
@@ -23,12 +23,17 @@ object WebSocketReceiver {
         webSocketClient = object : WebSocketClient(URI("ws://${ip}:${port}")) {
             override fun onOpen(handshakedata: ServerHandshake?) {
                 Log.e("我是一条鱼：", "开启" )
+                webSocketClient.send("我是一条鱼")
             }
-            override fun onMessage(message: String?) {}
+            override fun onMessage(message: String?) {
+                Log.i("我是一条鱼", "onMessage message = ${message}")
+            }
             override fun onMessage(bytes: ByteBuffer) {
                 val buf = ByteArray(bytes.remaining())
-                bytes[buf]
-                receive(buf)
+                Log.i("我是一条鱼", "onMessage bytes = ${String(buf)}")
+//                val buf = ByteArray(bytes.remaining())
+//                bytes[buf]
+//                receive(buf)
             }
             override fun onClose(code: Int, reason: String?, remote: Boolean) {
                 Log.e("我是一条鱼：", "远端关闭" )
@@ -38,6 +43,11 @@ object WebSocketReceiver {
             }
         }
         webSocketClient.connect()
+    }
+
+    fun send(msg: String) {
+        Log.i("我是一条鱼", "send msg = $msg")
+        webSocketClient.send(msg)
     }
 
     /**

@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/base" />
             <option value="$PROJECT_DIR$/ijkplayer" />
             <option value="$PROJECT_DIR$/postScreen" />
+            <option value="$PROJECT_DIR$/webplay" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
