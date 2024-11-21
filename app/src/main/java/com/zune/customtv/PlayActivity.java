@@ -96,6 +96,7 @@ import okhttp3.Response;
 
     @Override
     protected void initView() {
+//        WebView webView = findViewById(R.id.web_view);
 //        initWebView(webView);
 //        webView.loadUrl("https://jx2022.laobandq.com/jiexi20210115/8090.php?url=https://v.qq.com/x/cover/mzc00200zixidqy/p0046443rsg.html");
         findViewById(R.id.back).setOnClickListener(v -> YaoKongUtils.back());
@@ -112,7 +113,7 @@ import okhttp3.Response;
                 @Override
                 public void run() {
                     super.run();
-                    parseFifth(mediaUrls.get(0) + "?_=" + System.currentTimeMillis());
+                    parseFifth(mediaUrls.get(0));
                 }
             }.start();
             return;
@@ -136,13 +137,22 @@ import okhttp3.Response;
             Response response = call.execute();
             if (response != null && response.body() != null) {
                 String json = response.body().string();
-                String keyWords = getKeyWords(json, "player_aaaa=", "</script>");
-                JSONObject jsonObject = new JSONObject(keyWords);
-                String url = jsonObject.getString("url");
-                BaseApplication.getInstance().getHandler().post(() -> startPlayByVideoView(url, null, null));
+                String keyWords = getKeyWords(json, "name=\"player_if\" src=\"", "\" style=\"");
+                parseSixth("https://vidhub1.cc/" + keyWords);
             }
         } catch (Exception ignore) {
         }
+    }
+    ObjectAnimator oa = null;
+    private void parseSixth(String s) {
+        BaseApplication.getInstance().getHandler().post(() -> {
+            oa = showLoading(findViewById(R.id.ivLoading));
+            WebView webView = findViewById(R.id.web_view);
+            webView.getLayoutParams().width = 1;
+            webView.getLayoutParams().height = 1;
+            initWebView(webView);
+            webView.loadUrl(s);
+        });
     }
 
     private void parseForth(String s) {
@@ -445,7 +455,7 @@ import okhttp3.Response;
         webView.setWebViewClient(new MyWebViewClient());
     }
 
-    static class MyWebViewClient extends WebViewClient {
+    class MyWebViewClient extends WebViewClient {
         @Override
         public void onLoadResource(WebView view, String url) {
             super.onLoadResource(view, url);
@@ -455,6 +465,14 @@ import okhttp3.Response;
                         "document.getElementsByClassName('yzmplayer-controller')[0].style.marginBottom='-40px';" +
                         " objs.click(); " +
                         "})()");
+            }
+            if (url.endsWith("/2000k/hls/mixed.m3u8")) {
+                if (oa != null) {
+                    hideLoading(findViewById(R.id.ivLoading), oa);
+                }
+                view.setVisibility(View.GONE);
+                view.destroy();
+                startPlayByVideoView(url, null, null);
             }
         }
 

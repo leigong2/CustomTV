@@ -106,18 +106,24 @@ public class AiQingFragment extends BaseFragment {
                             .build();
                     //2.创建Request.Builder对象，设置参数，请求方式如果是Get，就不用设置，默认就是Get
                     Request request = new Request.Builder()
-                            .url("https://iuys2.cc/voddetail/151872.html")
+                            .url("https://vidhub1.cc/vodplay/238757-1-135.html")
                             .build();
                     //3.创建一个Call对象，参数是request对象，发送请求
                     Call call = okHttpClient.newCall(request);
                     Response response = call.execute();
                     if (response != null && response.body() != null) {
                         String string = response.body().string();
-                        List<String> keyWords = getKeyWords(string, "/vodplay/151872-1", "</a></li>");
+                        List<String> keyWords = getKeyWords(string, "/vodplay/238757-1", "</a><a");
                         for (String keyWord : keyWords) {
-                            String[] split = keyWord.split("\">");
-                            String url = "https://iuys2.cc/vodplay/151872-1"+split[0];
-                            String title = split[1];
+                            if (keyWords.indexOf(keyWord) == 0) {
+                                continue;
+                            }
+                            String[] split = keyWord.split("\" class=\"\" title=\"");
+                            if (split.length < 2) {
+                                continue;
+                            }
+                            String url = "https://vidhub1.cc/vodplay/238757-1-1"+split[0];
+                            String title = split[1].split("\"><span>")[0];
                             BaseDataBean.ODTO o = new BaseDataBean.ODTO();
                             o.firstPublished = "";
                             o.title = title;
