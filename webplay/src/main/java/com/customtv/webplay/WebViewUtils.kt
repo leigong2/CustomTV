@@ -10,6 +10,7 @@ import android.view.View
 import android.view.animation.LinearInterpolator
 import android.webkit.SslErrorHandler
 import android.webkit.WebChromeClient
+import android.webkit.WebResourceRequest
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -100,6 +101,14 @@ object WebViewUtils {
                 """.trimIndent()
                 ) { value: String? -> }
                 super.onPageStarted(view, url, favicon)
+            }
+
+            override fun onLoadResource(view: WebView?, url: String?) {
+                super.onLoadResource(view, url)
+            }
+
+            override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
+                return super.shouldOverrideUrlLoading(view, request)
             }
 
             // 设置 WebViewClient，监听页面加载完成事件
