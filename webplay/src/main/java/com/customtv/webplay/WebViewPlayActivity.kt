@@ -26,6 +26,7 @@ import com.customtv.webplay.WebViewUtils.showLoading
 import com.customtv.webplay.WebViewUtils.startPlay
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Objects
 
 class WebViewPlayActivity : AppCompatActivity() {
     private lateinit var ivLoading: ImageView
@@ -67,15 +68,22 @@ class WebViewPlayActivity : AppCompatActivity() {
     private fun loadPosition(position: Int) {
         ivLoading = findViewById(R.id.ivLoading)
         webView = findViewById(R.id.webView)
-        initWebView(webView)
         if (liveUrls.size <= currentPosition || currentPosition == -1) {
             Toast.makeText(this, "播放完毕", Toast.LENGTH_SHORT).show()
             currentPosition = if (currentPosition == -1) 0 else liveUrls.size - 1
             return
         }
+        val s = liveUrls[position]
+        if (Objects.equals("http://a.liuxiaobo.top:8888/udp/239.69.1.68:10048", s)) {
+            webView.visibility = View.GONE
+            webView.destroy()
+            startPlayByVideoView(s)
+            return
+        }
+//        initWebView(webView)
+//        webView.loadUrl(liveUrls[position])
         webView.alpha = 0f
         oa = showLoading(ivLoading)
-//        webView.loadUrl(liveUrls[position])
         webView.apply {
             startPlay(liveUrls[position]) {
                 lifecycleScope.launch {
