@@ -1,0 +1,320 @@
+[
+    {
+        "brief": "",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/06/07/ea174c867d694efd9260a3b079e46a00-180.jpg",
+        "title": "《熊出没》MV",
+        "url": "https://tv.cctv.com/2016/06/07/VIDEOq7Vsswy3rUceDpuDU8Y160607.shtml"
+    },
+    {
+        "brief": "蹦蹦和狗熊岭和熊大熊二一起露营，还有它最爱的坚果。三人回忆起蹦蹦当初刚来时因为坚果过敏的事还闹过不小的笑话。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/09/08e9027fe40b4c729d5f6d37f801ab3a-251.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第1集 蹦蹦的坚果故事",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEYqYijMewOIp6VfdHAIvP160609.shtml"
+    },
+    {
+        "brief": "光头强在电视上看到螃蟹美食，禁不住诱惑，准备制作一个工具钓螃蟹，却没想到螃蟹没钓到，钓到一大堆鱼，便宜了熊大熊二。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/09/cb4330cd39994d6db5eedf1e564bee46-251.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第2集 螃蟹的诱惑",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEahL1BV4lOPJY7KEVOP8p160609.shtml"
+    },
+    {
+        "brief": "蹦蹦偶然发现光头强收到一个盒子，说是用来对付它们的。于是，蹦蹦就联系熊大熊二，准备抢夺盒子。最终发现，盒子里都是光头强小时候的照片。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/09/ec819c889d9f49c5b979406c89fb30ee-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第3集 光头强的秘密",
+        "url": "https://tv.cctv.com/2016/06/09/VIDET4JmKrHTHun6gfYOpCRr160609.shtml"
+    },
+    {
+        "brief": "光头强最近总是心神不宁、坐立不安，他怀疑自己提早进入了更年期。狗熊岭的小伙伴们一起帮助他渡过难关。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/09/40f6cbd44185473aab7087d26020a729-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第4集 更年期",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEd4hav0rwNyhLnRmU2vib160609.shtml"
+    },
+    {
+        "brief": "光头强在电视上看到浪木根雕大师的一件普通木头作品价值却非常昂贵，不由心动，也准备砍伐木头制作浪木根雕，最终在大伙的帮助下得奖。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/06/09/0648066d233d4f1a9797d4183cebebad-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第5集 浪木根雕",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEjseQRoN0pwLhs6r19aWw160609.shtml"
+    },
+    {
+        "brief": "光头强在电视上听说猎狗勇敢无畏，能够驱逐狗熊，准备也买一只。很快，一直瘦弱的猎狗：大黑就被他买了回来。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/09/9be964de7c724a8cb79ed2a985704c90-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第6集 大黑（上）",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEXZjgEFjyE3K6jTaDjoEn160609.shtml"
+    },
+    {
+        "brief": "大黑受到光头强家里猫的欺负，跌落山崖，被熊大熊二所救，并悉心照顾。最终，光头强醒悟，决定将它送回原来的地方。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/09/9b7fc4d971424558a2866cf9f59014f0-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第7集 大黑（下）",
+        "url": "https://tv.cctv.com/2016/06/09/VIDELcuIEkPO30rN9kHaOpQm160609.shtml"
+    },
+    {
+        "brief": "光头强为了应付警察的调查，准备采取温柔战术，但是最终还是受到狗熊岭动物们的投诉，被调查员记录恶行。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/06/09/a90f4f976415454ebfc4e0dbe511dedd-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第8集 遭遇投诉",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEfQShJWtUygje1WO4x3GU160609.shtml"
+    },
+    {
+        "brief": "光头强赤脚出去砍树，被熊大熊二没收了机器。光头强非常生气，因为它们的阻止，导致他现在连鞋子都买不起了。光头强为此借了很多钱，想体验富翁的生活，没想到最终负债累累。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/09/c2b1c75ff1ba4421a02f4cc0c691145d-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第9集 一日富翁",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEzPx6fop0dXqh2JXnH7Ke160609.shtml"
+    },
+    {
+        "brief": "光头强在家感冒，饿的天昏地暗，肥波找来熊大熊二为他做了一顿美味的面条。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/06/09/7d5d045ed89648cc859bd820aa5e6c94-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第10集 幸福的面条",
+        "url": "https://tv.cctv.com/2016/06/09/VIDE7f0LKMUofmF8cisNSihJ160609.shtml"
+    },
+    {
+        "brief": "光头强接到老板电话，说要他帮忙搞到熊掌印，承诺搞到之后会有带薪假期。光头强想尽办法，最终得到熊大熊二的掌印。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/06/09/e1efd060fd8046fdb719428f36c35894-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第11集 熊掌难得",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEwrakctdDDCKyqmyT3aQO160609.shtml"
+    },
+    {
+        "brief": "光头强为了打扫屋子的垃圾，买来一个智能吸尘器，起初智能吸尘器还能起到很好的作用，但是最终难以掌控。辗转智能吸尘器被熊大熊二得到，为它们带来很多麻烦。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/06/09/9e7801762bd24d6aa6c2c0f401aeae1a-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第12集 智能吸尘器",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEXEGdFpQDZV2P6wthG026160609.shtml"
+    },
+    {
+        "brief": "光头强为了赚钱，买了个摇摇车带回森林。熊大熊二禁不住诱惑，愿意用水果作为报酬，希望可以体验，但很快就失去兴趣。光头强对水果摇摇车进行了改造，虽然吸引了很多熊宝贝来玩，但是却将自己的房屋弄得一团糟。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/09/dd9a3830fe51423ab17c4f4281b0fb91-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第13集 水果摇摇车",
+        "url": "https://tv.cctv.com/2016/06/09/VIDEFoQcbZN8p9YAlkKt09Va160609.shtml"
+    },
+    {
+        "brief": "熊二跟吉吉学习滑轮滑，涂涂说道东边森林里正在举行轮滑友谊赛，熊二和吉吉都很心动，但是参赛名额只有一个，于是决定熊二和吉吉公平竞争。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/06/10/b73f5672f01d4441904562b0b2c7b121-191.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第14集 争夺参赛权（上）",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEpwgQkJ4Godf4AaKPAI8k160610.shtml"
+    },
+    {
+        "brief": "吉吉即将到达终点时，熊二率先过了终点，但是熊二的轮滑鞋也坏了，于是熊二准备自己做双新鞋。不甘心的吉吉在背后搞破坏。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/f16f451816054ef0b584e403b9e8e702-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第15集 争夺参赛权（下）",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEViCeFoueKHJ6Lt7O7N5K160610.shtml"
+    },
+    {
+        "brief": "中秋节到了，熊二和光头强争夺月饼，于是光头强提议举行中秋节孔明灯比赛。熊大和光头强身陷泥潭里，在熊二的帮助下，终于将两人救出。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/69a486a0f27940a4add6bf237e6c9135-251.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第16集 中秋节记事",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEGWffdmN1hDyAMPan7YEx160610.shtml"
+    },
+    {
+        "brief": "光头强温室花房里照顾花儿，熊二追赶着蝴蝶来到了花房，被光头强给赶走了。光头强发现花房里有虫子，将他的宝贝花叶子给咬了。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/06/10/51c8ae8533544cd49384a98ee20cb20b-191.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第17集 生命的传递",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEVdMlvyGciEeiwKXX0EyV160610.shtml"
+    },
+    {
+        "brief": "光头强给老爸打电话，听闻自己的老妈生病吃不下饭，想要买点果脯送给老妈。不想，刚买的果脯被熊大熊二给打翻了，于是他们想到要自己做果脯。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/48cefd40d4fd4ebbb1e56b50c3999d05-251.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第18集 果脯甜蜜蜜",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEmlQ3aQFf3PthgSgQfDDr160610.shtml"
+    },
+    {
+        "brief": "光头强弄来了安保系统，兴奋的他从楼梯上摔了下来。醒来的光头强变得不认识熊二熊二了，称自己只有7岁，名叫小强。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/06/10/109e4ecc5a4147669e4a77e7bd62732a-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第19集 光头“小”强",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEsswz5FHmj2APNSubri15160610.shtml"
+    },
+    {
+        "brief": "李老板要提升光头强为伐木分公司的老总，让他学习税务，学习如何偷税漏税。睡梦中，熊大熊二变身税官前来查账。然而一觉醒来的光头强接到李老板的电话，分公司不开了，让他老老实实砍树。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/264d205b3fd1454bb72c1fb3800a7d92-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第20集 铁面税官",
+        "url": "https://tv.cctv.com/2016/06/10/VIDERUjcIMQxGIRsZ63F4PGQ160610.shtml"
+    },
+    {
+        "brief": "熊大熊二受标标委托要照顾肥肥，但是肥肥力大无穷，做事出人意料，经常帮倒忙。在光头强的帮助下，肥肥学会控制自己的力量。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/76e0b1e1f7df4dfab7c42176230b0126-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第21集 大力士",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEgMbqa1XW57YHzgJ47r4I160610.shtml"
+    },
+    {
+        "brief": "熊大熊二种的棉花成熟了，涂涂前来报喜。而此时光头强将棉花全给摘了，想用这些棉花给老妈做棉被。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/ab99cae943dc4b33b70d9087d3ed3c4d-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第22集 暖心棉被",
+        "url": "https://tv.cctv.com/2016/06/10/VIDE7lb0WEd8xrEoqGQNijdd160610.shtml"
+    },
+    {
+        "brief": "李老板给光头强派来了一个新助手，却发现这个新助手小光竟然跟熊二熊二是认识的。原来这个小光是为了骗取动物们的信任，想把它们送去动物园。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/8abea176a3594448a08a70afe3c565dd-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第23集 光头强的助手",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEH1clhKxixBSKIpfCEK8V160610.shtml"
+    },
+    {
+        "brief": "光头强感觉牛仔很帅气，于是他就打扮成牛仔的样子。此时有两个偷猎的人来森林里偷走了毛毛，在牛仔光头强的帮助下救回了毛毛。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/10/3fb9122f4d82487d815a406833963996-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第24集 牛仔光头强",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEAPHOJiD1a8lc4q9ZlSRs160610.shtml"
+    },
+    {
+        "brief": "光头强发现森林里来了一只东北虎，感到很害怕，李老板让他拍一张东北虎的照片。熊大熊二意外认识了那只东北虎。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/fc0dcaf8ee9243f289efd40ff3ec60a4-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第25集 惊现东北虎（上）",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEClZ5xOO7U9L6gz9XqkCA160610.shtml"
+    },
+    {
+        "brief": "李老板让光头强将东北虎给抓回来，可是被其他的偷猎者抢走了，于是找到熊大熊二一起帮忙。在三者的合力之下，终于救回了虎子。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/8d5d1b86972d44009e1413aebd1c3a85-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第26集 惊现东北虎（下）",
+        "url": "https://tv.cctv.com/2016/06/10/VIDE34WdfNH8lsbK72fjypiK160610.shtml"
+    },
+    {
+        "brief": "光头强接了个新活，要让他收玉米。于是光头强想到要让熊大熊二一起帮忙收玉米。熊大熊二一边收玉米，一边却在偷吃。蝗虫来袭，光头强和熊大熊二一起保住了玉米。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/10/5ae2d4180b7042788cf8ab9a2cd60948-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第27集 玉米丰收时",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEmOW5LQm3u432c7soGz0m160610.shtml"
+    },
+    {
+        "brief": "光头强因为没有及时缴纳电费，家里被断电了。他想要自己发电，便设计了一些健身器材，开办起了健身俱乐部。让动物们在健身的同时，帮助自己发电。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/06/10/589f1cf5e78d4596bf55b1ca3a8556d6-309.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第28集 光头强健身俱乐部",
+        "url": "https://tv.cctv.com/2016/06/10/VIDEwCQV5UGw0WP5QEObQbO1160610.shtml"
+    },
+    {
+        "brief": "光头强听说自己的小学同学画画出名了，于是重拾画笔。熊大熊二因为一次玩闹把他的画弄得都是掌印，却没想到有掌印的画受到杂志社青睐，杂志社还准备为他办画展。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/06/11/d99294647b114ab899a6470058a56541-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第29集 谁才是艺术家",
+        "url": "https://tv.cctv.com/2016/06/11/VIDEhaZwpN6B85g6ZBug14ex160611.shtml"
+    },
+    {
+        "brief": "熊大责怪熊二好吃懒做，只会吃蜂蜜，两人随后大吵一架。熊二离家出走住在一个没有床的树洞里。两人最终因为一起阻止光头强砍树而和好如初。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/11/ad5e3e05ea664f4c9b99766881e83fbf-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第30集 最佳拍档",
+        "url": "https://tv.cctv.com/2016/06/11/VIDEMnirFODUndcK9ErREQJS160611.shtml"
+    },
+    {
+        "brief": "光头强砍树被熊大熊二及时阻止，但是光头强拿着火炮回击，三人在雨中追赶，光头强被熊二撞到了沟里。光头强躲进森林深处，早上天晴后继续砍树，神不知鬼不觉。熊二四处寻找光头强，被树根绊倒，挂在半空的树枝上。光头强放心不下救了熊二。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/06/11/3bca0b0e1e9c4e8eb8c0e7973a5778d7-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第31集 光头强失踪事件",
+        "url": "https://tv.cctv.com/2016/06/11/VIDErp5cxHePoXKeIISn2115160611.shtml"
+    },
+    {
+        "brief": "光头强为了努力学习，把以前一些好玩的都放进罐子里埋在一棵树旁边。熊大熊二发现后不小心把罐子摔碎，难以拼合，于是就准备照一张和光头强的合照放进罐子里。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/11/41d365bab57a4a7ea7cf1fcb367b3602-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第32集 时光胶囊",
+        "url": "https://tv.cctv.com/2016/06/11/VIDE3o4DfvJhDUG2aQsNjpBo160611.shtml"
+    },
+    {
+        "brief": "光头强的老板付不出工资，准备用水果抵押，光头强就把它们榨成果汁卖钱。对于那些烂掉的水果，光头强就加糖继续榨汁卖给消费者，熊大熊二因此吃坏了肚子。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/11/effb5a07930646adbe8154c14af55a77-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第33集 美味的果汁",
+        "url": "https://tv.cctv.com/2016/06/11/VIDEaIcvSJGjriTmR4NYnksQ160611.shtml"
+    },
+    {
+        "brief": "光头强欺骗熊大熊二说有块能双倍收获的宝地，熊二相信了。为了不打击熊二的好心，熊大只能每天晚上收集蜂蜜，帮熊二完成心愿。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/06/11/e2f482d81b494051a15b160ee4a858b2-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第34集 双倍收获的宝地",
+        "url": "https://tv.cctv.com/2016/06/11/VIDED7SybGa1nSGYQgVG8AZA160611.shtml"
+    },
+    {
+        "brief": "熊二叫熊大泡澡，其实是去泡泥潭。熊大为此玩起了失踪，光头强听说可以泡澡，很高兴，和熊二一起去寻找熊大。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/11/72a98f309ae34ec1bc38b824a44ef70a-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第35集 我不要泡浴",
+        "url": "https://tv.cctv.com/2016/06/11/VIDEDNrLjOBhOQ39Y295AnBj160611.shtml"
+    },
+    {
+        "brief": "熊二看到电视里的短信服务能赚钱，于是想了个招：用一个苹果换取自己的贴心传话服务。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/06/11/e5741ad92a364955afb1f6ef0d9dc40a-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第36集 森林传话员（上）",
+        "url": "https://tv.cctv.com/2016/06/11/VIDE0SBiqWOsssrX8H9mVzFl160611.shtml"
+    },
+    {
+        "brief": "吉吉设计了一个高科技的传话装备，既省时又省力，还能赚到大批苹果。熊二羡慕不已。光头强看到吉吉用自己的毛线做传话装备，很生气，大肆破坏。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/11/2c7b5bfefa544331911aff2c0d389f35-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第37集 森林传话员（下）",
+        "url": "https://tv.cctv.com/2016/06/11/VIDEu7YsIbb8ttN0BQ383Lgm160611.shtml"
+    },
+    {
+        "brief": "李老板听说光头强砍树被熊大熊二阻挠，于是寄了一套铠甲给光头强。光头强想用铠甲对抗熊大熊二，没想到自食恶果。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/06/11/10cdb824e599442a891abf672a97429e-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第38集 铠甲光头强",
+        "url": "https://tv.cctv.com/2016/06/11/VIDE5a89gp1FSO48W8sJWXgj160611.shtml"
+    },
+    {
+        "brief": "吉吉的表哥来到森林，还把很多水果送给光头强，光头强误以为是吉吉又在耍花样。最终，光头强被吉吉表哥的真诚帮助打动。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/11/ed91761c5dc24a2bac855ae9c539340f-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第39集 另一个吉吉",
+        "url": "https://tv.cctv.com/2016/06/11/VIDEzphOI7lxlwJDDXH4CKBJ160611.shtml"
+    },
+    {
+        "brief": "熊大熊二等一批动物晚上跳广场舞，吵得光头强难以入睡。光头强想了办法，趁它们戴耳机跳舞时，悄悄砍走大批树木。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/06/11/dce95e0ccbb9445db08fc6ead47f43f1-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第40集 森林广场舞",
+        "url": "https://tv.cctv.com/2016/06/11/VIDEy3XAUNZ39gkyN8QWMzsN160611.shtml"
+    },
+    {
+        "brief": "光头强接到李老板的电话，李老板表示要给他寄点的吃的过去，李老板给他寄了很多西红柿。吉吉吃了很多光头强的西红柿，还以为这些西红柿有问题，于是便晕了过去。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/12/ae60d78c6fa9420a86e9b95828d79afe-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第41集 舌尖上的危机",
+        "url": "https://tv.cctv.com/2016/06/12/VIDEChQROlNmmdP66sBKHWfZ160612.shtml"
+    },
+    {
+        "brief": "熊大把熊二赶出去找吃的，熊二无意中看到了它俩小时候搭的树屋，便和伙伴们一起修缮了树屋。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/06/12/0987f0ea9f2546089311882a1b75d4f7-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第42集 树屋的回忆",
+        "url": "https://tv.cctv.com/2016/06/12/VIDEdy7DUMbB7Xzpxz6BPyEH160612.shtml"
+    },
+    {
+        "brief": "旱季即将到来，光头强很担心森林里的树木都枯萎了，于是便想打口井。光头强不停地往下挖井，动物们都觉得他这是病了，想要帮他治病。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/12/2957d930cb484581939a28bd7ea71ca4-250.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第43集 我只是想打口井",
+        "url": "https://tv.cctv.com/2016/06/12/VIDEhUrbV6OR6XV0k2wPggLs160612.shtml"
+    },
+    {
+        "brief": "熊二在清理时发现了一个竹蜻蜓，以为不能用便把它丢了，不想这正是熊大的宝贝，熊大很生气。光头强用帮忙做竹蜻蜓作为交换，让熊二要帮他做家务。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/12/d25305f546dd43b1b180f047fcb579f1-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第44集 竹蜻蜓事件",
+        "url": "https://tv.cctv.com/2016/06/12/VIDEQNJzexlXbPvhuJX9eUw0160612.shtml"
+    },
+    {
+        "brief": "光头强在家发现有很多跳蚤，于是跑了出去，结果熊大和跳跳都被光头强传染了跳蚤。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/12/2e69d32d23fd4885afddfbc3fdf1a59b-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第45集 跳蚤大作战",
+        "url": "https://tv.cctv.com/2016/06/12/VIDEGMklZ7ts9AVk3jxhq5oz160612.shtml"
+    },
+    {
+        "brief": "重阳节到了，光头强打电话给李老板催要上个月的工资，李老板答应给光头强一些重阳节的福利——可乐。结果光头强中了一等奖，可乐公司却告知他要领取百万大奖，就得先付10%的个人所得税。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/06/12/1da1256f784249e6aabde3fd93068b0b-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第46集 百万美梦",
+        "url": "https://tv.cctv.com/2016/06/12/VIDEoyqzC3IhwDTSJDSXNxJ6160612.shtml"
+    },
+    {
+        "brief": "熊二知道有世界和平日，于是找熊大商量要设定一个森林和平日。熊大熊二和光头强商量此时，光头强便想利用这点，在它们放松警惕时砍树。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/06/12/4eb72ae0de554f178716057edd3be779-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第47集 森林和平日",
+        "url": "https://tv.cctv.com/2016/06/12/VIDEJYQ8I4PqNiI2wd32tyTG160612.shtml"
+    },
+    {
+        "brief": "毛毛负责看护采摘好的果子，结果从西边森林来的壮壮为了想要得到果子，便向吉吉发出挑战。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/06/12/f6409abb6bd149eb8f7d6bd8bbfd186c-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第48集 吉吉的挑战",
+        "url": "https://tv.cctv.com/2016/06/12/VIDELezY4eOWBCpxAzX6nNpn160612.shtml"
+    },
+    {
+        "brief": "光头强想吃妈妈酿的醋，可是他又不想让妈妈太辛苦，于是他便想自己酿醋。熊二觉得光头强酿的东西太难闻了，于是便将自己的食物分给光头强，光头强请他尝尝自己酿的醋。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/12/6a33a4eebbca4875b39ba88ecfdecec8-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第49集 一碗香",
+        "url": "https://tv.cctv.com/2016/06/12/VIDE8qm8ft6W915e6aX0EMq2160612.shtml"
+    },
+    {
+        "brief": "熊二想给熊大找个独一无二的生日礼物，光头强给了它一个面人，但是上面缺了一角。于是光头强便带着熊二一起上街买面人。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/06/12/c4ea2e0a5b0f4383b89c53a863051a85-311.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第50集 面人情谊",
+        "url": "https://tv.cctv.com/2016/06/12/VIDE1PYETmHBq7NuXzNCv9sS160612.shtml"
+    },
+    {
+        "brief": "李老板决定让光头强每天写一份工作日志。光头强就按照自己每天的行程写日志。熊大熊二发现光头强竟然在砍树，于是便搞破坏，抢走了光头强的锯子。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/06/12/a197638f5a444a14b32d42e295af0488-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第51集 工作日志",
+        "url": "https://tv.cctv.com/2016/06/12/VIDEtQ9TVvNrS6BOSeYIkUNX160612.shtml"
+    },
+    {
+        "brief": "熊大做梦时梦到了儿时母亲带着它们逃难的情形，醒来后异常想念母亲。于是熊大熊二便想去小时候待得那片树林去看看，光头强也偷偷跟在后面。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/06/12/fe825767ba0d457c8b44c9b6a62b85a2-310.jpg",
+        "title": "[动画大放映]《熊出没之秋日团团转》 第52集 那片小树林",
+        "url": "https://tv.cctv.com/2016/06/12/VIDEzFkxLszwqjql6JXEaozo160612.shtml"
+    }
+]

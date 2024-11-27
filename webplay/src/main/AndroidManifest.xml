@@ -16,6 +16,10 @@
             android:name="com.customtv.webplay.WebViewPlayActivity"
             android:exported="true"
             android:screenOrientation="landscape" />
+        <activity
+            android:name="com.customtv.webplay.WebListActivity"
+            android:exported="true"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

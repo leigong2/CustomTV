@@ -31,12 +31,14 @@ import java.util.Objects
 class WebViewPlayActivity : AppCompatActivity() {
     private lateinit var ivLoading: ImageView
     private lateinit var webView: WebView
-    private var currentPosition = 0
+    private var currentPosition = -1
+    private var url: String? = null
 
     companion object {
-        fun start(context: Context, position: Int) {
+        fun start(context: Context, position: Int = -1, url: String? = null) {
             val intent = Intent(context, WebViewPlayActivity::class.java)
             intent.putExtra("position", position)
+            intent.putExtra("url", url)
             context.startActivity(intent)
         }
     }
@@ -44,18 +46,29 @@ class WebViewPlayActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview_play)
-        currentPosition = intent.getIntExtra("position", 0)
-        loadPosition(currentPosition)
+        currentPosition = intent.getIntExtra("position", -1)
+        url = intent.getStringExtra("url")
+        if (currentPosition == -1) {
+            url?.let { loadUrl(it) }
+        } else {
+            loadPosition(currentPosition)
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         when (keyCode) {
             KeyEvent.KEYCODE_DPAD_DOWN -> {
+                if (currentPosition == -1) {
+                    return super.onKeyDown(keyCode, event)
+                }
                 Toast.makeText(this, "播放下一个", Toast.LENGTH_SHORT).show()
                 loadPosition(++currentPosition)
             }
 
             KeyEvent.KEYCODE_DPAD_UP -> {
+                if (currentPosition == -1) {
+                    return super.onKeyDown(keyCode, event)
+                }
                 Toast.makeText(this, "播放上一个", Toast.LENGTH_SHORT).show()
                 loadPosition(--currentPosition)
             }
@@ -64,6 +77,31 @@ class WebViewPlayActivity : AppCompatActivity() {
     }
 
     var oa: ObjectAnimator? = null
+
+    private fun loadUrl(url: String) {
+        ivLoading = findViewById(R.id.ivLoading)
+        webView = findViewById(R.id.webView)
+        webView.alpha = 0f
+        oa = showLoading(ivLoading)
+        webView.apply {
+            startPlay(url) {
+                lifecycleScope.launch {
+                    delay(1000)
+                    webView.alpha = 1f
+                    hideLoading(ivLoading, oa)
+                    if (url.endsWith(".shtml")) {
+                        delay(3000)
+                        webView.loadUrl(
+                            "javascript:(function(){" +
+                                    "var objs = document.getElementsByClassName(\"vjs-webfullscreen-control vjs-control vjs-button\");" +
+                                    " objs[0].click(); " +
+                                    "})()"
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     private fun loadPosition(position: Int) {
         ivLoading = findViewById(R.id.ivLoading)
@@ -74,7 +112,7 @@ class WebViewPlayActivity : AppCompatActivity() {
             return
         }
         val s = liveUrls[position]
-        if (Objects.equals("http://a.liuxiaobo.top:8888/udp/239.69.1.68:10048", s)) {
+        if (Objects.equals("http://a.liuxiaobo.top:8888/udp/239.69.1.68:10048", s) || s.contains("m3u8")) {
             webView.visibility = View.GONE
             webView.destroy()
             startPlayByVideoView(s)
@@ -85,11 +123,20 @@ class WebViewPlayActivity : AppCompatActivity() {
         webView.alpha = 0f
         oa = showLoading(ivLoading)
         webView.apply {
-            startPlay(liveUrls[position]) {
+            startPlay(s) {
                 lifecycleScope.launch {
                     delay(1000)
                     webView.alpha = 1f
                     hideLoading(ivLoading, oa)
+                    if (s.endsWith(".shtml")) {
+                        delay(3000)
+                        webView.loadUrl(
+                            "javascript:(function(){" +
+                                    "var objs = document.getElementsByClassName(\"vjs-webfullscreen-control vjs-control vjs-button\");" +
+                                    " objs[0].click(); " +
+                                    "})()"
+                        )
+                    }
                 }
             }
         }
@@ -105,6 +152,7 @@ class WebViewPlayActivity : AppCompatActivity() {
             videoView.start()
         }
     }
+
     private fun VideoView.setVideoCenterCrop(mp: MediaPlayer) {
         val videoWidth: Int = mp.videoWidth
         val videoHeight: Int = mp.videoHeight
@@ -148,6 +196,7 @@ class WebViewPlayActivity : AppCompatActivity() {
         webView.visibility = View.VISIBLE
         webView.webViewClient = MyWebViewClient(this)
     }
+
     internal class MyWebViewClient(private val webViewPlayActivity: WebViewPlayActivity) : WebViewClient() {
         override fun onLoadResource(view: WebView, url: String) {
             super.onLoadResource(view, url)

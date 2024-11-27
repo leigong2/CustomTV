@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.base.base.BaseApplication
 import com.customtv.webplay.WebConstant
+import com.customtv.webplay.WebListActivity
 import com.customtv.webplay.WebViewPlayActivity
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -74,7 +75,13 @@ class WatchTvFragment : Fragment() {
                     holder.itemView.setOnClickListener {
                         mLastPlayPosition = position
                         SpUtil.getInstance().setIntValue("LastPlayPosition", position)
-                        context?.let { WebViewPlayActivity.start(it, mLastPlayPosition) }
+                        context?.let {
+                            if (mData[mLastPlayPosition].urls[0].url.endsWith(".txt")) {
+                                WebListActivity.start(it, mData[mLastPlayPosition].urls[0].url)
+                            } else {
+                                WebViewPlayActivity.start(it, mLastPlayPosition)
+                            }
+                        }
                     }
                 }
             }
@@ -82,7 +89,13 @@ class WatchTvFragment : Fragment() {
         if (mLastPlayPosition >= 0) {
             lifecycleScope.launch {
                 delay(300)
-                context?.let { WebViewPlayActivity.start(it, mLastPlayPosition) }
+                context?.let {
+                    if (mData[mLastPlayPosition].urls[0].url.endsWith(".txt")) {
+                        WebListActivity.start(it, mData[mLastPlayPosition].urls[0].url)
+                    } else {
+                        WebViewPlayActivity.start(it, mLastPlayPosition)
+                    }
+                }
             }
         }
     }

@@ -45,7 +45,16 @@ object WebConstant {
         "https://www.yangshipin.cn/tv/home?pid=600002493",
         "https://www.yangshipin.cn/tv/home?pid=600002513",
         "http://a.liuxiaobo.top:8888/udp/239.69.1.68:10048",
-        "https://www.yangshipin.cn/tv/home?pid=600014550"
+        "https://www.yangshipin.cn/tv/home?pid=600014550",
+        "动物自然.txt",
+        "哈喽！葡星人.txt",
+        "大头儿子小头爸爸第四季.txt",
+        "奇妙梦境.txt",
+        "小P优优.txt",
+        "小猪佩奇.txt",
+        "棉花糖和云朵妈妈.txt",
+        "熊出没.txt",
+        "踢踢和奇奇.txt",
     )
 
     val channelNames = arrayOf(
@@ -91,6 +100,15 @@ object WebConstant {
         "40 河北卫视",
         "41 山东卫视",
         "42 天津卫视",
-        "43 CGTN"
+        "43 CGTN",
+        "动物自然",
+        "哈喽！葡星人",
+        "大头儿子小头爸爸第四季",
+        "奇妙梦境",
+        "小P优优",
+        "小猪佩奇",
+        "棉花糖和云朵妈妈",
+        "熊出没",
+        "踢踢和奇奇",
     )
 }

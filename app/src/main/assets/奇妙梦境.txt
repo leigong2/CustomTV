@@ -1,0 +1,158 @@
+[
+    {
+        "brief": "擅长做手工的娜娜最大的爱好就是把废弃物做成各种新的物品。娜娜喜欢做梦，喜欢风的声音，娜娜在森林的树上发现一顶魔法帽子，她将帽子戴在头上就飞了起来。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/03/10/82a5b049998a4aacb31e15d3a40a8a60-311.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第1集 会魔法的帽子",
+        "url": "https://tv.cctv.com/2016/03/10/VIDEumPGB2xhFqKeNdSQqKi1160310.shtml"
+    },
+    {
+        "brief": "娜娜与小伙伴无意间发现了被主人抛弃的布偶小米，通过小米发现了被遗弃的回忆。娜娜在梦境中找到了很多回忆。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/03/10/37bd8772933b482b90c12475ccdd5fa2-311.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第2集 雨伞下的布偶猫咪",
+        "url": "https://tv.cctv.com/2016/03/10/VIDEm98WD6nSuOENjZ9dyY2t160310.shtml"
+    },
+    {
+        "brief": "突然有一天，布偶小米无意间去到了一个新的世界。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/03/11/2daac917ad484a09877ed373dcc3422e-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第3集 小米的信件",
+        "url": "https://tv.cctv.com/2016/03/11/VIDEL79dj32QKoMh6zF5f24N160311.shtml"
+    },
+    {
+        "brief": "下雨了，布偶小米在雨天里救下了一只落水的小鸽子。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/03/11/bf681270a9e7404cac7344185181766e-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第4集 下雨天",
+        "url": "https://tv.cctv.com/2016/03/11/VIDE93Dc53JvTc2WPsSN1oES160311.shtml"
+    },
+    {
+        "brief": "熊的菜地里有一束牛角花，熊说牛角花的花语是重逢。雨停了，森林里一只白鸽在和小宝抢信，小米写了封信她想自己亲自送。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/03/14/ebc3903adfe64ca4b62def2c5047e242-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第5集 叶子信",
+        "url": "https://tv.cctv.com/2016/03/14/VIDE2OyjLkkOvRrUPKC0eg1H160314.shtml"
+    },
+    {
+        "brief": "豆豆先生一早给法提娜送来了信，熊让她们去喝新酿的果汁，法提娜来到熊家喝了许多果汁，然后把罐子做了一些灯笼。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/03/14/ed421ca6807a4630a7af2fcd682d2233-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第6集 城市布偶托托",
+        "url": "https://tv.cctv.com/2016/03/14/VIDE5KVKKAizH0yo1kX32cLD160314.shtml"
+    },
+    {
+        "brief": "一群被抛弃的布偶来到蘑菇岛，在这里，它们用自己的方式生活，法提娜用手工把每个被抛弃的回忆捡起来，重新拼凑出一种新的回忆。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/03/15/e404580d15574889a20a9ab9746ab99b-311.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第7集 等待的光",
+        "url": "https://tv.cctv.com/2016/03/15/VIDE0Xj0WbrO71rwA6LkjYz8160315.shtml"
+    },
+    {
+        "brief": "布偶托托去年生日的时候收到了主人送的三角帽，有一天三角帽上被法提娜缝上了新的东西。时光湖在发光，布偶托托记得它和主人发生的每一件小事，法提娜带着小熊来到蘑菇岛，托托新奇得看着周边的世界，托托不要吃这里的食物，还把碗打碎了，大家努力开导它。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/03/15/12b8e3d3febe4722b3a19e26caab76ed-311.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第8集 报纸碗",
+        "url": "https://tv.cctv.com/2016/03/15/VIDE018mFPts37jJOMSjE2CF160315.shtml"
+    },
+    {
+        "brief": "法提娜觉得自己没有回忆，小厨却一心想要法提娜微笑。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/03/18/a31a21e938b044f7821e41a4ee99d098-311.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第9集 法提娜的心事",
+        "url": "https://tv.cctv.com/2016/03/18/VIDEhJ3H9tE4QyNHNS5jUyRE160318.shtml"
+    },
+    {
+        "brief": "小厨告诉法提娜，他们曾经就认识，她也用画面记录下曾经的记忆。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/03/18/7829ddaf3943492cba28beec95a61639-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第10集 回忆拼图",
+        "url": "https://tv.cctv.com/2016/03/18/VIDEyVTmnY9aY5wBn1sipnjJ160318.shtml"
+    },
+    {
+        "brief": "法提娜每天看着窗外，她最喜欢下雨天。甜点屋聚会即将开始了，法提娜收到了邀请信，还收到了一个蝴蝶结，下雨天法提娜打着雨伞飞走了。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/03/17/81498d7f96b44c3aa5ed11c057e7feb5-311.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第11集 甜点屋聚会前奏曲",
+        "url": "https://tv.cctv.com/2016/03/17/VIDEnUVpMKn6kxqnbPyRsCwR160317.shtml"
+    },
+    {
+        "brief": "蘑菇岛聚会开始了，布偶恐龙蒂诺也来了。天气放晴了，大家欢快来到了聚会现场。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/03/17/c904e49fab3049a1b54d3646f7afe0a6-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第12集 布偶恐龙蒂诺",
+        "url": "https://tv.cctv.com/2016/03/17/VIDEmgj7UdJuBO3RZ6t7MffS160317.shtml"
+    },
+    {
+        "brief": "托托不敢面对自己忘却的过去，在小猫的引导下，他开始直面自己的过去。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/03/18/5b7221e963cc4c54ab602a713b76d9b4-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第13集 托托的焦躁",
+        "url": "https://tv.cctv.com/2016/03/18/VIDEldZszf0VGboi5xBIDGA3160318.shtml"
+    },
+    {
+        "brief": "托托逐渐记起与主人的过去，然而更乱的思绪却困扰了他。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/03/18/df4a1bb39375456a8b61a68d8cb52b4c-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第14集 萤火虫之光",
+        "url": "https://tv.cctv.com/2016/03/18/VIDEZzJOXNTMpqlLwEwYKlty160318.shtml"
+    },
+    {
+        "brief": "小环的衣服破了个大洞，法提娜要帮忙缝补。法提娜在梦中看到了一棵很大的开心果树，在那里正在采开心果的布偶熊不小心把衣服刮破了。法提娜和布偶熊成为了好朋友，一起摘开心果。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/03/21/938e7bcac1ef46c58209354ccd8e6100-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第15集 开心果的季节",
+        "url": "https://tv.cctv.com/2016/03/21/VIDE0Fj7Nh4lsOcE4z9MFJpy160321.shtml"
+    },
+    {
+        "brief": "天气太热了，法提娜做了个恶梦，她用纸做了纸风车。法提娜将她做的纸风车分别送给了小米和其他蘑菇岛上的布偶们。时光湖里可以看到过去和未来，法提娜在时光湖里看到了托托。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/03/21/ea85f3795a574d14a358b9425437dc9a-311.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第16集 时光湖里看到的未来",
+        "url": "https://tv.cctv.com/2016/03/21/VIDEGIKC3SckrmwACpthLku2160321.shtml"
+    },
+    {
+        "brief": "蒂诺记得所有的布偶，但是就是不记得法提娜，法提娜就去询问小米。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/03/22/7709f314b5c14f1486e642ad46a56151-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第17集 真实之忆",
+        "url": "https://tv.cctv.com/2016/03/22/VIDEEgG3Sl4XfAoCAnFr4GX2160322.shtml"
+    },
+    {
+        "brief": "托托开始自己旅行了，想要找寻新的回忆。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/03/22/82b33549e7d14c7ca923bf3b5cfb2d29-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第18集 带着回忆旅行",
+        "url": "https://tv.cctv.com/2016/03/22/VIDEqMHuC32miAhq4uuUdXJi160322.shtml"
+    },
+    {
+        "brief": "布偶小米在房屋前发现了一株植物，植物长成了四叶草，四叶草的花语是幸福。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/03/23/40baf9ec29e24282941443ac42f147e0-311.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第19集 四叶草",
+        "url": "https://tv.cctv.com/2016/03/23/VIDECoOthENm5c9MyEpyIpCH160323.shtml"
+    },
+    {
+        "brief": "蘑菇岛上有很多神奇的传说，法提娜和朋友们准备东西过平安夜迎接新年的到来。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/03/23/22ff0a5655994b1b8e317ec6820b9d7b-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第20集 平安夜",
+        "url": "https://tv.cctv.com/2016/03/23/VIDEk5j6PIua3fD9EOcehpqZ160323.shtml"
+    },
+    {
+        "brief": "圣诞节来临，蘑菇岛的布偶来到发着光的星星前庆祝。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/03/24/c7688802d54c4e9b9058c6766339623c-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第21集 夜精灵",
+        "url": "https://tv.cctv.com/2016/03/24/VIDEV3UbNwOnQQDGGsZG62he160324.shtml"
+    },
+    {
+        "brief": "小恐龙透过盒子看着外面的人和布偶，它认识每个布偶，但别人却不认识它。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/03/24/600eb405a1d64d788003685477b57be7-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第22集 预言般的梦境",
+        "url": "https://tv.cctv.com/2016/03/24/VIDEgbteL5HLKeFZLtH1z6mk160324.shtml"
+    },
+    {
+        "brief": "法提娜在梦境中看到自己在缝制衣物，她来到了自己画中的世界。法提娜发高烧了，伙伴们都来看望她。小恐龙带来了四叶草，在朋友们的关心下，法提娜很快苏醒过来。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/03/25/a404c600c27d4e6f8ad9217e2d9380e0-371.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第23集 苏醒",
+        "url": "https://tv.cctv.com/2016/03/25/VIDE7AZwbMdiw1ez5MQ8qhYX160325.shtml"
+    },
+    {
+        "brief": "法提娜和小米跟着奶奶去逛街，他们藏在了奶奶的篮子里面，看到了布偶小熊，奶奶将布偶小熊带了回来。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/03/25/a6294fcd13c74428acc9b27ca12fe8ef-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第24集 重拾的回忆",
+        "url": "https://tv.cctv.com/2016/03/25/VIDEDBlfzKRtj2DR70GXXw1z160325.shtml"
+    },
+    {
+        "brief": "法提娜回想自己和主人过去的事情，觉得就像甜蜜的棉花糖。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/03/28/820dfbbe87e84af8ada7699c291509c7-309.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第25集 梦境世界",
+        "url": "https://tv.cctv.com/2016/03/28/VIDE7XM7sAIIBswsFEfbKeZM160328.shtml"
+    },
+    {
+        "brief": "当布偶们的回忆渐渐恢复的时候，都觉得是另一番收获。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/03/28/5206ea59cf4d475d8c799e447206afb4-310.jpg",
+        "title": "[动画剧场]《奇妙梦境》 第26集 等待重逢",
+        "url": "https://tv.cctv.com/2016/03/28/VIDEx7EuL36oCc9vVkpONJnT160328.shtml"
+    }
+]

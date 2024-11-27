@@ -35,8 +35,10 @@ object WebViewUtils {
         webSettings.javaScriptEnabled = true
         webSettings.domStorageEnabled = true
         webSettings.databaseEnabled = true
-        webSettings.loadsImagesAutomatically = false // 禁用自动加载图片
-        webSettings.blockNetworkImage = true // 禁用网络图片加载
+        if (!url.endsWith(".shtml")) {
+            webSettings.loadsImagesAutomatically = false // 禁用自动加载图片
+            webSettings.blockNetworkImage = true // 禁用网络图片加载
+        }
         webSettings.mediaPlaybackRequiresUserGesture = false
         webSettings.userAgentString = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
         // 启用缓存
@@ -65,9 +67,10 @@ object WebViewUtils {
             // handler.proceed(); // 忽略 SSL 错误
             // }
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+                if (!url.endsWith(".shtml"))
                 // 页面加载时执行 JavaScript 脚本
-                view.evaluateJavascript(
-                    """
+                    view.evaluateJavascript(
+                        """
                         function FastLoading() {
                              const fullscreenBtn = document.querySelector('#player_pagefullscreen_yes_player') || document.querySelector('.videoFull');
                              if (fullscreenBtn) return;
@@ -99,7 +102,7 @@ object WebViewUtils {
 
                      FastLoading();
                 """.trimIndent()
-                ) { value: String? -> }
+                    ) { value: String? -> }
                 super.onPageStarted(view, url, favicon)
             }
 

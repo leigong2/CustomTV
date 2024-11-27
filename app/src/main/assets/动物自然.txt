@@ -1,0 +1,308 @@
+[
+    {
+        "brief": "乐比等人发现了一本神奇的书，它是用来收集动物资料的图鉴。博士告诉大家地球上生活着很多有趣的动物，博士希望大家帮他收集资料。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/04/18/b936025b49994b66be16e45d59926688-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第1集 神奇的图鉴",
+        "url": "https://tv.cctv.com/2017/04/18/VIDEtkNVKtkwIddT5ykeUDCG170418.shtml"
+    },
+    {
+        "brief": "蓝鸟的蛋宝宝不见了，着急的它大哭起来，乐比等人帮它找来了很多蛋，都不是它的蛋宝宝，原来蛋宝宝已经孵出来了。",
+        "img": "//p4.img.cctvpic.com/fmspic/2017/04/18/341d312571e14123972943aab47ea93f-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第2集 寻蛋风波",
+        "url": "https://tv.cctv.com/2017/04/18/VIDEL6GwOXP69gaXvP7aDswS170418.shtml"
+    },
+    {
+        "brief": "一个神秘的小偷偷了大家的东西，乐比等人用计抓住了小偷，原来是园丁鸟为了吸引雌鸟的注意，它想建造一个漂亮的鸟窝，所以才偷了大家的东西。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/04/18/4fffad6eec674902bb2a05fa00ad12fb-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第3集 闪亮的窝",
+        "url": "https://tv.cctv.com/2017/04/18/VIDE6Rh36szSqSlBftZiZ3WG170418.shtml"
+    },
+    {
+        "brief": "大草莓种的东西不翼而飞，乐比想办法将水灌入洞里，一只鼹鼠爬了出来，它们是一种生活在地下的动物，以土里的虫子和植物的根为食。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/04/18/7f70b9d5ab5146b786d2d70a73e94e23-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第4集 花园小偷",
+        "url": "https://tv.cctv.com/2017/04/18/VIDEkpQznFMaI02Fp58U9Drc170418.shtml"
+    },
+    {
+        "brief": "小草莓在关键时候想到了冰淇淋，这时红绿灯正好经过，给它们都发了冰淇淋，而小草莓的冰淇淋莫名奇妙变少了，原来是变色龙偷偷吃了它的冰淇淋。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/04/19/ebd9b86d4336429881b70e04db165b6a-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第5集 “隐形”的贪吃鬼",
+        "url": "https://tv.cctv.com/2017/04/19/VIDEKiaTCjg5xF0HhJ18Sd5A170419.shtml"
+    },
+    {
+        "brief": "乐比她们来到海底，乐比玩累了很快睡着了，但是小虎鲸却睡不着，乐比帮助小虎鲸入睡，但是小虎鲸还是睡不着。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/04/19/a206bba4ae494caa872a8ea023072fd7-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第6集 不睡觉的朋友",
+        "url": "https://tv.cctv.com/2017/04/19/VIDEcfIbmGxSWThmkChQl0Ie170419.shtml"
+    },
+    {
+        "brief": "乐比她们遇到了熊猫，熊猫把自己包裹得很严实，小火车以为它是个坏人，熊猫说它想改变，想变成大明星被大家喜欢，乐比决定帮助它。",
+        "img": "//p2.img.cctvpic.com/fmspic/2017/04/19/4712a07d13e448709e3c82d93541fafd-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第7集 我是大明星",
+        "url": "https://tv.cctv.com/2017/04/19/VIDEngHrallwyvC5iV0tXPQZ170419.shtml"
+    },
+    {
+        "brief": "乐比她们来到南极，她们看到了很多小企鹅，突然暴风雨来了，小企鹅只能通过围成一圈来躲避暴风雨，乐比决定帮助企鹅。",
+        "img": "//p2.img.cctvpic.com/fmspic/2017/04/19/4725540d5b2e497ab41ae5e5a90861b3-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第8集 南极拯救行动",
+        "url": "https://tv.cctv.com/2017/04/19/VIDE9nW4rLTdbiGre1CWBUAX170419.shtml"
+    },
+    {
+        "brief": "悠悠发现了一个长蘑菇的石头，其实那是一只树懒。树懒在地上走的速度比乌龟还慢，它几乎一直生活在树上，所以它从来不洗澡。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/04/20/9c1db3ce426544febf3a6049afd3ef08-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第9集 不洗澡的怪家伙",
+        "url": "https://tv.cctv.com/2017/04/20/VIDENZ38WrMGOYXp6V4071hF170420.shtml"
+    },
+    {
+        "brief": "乐比等人在寻找传说中的“大侠”，它就是招潮蟹，招潮蟹长着一大一小两个钳子，大钳子用来战斗，小钳子则用来吃饭。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/04/20/1fe0a2dde8a74acdb78ece24f8578009-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第10集 传说中的“大侠”",
+        "url": "https://tv.cctv.com/2017/04/20/VIDEMyf5jInkjpwHksazaWbg170420.shtml"
+    },
+    {
+        "brief": "乐比等人在郊外野餐，可总是能闻到臭臭的味道。原来有一只臭鼬一直跟着它们，当臭鼬遇到危险的时候可以喷出臭臭的液体，臭味可以传出好几百米。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/04/20/8aa302f809014036a95bf0155ae1f544-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第11集 臭臭的朋友",
+        "url": "https://tv.cctv.com/2017/04/20/VIDEDiCEe1okZ13MiEjtsCTx170420.shtml"
+    },
+    {
+        "brief": "乐比等人要建一个树屋，大象也来帮忙。因为大象的鼻子由很多肌肉组成，就像人类的手一样可以做很多事情。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/04/20/46422b756cad4a109abb726bad786bc8-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第12集 万能的鼻子",
+        "url": "https://tv.cctv.com/2017/04/20/VIDEu7ivJm1VqJRAttBfspa3170420.shtml"
+    },
+    {
+        "brief": "狐狸偷走了鸡妈妈的蛋、还抓走了小鸭以及其它的动物，乐比和狐狸谈判，想要抓住它，但是没有成功，最后乐比和小伙伴们一起打败了狡猾的狐狸，救出了被狐狸抓走的动物。",
+        "img": "//p4.img.cctvpic.com/fmspic/2017/04/21/487c8ab6efb34cbebd60683e26b1aaaa-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第13集 狡猾的狐狸",
+        "url": "https://tv.cctv.com/2017/04/21/VIDE1vdFQ41tong5ekgx4HpY170421.shtml"
+    },
+    {
+        "brief": "斑马和长劲鹿玩躲妈妈的游戏，但由于长劲鹿脖子长无处躲藏，所以很快就被找到了；由于长劲鹿的脖子长，它喝水都显得很困难，长劲鹿因为脖子长很困扰。",
+        "img": "//p2.img.cctvpic.com/fmspic/2017/04/21/35d2ce2942ff40df83ce60936a70dbca-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第14集 小巨人",
+        "url": "https://tv.cctv.com/2017/04/21/VIDE3ewoDDUFR2cPPKrW0IcK170421.shtml"
+    },
+    {
+        "brief": "乐比看到一个无人认领的蛋糕，不知道是谁的，但蛋糕旁边有一个纸条，藏了蛋糕主人的信息，这时一个小猪来认领蛋糕，它想冒领，但被悠悠识破。小猪说它的鼻子很灵敏，闻到了蛋糕的味道。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/04/21/7e3a0f881c9d4659982bcfa0cff7932c-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第15集 小猪的鼻子",
+        "url": "https://tv.cctv.com/2017/04/21/VIDEeu5Hxxt8Kq4pRGxsdEgV170421.shtml"
+    },
+    {
+        "brief": "小熊要冬眠了，所以在这之前它们要储备很多的鱼，但它一条鱼也没有抓到，乐比她们看到了，决定帮助小熊。",
+        "img": "//p2.img.cctvpic.com/fmspic/2017/04/21/855c9d0847a542629dac2adc458b0541-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第16集 小熊要冬眠",
+        "url": "https://tv.cctv.com/2017/04/21/VIDEPQd6k1ZLpwb3Bi96RpCM170421.shtml"
+    },
+    {
+        "brief": "刺猬找不到小蛇，乐比等人在树洞里只发现了蛇皮，众人都以为小蛇被吃掉了，其实小蛇蜕皮是因为它在长大。",
+        "img": "//p2.img.cctvpic.com/fmspic/2017/04/24/f008f55b8afd4ac1854a62852f5966d3-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第17集 小蛇不见了",
+        "url": "https://tv.cctv.com/2017/04/24/VIDEicQrrT5Xq9d3QNY1EzVc170424.shtml"
+    },
+    {
+        "brief": "小草莓不见了，乐比等人在猫头鹰的帮助下，顺利找到小草莓。因为猫头鹰的眼睛夜晚也能看见东西。",
+        "img": "//p4.img.cctvpic.com/fmspic/2017/04/24/47a278a8d72c44adacee1e5c2faf8ca4-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第18集 森林搜救队",
+        "url": "https://tv.cctv.com/2017/04/24/VIDEsOVA81ZT2GHFSUgxF4Pc170424.shtml"
+    },
+    {
+        "brief": "乐比等人在湖上玩皮划艇，小草莓不慎落水，被海豚兄弟接住并抛来抛去，其实它们是在救小草莓。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/04/24/91e20b92621443e885ebd0b4de601ae4-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第19集 海豚兄弟",
+        "url": "https://tv.cctv.com/2017/04/24/VIDEX1H3nDuxoEc53zNO5inp170424.shtml"
+    },
+    {
+        "brief": "森林里总能听到奇怪的声音，乐比等人发现一只鸟在啄食树木，众人以为它是坏蛋，其实啄木鸟是森林医生，它在给树木除害虫。",
+        "img": "//p2.img.cctvpic.com/fmspic/2017/04/24/a87127b88f8b44fa9c4e4847ab856a35-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第20集 森林医生还是坏蛋",
+        "url": "https://tv.cctv.com/2017/04/24/VIDEhYPivpO0ASd9vFWki3aI170424.shtml"
+    },
+    {
+        "brief": "乐比她们看到了小牛，小牛哭着说大家都不跟它一起玩，乐比愿意跟它做朋友，但是小牛看到红色脾气就很大。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/04/25/c8aa31bcfb304973b63e92db9a24ddb9-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第21集 坏脾气的小牛",
+        "url": "https://tv.cctv.com/2017/04/25/VIDESUSNB00cITagm2mgwcwl170425.shtml"
+    },
+    {
+        "brief": "乐比看到猫妈妈和小猫，她认为宝宝都是妈妈生的。海马要生孩子了，乐比把海马妈妈强行带到了医院，但是医生说海马是爸爸生孩子。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/04/25/7e0ad933b8e24ee981512c0f076f7b15-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第22集 宝宝都是妈妈生的吗",
+        "url": "https://tv.cctv.com/2017/04/25/VIDEbvExO6nU9eg0t6kuGMzm170425.shtml"
+    },
+    {
+        "brief": "乐比看到海狸被困了河中央，乐比将海狸救了出来，原来海狸是想趁水涨起来之前修大坝，保护家园。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/04/25/322eca532b3c4ae393672e155877d345-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第23集 海狸的大坝",
+        "url": "https://tv.cctv.com/2017/04/25/VIDE46JhQW5fkJHpfCTeFhWC170425.shtml"
+    },
+    {
+        "brief": "乐比她们看到很多坚果，准备抱回去，结果被许多的坚果砸，她们慌忙逃跑，她们躲起来找凶手，最后发现是松鼠在捣乱，原来冬天到了松鼠要过冬，所以需要很多的坚果。",
+        "img": "//p2.img.cctvpic.com/fmspic/2017/04/25/0694976d65284b53a622e7c8029f6972-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第24集 谁的坚果",
+        "url": "https://tv.cctv.com/2017/04/25/VIDEPxTy3vPlkBxZfa14F7oA170425.shtml"
+    },
+    {
+        "brief": "猫鼬爸爸被乐比玩球时不慎打中，乐比将它送去了医院，而乐比则决定亲自留下来代替猫鼬爸爸做起哨兵，一定保证小猫鼬们的安全。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/04/26/56876d16c664419f80f2cef6dfda1129-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第25集 称职的哨兵",
+        "url": "https://tv.cctv.com/2017/04/26/VIDE2umxCTDJbgTwc9iDxkBt170426.shtml"
+    },
+    {
+        "brief": "海底开始了一场有关鲨鱼绑架吸盘鱼一案的审判，大家伙儿都议论纷纷。最终，经过多位证人的证词，鲨鱼被无罪释放。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/04/26/7c185ca35f3e4f2086b63e550bece603-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第26集 吸盘鱼绑架事件",
+        "url": "https://tv.cctv.com/2017/04/26/VIDEVrPIfQYrumRns7HWHkTe170426.shtml"
+    },
+    {
+        "brief": "乐比大草莓等来到幽灵海域，据说每到晚上都会出现幽灵。乐比鼓动其余两个小伙伴，开始了寻找幽灵的探险之旅。",
+        "img": "//p2.img.cctvpic.com/fmspic/2017/04/26/11155040787047fd8c6b9ebf196b43c1-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第27集 寻找“幽灵”",
+        "url": "https://tv.cctv.com/2017/04/26/VIDEdf3T9fIcnrE4S522fzFf170426.shtml"
+    },
+    {
+        "brief": "乐比等小伙伴在沙滩上玩耍，但是小草莓的水桶忽然自己动了起来，原来是一只寄居蟹在搞鬼。寄居蟹向乐比介绍起它的独特外壳，乐比产生了浓厚的兴趣。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/04/26/d5538891bfb34108bf65ab529bf3ed9b-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第28集 寄居蟹的壳",
+        "url": "https://tv.cctv.com/2017/04/26/VIDEZpl4UePXpl1OTrvTOnKp170426.shtml"
+    },
+    {
+        "brief": "一条大鱼不仅超速行驶还闯红灯，乐比、小火车一行组成的乐比交警队前去追赶那条大鱼，但是大鱼实在太快了，他们追赶不上。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/04/27/827e2119a66f40bd94910b74b695c011-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第29集 最高通缉",
+        "url": "https://tv.cctv.com/2017/04/27/VIDEiUWwGaOrB1DvQPO1CXgD170427.shtml"
+    },
+    {
+        "brief": "小火车不小心被卡住了，乐比和悠悠想要帮助小火车却推不动它，冰原斗士独角鲸三兄弟听到了小火车的呼救声赶来帮忙。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/04/27/996c03f3e59547cc977349597d665a58-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第30集 冰原斗士独角鲸",
+        "url": "https://tv.cctv.com/2017/04/27/VIDEZdwbQH5jrEBhCtFez5qm170427.shtml"
+    },
+    {
+        "brief": "海里的小动物们告诉乐比它们都看到了大怪兽，于是乐比和小草莓前去调查。大怪兽突然出现，乐比一行急忙逃跑。大怪兽告诉乐比，它的名字叫蝠鲼。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/04/27/2709fb0bb0fa415aae0a778a04c470ce-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第31集 海底怪兽",
+        "url": "https://tv.cctv.com/2017/04/27/VIDEbHp6sb1OJLL6mSZdvP7Q170427.shtml"
+    },
+    {
+        "brief": "乐比在沙滩上遇到了小海龟，小海龟告诉乐比他们，自己是海龟，和乌龟不一样，海洋才是它的家，而它和其他小海龟失散了。在乐比等人的帮助下，小海龟终于来到了海边，找到了它的小伙伴。",
+        "img": "//p4.img.cctvpic.com/fmspic/2017/04/27/d1d73afa6d3747a5ba27b24a265f5a35-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第32集 失散的小海龟",
+        "url": "https://tv.cctv.com/2017/04/27/VIDEmd1GtDc8TwMDZ0zMAt9U170427.shtml"
+    },
+    {
+        "brief": "河豚爸爸拜托小草莓和乐比照看三个可爱的小宝宝，但小草莓因为被贝壳夹住了脑袋，无意中吵醒了三个小宝贝，三个小宝贝哭个不停，乐比和小草莓使出浑身解数让它们开心。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/05/02/3eaf6fba9dec4488b151889b772b1894-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第33集 照顾小婴儿",
+        "url": "https://tv.cctv.com/2017/05/02/VIDEERfxTjrpC4IknyIw2Z6s170502.shtml"
+    },
+    {
+        "brief": "小火车和乐比在海底比赛速度，但没想到无意中撞上了一条小花斑鱼，小花斑鱼以为自己眼睛撞歪了，两人赶紧将它送去医院治疗。医生告诉它们，花斑鱼的眼睛本来就长成这样。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/05/02/76dd7740497546e6a02ed2708db526e4-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第35集 海底车祸",
+        "url": "https://tv.cctv.com/2017/05/02/VIDEdOjJ0XuRnFPZkbDT2Lw1170502.shtml"
+    },
+    {
+        "brief": "小草莓在河边看到一只小鸟不小心飞进了鳄鱼的嘴里，以为有危险，于是叫来了乐比帮忙。但最终，小鸟非常安全的飞出了鳄鱼的大嘴，告诉它们，它其实是在帮鳄鱼漱口。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/05/02/5d6e555b90ed470f90ccbb69a9b6aca2-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第36集 鳄鱼嘴里的小鸟",
+        "url": "https://tv.cctv.com/2017/05/02/VIDEIptdUqG7goIip9Q6WVpW170502.shtml"
+    },
+    {
+        "brief": "森林运动会开始了，大家都很开心，100米赛跑时，鼹鼠和鸵鸟都钻进了土里。小草莓在以为自己会赢得比赛时，小鼹鼠突然从地里出现，赢得第一名，同时大家还发现小草莓在比赛中犯规。",
+        "img": "//p4.img.cctvpic.com/fmspic/2017/05/03/86f700b85e704957b99e96348d31129d-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第37集 运动会—前篇",
+        "url": "https://tv.cctv.com/2017/05/03/VIDEAKpclM70g0saaNuWRPs6170503.shtml"
+    },
+    {
+        "brief": "运动会的比赛还在进行中，扔铅球比赛中，树懒已经准备好了，但它的速度实在太慢了，大家都等不及了。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/05/03/d9a27d4a344d46c6943b8bc20a96560a-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第38集 运动会—后篇",
+        "url": "https://tv.cctv.com/2017/05/03/VIDEmdst8SDEpcwJ3YCTvVC1170503.shtml"
+    },
+    {
+        "brief": "乐比和悠悠正准备把西瓜运回家，途中不小心弄坏了小鸟的土堆，乐比和悠悠决定修好那个土堆，小鸟回来后原谅了他们，原来这个土堆是为了孵蛋。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/05/03/742e7596c6e74d1c89b799cb1e4f041d-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第39集 奇怪的土堆",
+        "url": "https://tv.cctv.com/2017/05/03/VIDEtZSPpt7EFpJ3w14D0u8A170503.shtml"
+    },
+    {
+        "brief": "乐比和小火车正在玩捉迷藏，乐比不小心被鱼给咬了，于是他们想抓住这些鱼，原来这些胆小的鱼叫做花园鳗。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/05/03/e2528cfb23a14b0f8b17d535c344c05c-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第40集 怪脾气的鱼",
+        "url": "https://tv.cctv.com/2017/05/03/VIDE5e1QM6j9Gimr5owspkYt170503.shtml"
+    },
+    {
+        "brief": "海底小伙伴都找章鱼护士来看病，但是章鱼护士只会手舞足蹈的，不会讲话。乐比以为章鱼护士其实是醒着的，于是把大伙儿都叫进来看病。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/05/04/5bbf48da94cc400987d6747940ea56b1-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第41集 冬眠的章鱼护士",
+        "url": "https://tv.cctv.com/2017/05/04/VIDElvoK4CPYgp1LVWF3MWLG170504.shtml"
+    },
+    {
+        "brief": "一只爱干净的浣熊在夜里偷偷潜进乐比和小草莓的家里偷东西，还准备把小草莓的蛋糕给吃掉。小草莓醒来后发现了小偷的踪迹，一路追赶。",
+        "img": "//p2.img.cctvpic.com/fmspic/2017/05/04/9fe3e0dc6afe486d8cc20fd50d8925bb-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第42集 爱干净的小偷",
+        "url": "https://tv.cctv.com/2017/05/04/VIDEExLjmXymWtR1buEU52s1170504.shtml"
+    },
+    {
+        "brief": "乐比、悠悠、小火车本来正在玩球，但是听说袋鼠妈妈坐在那里一整天没吃东西后非常担忧。原来，袋鼠妈妈之所以不动是因为自己的孩子不愿意离开育儿袋。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/05/04/234f288005854e12b5de0842621a507f-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第43集 叛逆的小袋鼠",
+        "url": "https://tv.cctv.com/2017/05/04/VIDEec1E9XL7L4BQdOxsHHL1170504.shtml"
+    },
+    {
+        "brief": "一只小鼯鼠因为不会滑行，被同伴嘲笑。乐比刚好经过，听说小鼯鼠的事情后非常同情，决定帮助小鼯鼠。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/05/04/25a0316f7e064b53a0989014ceaa248f-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第44集 不会飞的鼯鼠",
+        "url": "https://tv.cctv.com/2017/05/04/VIDEspzc3drACNrjFTydxlzP170504.shtml"
+    },
+    {
+        "brief": "一条鲸鱼因为吃了一些奇怪的东西导致肚子非常难受，不能游来游去了。乐比在小草莓的带领下来到鲸鱼的栖息地，以为是一座小岛，其实是生病的鲸鱼。",
+        "img": "//p5.img.cctvpic.com/fmspic/2017/05/05/aa181af030a547e98555d055f47800f2-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第45集 生病的“小岛”",
+        "url": "https://tv.cctv.com/2017/05/05/VIDEIFhDpJMIqnn3z4e7P7VJ170505.shtml"
+    },
+    {
+        "brief": "乐比、小草莓晚上在森林里露营，乐比讲了一个非常可怕的故事，小草莓非常害怕但是又忍不住好奇心，半夜独自起来，夜探森林。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/05/05/bf203d864e664b03b254a94d4572141e-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第46集 奇怪的露营之夜",
+        "url": "https://tv.cctv.com/2017/05/05/VIDEB5q1kYSpSbVYlWgn8LYv170505.shtml"
+    },
+    {
+        "brief": "乐比、小草莓今天的任务是寻找漂亮的贝壳，乐比无意中发现一颗非常好看的贝壳，谁知道这是小鲨鱼刚换的牙齿。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/05/05/48a7226a495e4a199bda8696d01f5370-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第47集 换牙的小鲨鱼",
+        "url": "https://tv.cctv.com/2017/05/05/VIDEkAMRi1rXTsDckR0ojDBn170505.shtml"
+    },
+    {
+        "brief": "乐比、小火车用望远镜无意中发现有人在跟踪它们，于是它们决定找出这个跟踪者。原来，跟踪它们的是一只鸵鸟，它也想玩望远镜。",
+        "img": "//p4.img.cctvpic.com/fmspic/2017/05/05/f770589f449646049354bd69d3d24190-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第48集 胆小的跟踪者",
+        "url": "https://tv.cctv.com/2017/05/05/VIDECVz70gLEe9BU8DD5GwmG170505.shtml"
+    },
+    {
+        "brief": "天气变冷了，乐比、小草莓都穿起了暖和的衣服保暖，但是小刺猬却从来没穿过衣服。乐比告诉了小刺猬衣服的好处，小刺猬让其他小动物都开始准备做衣服。",
+        "img": "//p3.img.cctvpic.com/fmspic/2017/05/08/2ec139fc628e4b91a20dd22d564fde41-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第49集 为什么不穿衣服",
+        "url": "https://tv.cctv.com/2017/05/08/VIDEQDDYeBZmGsZrDqlPikGB170508.shtml"
+    },
+    {
+        "brief": "选美大赛开始了，乐比和悠悠也准备参加比赛，但是却不小心拔了小孔雀的羽毛，小孔雀非常伤心。为了表达歉意，乐比和悠悠帮助小孔雀拿到了比赛第一名。",
+        "img": "//p4.img.cctvpic.com/fmspic/2017/05/08/cf7326deabf743bfbf5b2114f71cce0f-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第50集 选美比赛",
+        "url": "https://tv.cctv.com/2017/05/08/VIDE06nTUybIj2un98s6TbVL170508.shtml"
+    },
+    {
+        "brief": "河马非常羡慕陆地上的动物能够自由自在玩耍，有天，乐比等小伙伴在一起玩球u，河马忍不住诱惑，上岸和乐比一起玩球，结果生病了。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/05/08/8e8b938ad8be4ca58fd5c76ab1a6a06c-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第51集 离不开水的河马",
+        "url": "https://tv.cctv.com/2017/05/08/VIDEfj1WUMDBEyNnsnzsx1Ht170508.shtml"
+    },
+    {
+        "brief": "乐比、悠悠在认识了鸭嘴兽之后，受到问号的召唤，博士告诉它们，已经成功完成了所有的图鉴。",
+        "img": "//p1.img.cctvpic.com/fmspic/2017/05/08/fa4113eb0c4f4884a022d442658a56f0-130.jpg",
+        "title": "[动画乐翻天]《乐比悠悠科普系列之动物自然》 第52集 完成图鉴",
+        "url": "https://tv.cctv.com/2017/05/08/VIDE3eOFL3bkCC5pygBH1ngy170508.shtml"
+    }
+]

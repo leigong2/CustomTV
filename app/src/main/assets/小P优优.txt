@@ -1,0 +1,314 @@
+[
+    {
+        "brief": "优优带着小狗鲁拉准备去沙滩，他们要带上圆球，球是圆的，圆的英文是Round。优优还有一个玩具箱，玩具箱英文是Toy box，玩具箱里有很多好玩的玩具，比如滑板，积木，娃娃等。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/09/07/c9881f538a6841ceb7818d7cf37e3729-20.jpg",
+        "title": "[动漫世界]《小P优优》 第1集",
+        "url": "https://tv.cctv.com/2016/09/07/VIDERQblvWBRZDYGlitCT264160907.shtml"
+    },
+    {
+        "brief": "优优来看好朋友瞌睡鸟，从鸟巢里掉下来一个蛋，优优以为它是个球。优优需要把蛋送回鸟巢里。优优遵守承诺，带着鸟宝宝开飞艇。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/09/08/264df85b4b064f229874fae64cacbf67-610.jpg",
+        "title": "[动漫世界]《小P优优》 第2集",
+        "url": "https://tv.cctv.com/2016/09/08/VIDE4FsdBuK17WdfcKsWFzt1160908.shtml"
+    },
+    {
+        "brief": "优优认识了电话机，优优被电话的铃声和闹钟铃声给搞糊涂了。巴托选择需要照顾鸟宝宝，优优只能负责收拾东西。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/09/08/4800db215bbf4060a22b0d3489954eaa-610.jpg",
+        "title": "[动漫世界]《小P优优》 第3集",
+        "url": "https://tv.cctv.com/2016/09/08/VIDE7jkduF8x7Ixt7QEyXdE0160908.shtml"
+    },
+    {
+        "brief": "优优和小狗鲁拉玩起了球，球的英文是ball，优优拿出一个玩具狗，上面有一把钥匙（A Key），转动钥匙小狗就会动。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/09/09/bcde0df72e814523829f11e78cd2d1e8-20.jpg",
+        "title": "[动漫世界]《小P优优》 第4集",
+        "url": "https://tv.cctv.com/2016/09/09/VIDELrKpJB3YQnlD1mYd8zfK160909.shtml"
+    },
+    {
+        "brief": "优优有一架玩具飞机（plane），优优爱不释手，结果小象把优优的飞机弄得太高，看不到了，于是鸭子拿来一架望远镜（Telescope），通过望远镜来看飞机。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/09/09/e8d0d3925c99431292ff540a7423d4b9-610.jpg",
+        "title": "[动漫世界]《小P优优》 第5集",
+        "url": "https://tv.cctv.com/2016/09/09/VIDEH9hitm2UL2HCYt9wYhgt160909.shtml"
+    },
+    {
+        "brief": "优优、艾丽和巴托正在玩球，忽然巴托被闹钟吸引，原来它准备去海底世界，和海底世界的朋友一起玩耍。优优和巴托遨游太空，由于零件丢失，落在一颗不知名的星球，但最终安全回归。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/09/12/74e890e3e2754190b308f93339ac3d14-610.jpg",
+        "title": "[动漫世界]《小P优优》 第6集",
+        "url": "https://tv.cctv.com/2016/09/12/VIDEde2P7JyefqM2WBNFtwCV160912.shtml"
+    },
+    {
+        "brief": "优优和巴托被一个会发出声音的方盒子迷住了。按下按钮，这个盒子就能发出音乐。原来这是一个收音机！巴托听着音乐，开始跳滑稽的鸭子舞；艾丽也来了，随着音乐跳起了优美的大象舞；可是优优却怎么也不能像巴托和艾丽那样跳舞。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/09/12/740023da535745dca87cda0c5d55f962-20.jpg",
+        "title": "[动漫世界]《小P优优》 第7集",
+        "url": "https://tv.cctv.com/2016/09/12/VIDEbnJjv9zg6oQ2TNEezFr4160912.shtml"
+    },
+    {
+        "brief": "优优看到艾丽在和它喜欢的娃娃一起玩，艾丽希望优优帮忙照看娃娃。优优将艾丽的娃娃弄坏了，于是他便自己伪装成娃娃。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/09/13/99215b719d6547a48f4f7fca3d665419-610.jpg",
+        "title": "[动漫世界]《小P优优》 第8集",
+        "url": "https://tv.cctv.com/2016/09/13/VIDEtVJGo6pi4KiIjJKmJofw160913.shtml"
+    },
+    {
+        "brief": "优优画了一条在天上的绿色鱼，随后优优又画了一条在树林里的蓝色鱼，他又画了一条在海里的红色鱼。艾丽让优优和巴托画它的娃娃，但是他们都画的不是娃娃，艾丽有点不高兴了。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/09/13/4835458b1b164491891091cc982e8cfa-20.jpg",
+        "title": "[动漫世界]《小P优优》 第9集",
+        "url": "https://tv.cctv.com/2016/09/13/VIDE2rgpQVq6xscEfNyVrneD160913.shtml"
+    },
+    {
+        "brief": "优优正在忙着给苹果拍照片，忽然发现相机不见啦。是谁拿了照相机？优优找到了三张照片，一张上面是粉色的脚，一张上面是滑板车，还有一张上面有个蓝色的小背包。根据这些照片，优优终于找到了拿走相机的小朋友。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/09/14/61976d0fea6d4fd598b1009f0dee3988-20.jpg",
+        "title": "[动漫世界]《小P优优》 第10集",
+        "url": "https://tv.cctv.com/2016/09/14/VIDEKf9flxh5AisdsyNUEQOA160914.shtml"
+    },
+    {
+        "brief": "优优是个神气的小鼓手，他用力的敲着鼓，走去找瞌睡鸟，可是瞌睡鸟不理他。他又敲着鼓，去找艾丽，可是艾丽在跳舞也不想和他玩。优优最后敲着鼓来找巴托，把搭积木的巴托吓了一大跳。没有人想和优优一起玩敲鼓，优优该怎么办呢？",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/09/14/9e7dd92db37a44cfbc8f3542e01bc532-610.jpg",
+        "title": "[动漫世界]《小P优优》 第11集",
+        "url": "https://tv.cctv.com/2016/09/14/VIDEF0E0vV5YywyJPPSzGLJY160914.shtml"
+    },
+    {
+        "brief": "优优又交到了新朋友——蝴蝶，优优非常高兴，追着蝴蝶跑。巴托小心翼翼地守着一颗蛋，却发现孵出来的是一只蜘蛛。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/09/19/342dcc52d1f04717aa9884f07728161b-610.jpg",
+        "title": "[动漫世界]《小P优优》 第12集",
+        "url": "https://tv.cctv.com/2016/09/19/VIDEdOJx74ozwAXwWNvFUQuW160919.shtml"
+    },
+    {
+        "brief": "章鱼来了球棒和球，优优、巴托、艾莉和章鱼一起玩起了击球游戏。艾莉好不容易击中了球，球飞走了，优优找回了球。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/09/19/78433ded65b44217bb7bfcd63931b175-20.jpg",
+        "title": "[动漫世界]《小P优优》 第13集",
+        "url": "https://tv.cctv.com/2016/09/19/VIDEUMRrVSwKOEjCIzyG5XBk160919.shtml"
+    },
+    {
+        "brief": "优优和艾丽驾着各自的小车，在裁判巴托的指挥下，展开了一场紧张的比赛。连瞌睡鸟也忍不住驾着自己的小车加入到这个比赛当中。可是，在比赛的过程中，优优和艾丽分别遇到了各自的难题，他们的车都坏了。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/09/20/a84a6d5ba0b44b5ea618b44dee55e618-20.jpg",
+        "title": "[动漫世界]《小P优优》 第14集",
+        "url": "https://tv.cctv.com/2016/09/20/VIDER9ICKYZkgQ81U5FFTxjc160920.shtml"
+    },
+    {
+        "brief": "优优收到了一件礼物，吸引了艾丽和巴托的目光，他们两个都想打开礼物，但是优优就是不打开。艾丽有什么办法呢？原来礼物是优优为艾丽准备的。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/09/20/722b65dd7de3437c95e4417c1989ea46-20.jpg",
+        "title": "[动漫世界]《小P优优》 第15集",
+        "url": "https://tv.cctv.com/2016/09/20/VIDEkdpKEMquO83h11eusEKU160920.shtml"
+    },
+    {
+        "brief": "优优想学巴托和艾丽那样跳绳，可是跳来跳去绳子不是绕在腿上，就是缠到了树上，把优优气坏了。这时，好朋友巴托和艾丽想出来一个好办法，帮着优优摇起了绳子，这样优优就可以快乐地跳绳了。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/09/21/caf519729afe4516b74400a14da7694b-610.jpg",
+        "title": "[动漫世界]《小P优优》 第16集",
+        "url": "https://tv.cctv.com/2016/09/21/VIDE5tLdPVeHQFxdeavExUMr160921.shtml"
+    },
+    {
+        "brief": "优优把盒子当成小汽车，独自玩耍。一只狗趁优优不注意，跑到了盒子里面，当优优再次坐在盒子上的时候，盒子居然像真的小汽车，移动起来。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/09/21/1bcaf3f01b4c420eb95996794a97d0d1-20.jpg",
+        "title": "[动漫世界]《小P优优》 第17集",
+        "url": "https://tv.cctv.com/2016/09/21/VIDEAbY4LkBo04oxJqduSswx160921.shtml"
+    },
+    {
+        "brief": "优优拿着一个有着不同颜色的神奇遥控器，它能将火车变成红色，将飞机变成蓝色。艾丽和巴托在玩堆积木，优优看到后，就把积木都变成了红色，真奇怪啊！",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/09/22/0887bd9dc44742b9be69e7171bdce02e-20.jpg",
+        "title": "[动漫世界]《小P优优》 第18集",
+        "url": "https://tv.cctv.com/2016/09/22/VIDETA7s0FvfyZPxkCY3zTlm160922.shtml"
+    },
+    {
+        "brief": "优优和巴托准备去野餐，艾丽也准备加入进来。但是，今天的艾丽有些不同，它的身上长满了蓝色的斑点，优优和巴托本来想远离它，但是艾丽紧追不舍。两人将他弄到床上后，准备继续野餐。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/09/22/3ccb13e077b0452cada6fbc600d4eed4-20.jpg",
+        "title": "[动漫世界]《小P优优》 第19集",
+        "url": "https://tv.cctv.com/2016/09/22/VIDEwccsoLIgEVy9z3xuixpv160922.shtml"
+    },
+    {
+        "brief": "美好的一天又开始了，艾丽要来优优家找优优玩。优优要打扫屋子了，可是优优不会正确使用扫帚。优优拿着扫帚，一会当马骑，一会打起了冰球。终于，在艾丽赶来之前，整理好了房间。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/09/23/33e1b418a2634d7d9ba06f70e08989a9-610.jpg",
+        "title": "[动漫世界]《小P优优》 第20集",
+        "url": "https://tv.cctv.com/2016/09/23/VIDEzBb3je67QTkbgpEuYrRC160923.shtml"
+    },
+    {
+        "brief": "优优和巴托该上床睡觉了，可是优优不想去睡觉，它还想多玩会，巴托被吵到了，它很无奈。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/09/23/d59625ac51f7477abe53ce3b15e760bc-610.jpg",
+        "title": "[动漫世界]《小P优优》 第21集",
+        "url": "https://tv.cctv.com/2016/09/23/VIDECBi1qxxsD5fej17s2oMD160923.shtml"
+    },
+    {
+        "brief": "优优的音乐花长大了，优优喜欢他的音乐花，优优给水壶灌满了水，然后去浇花。大象想要洗澡，可是没有水，优优将水给了大象。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/09/26/7c636dff195b47feb89d5d4271959d0b-610.jpg",
+        "title": "[动漫世界]《小P优优》 第22集",
+        "url": "https://tv.cctv.com/2016/09/26/VIDE1D0ZI0Dn4osmUvNrMWS7160926.shtml"
+    },
+    {
+        "brief": "优优想要找好朋友一起玩，他看到自己的影子觉得很好奇，优优想摆脱掉影子，可是怎么都摆脱不了。一朵云彩一直跟着优优和巴特。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/09/26/a4ce307e7b824982af6dfad329700b63-20.jpg",
+        "title": "[动漫世界]《小P优优》 第23集",
+        "url": "https://tv.cctv.com/2016/09/26/VIDEfwkNCsXrJIMkbesh5T4B160926.shtml"
+    },
+    {
+        "brief": "优优发现了一把雨伞，却不会使用它，最后下雨了优优和大家成功的用雨伞避免了被雨水淋湿。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/09/27/a77033de40354503aebdcfc0cfdd29a1-610.jpg",
+        "title": "[动漫世界]《小P优优》 第24集",
+        "url": "https://tv.cctv.com/2016/09/27/VIDEdgEsYQ9grVRA5MJQ4ihj160927.shtml"
+    },
+    {
+        "brief": "优优发现了自己说一句话就有一个声音回答他，但是他并不知道这是什么，最终他和小伙伴们发现了这就是自己的回声。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/09/27/60d67207a3664baa93386560af2112c4-610.jpg",
+        "title": "[动漫世界]《小P优优》 第25集",
+        "url": "https://tv.cctv.com/2016/09/27/VIDEKT6KuGqc7lWcl6KU6Smm160927.shtml"
+    },
+    {
+        "brief": "优优和朋友们跳着舞，突然音乐停了，优优只能和大家一起自己演奏乐器，然而他们演奏的只是噪音，还吵醒了瞌睡鸟。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/09/28/f75d713ff20f4d45a962ec94b45bdae6-20.jpg",
+        "title": "[动漫世界]《小P优优》 第26集",
+        "url": "https://tv.cctv.com/2016/09/28/VIDEwPTks0NPOS0VRI1Au6sI160928.shtml"
+    },
+    {
+        "brief": "优优和巴托在搭城堡，巴托搭到最上面还差一块积木，优优从最底层抽出一块给巴托，城堡刚搭好就倒了，二人因此闹起了别扭。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/09/28/ddd556e477174296b2cccf704121a424-610.jpg",
+        "title": "[动漫世界]《小P优优》 第27集",
+        "url": "https://tv.cctv.com/2016/09/28/VIDE7YgYqLinLCCNRIDnkzbv160928.shtml"
+    },
+    {
+        "brief": "优优跟着自己的脚印转着圈圈，忽然发现不远处也有一排脚印，优优猜不出来是谁留下的，小伙伴们告诉优优是鲁拉行走在沙滩上留下的足迹。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/09/29/b4b969143f3a461daa311e1d120a9658-20.jpg",
+        "title": "[动漫世界]《小P优优》 第28集",
+        "url": "https://tv.cctv.com/2016/09/29/VIDEUKjo8LpX7WEwmrusKlgQ160929.shtml"
+    },
+    {
+        "brief": "一件闪闪发光的东西，优优很好奇它是什么。小伙伴们告诉优优，这是一把曾经打开过海盗宝藏的神奇钥匙。优优拿着它居然真的打开了一处地方，他开始寻找宝藏。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/09/29/b907082de62a42f68e055923a1f5088d-20.jpg",
+        "title": "[动漫世界]《小P优优》 第29集",
+        "url": "https://tv.cctv.com/2016/09/29/VIDEN5wIjaJBO2WEcwg2kJH5160929.shtml"
+    },
+    {
+        "brief": "巴托被粘在上面没法下来，优优和艾丽给巴托喂吃的喝的，并陪着他玩耍，最后闹铃响了，巴托也跟着走了下来。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/09/30/a66e6a424c9545ae8216bed7aac4898b-610.jpg",
+        "title": "[动漫世界]《小P优优》 第30集",
+        "url": "https://tv.cctv.com/2016/09/30/VIDEKekN9GvkW9MWTMLySZvT160930.shtml"
+    },
+    {
+        "brief": "今天是艾丽的生日，优优要给艾丽准备个礼物，他用积木搭了一个艾丽的模型，艾丽收到礼物很高兴。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/09/30/3fe6e827ffaf40eeb66c5f484d0039e8-610.jpg",
+        "title": "[动漫世界]《小P优优》 第31集",
+        "url": "https://tv.cctv.com/2016/09/30/VIDEzFqBcOsMxD0HQZDxpi4d160930.shtml"
+    },
+    {
+        "brief": "优优在吹泡泡，泡泡漫天飞舞，鲁拉追着泡泡跑，玩得非常开心。大象艾丽也想吹泡泡，可是优优不给它泡泡瓶，它只得趁优优不注意时从优优手里抢了过来。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/10/10/5c2d82b77ca44350ab23f789db826887-20.jpg",
+        "title": "[动漫世界]《小P优优》 第32集",
+        "url": "https://tv.cctv.com/2016/10/10/VIDE1fqZQNDpJ4HzXgjTOCFU161010.shtml"
+    },
+    {
+        "brief": "优优将喇叭和收音机放入了一台非常奇怪和复杂的机器里面，经过混合后，就变成了一个可以吹出各种音乐的喇叭，大家都很喜欢优优的这个新玩具。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/10/10/f40f3d4d534b492c98052a67bf5f2dca-610.jpg",
+        "title": "[动漫世界]《小P优优》 第33集",
+        "url": "https://tv.cctv.com/2016/10/10/VIDEErrVp6gmlpibSZcBCGHy161010.shtml"
+    },
+    {
+        "brief": "优优和巴托去露营，优优带了帐篷，巴托却带了鱼缸、花盆等不需要的东西，优优很生气。最后优优发现他们竟然没有带吃的东西，优优将冰箱搬过来了。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/10/11/20883d5dee6f45df91a85409e6467856-610.jpg",
+        "title": "[动漫世界]《小P优优》 第34集",
+        "url": "https://tv.cctv.com/2016/10/11/VIDEFi9roD3ZEBNOukkVj1WI161011.shtml"
+    },
+    {
+        "brief": "优优的朋友们要为他举办聚会，并给他一个惊喜，于是艾丽、巴托、瞌睡鸟分别偷偷地着手准备起来。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/10/11/d1939db0a7c14f6c8c4ae2623801e862-610.jpg",
+        "title": "[动漫世界]《小P优优》 第35集",
+        "url": "https://tv.cctv.com/2016/10/11/VIDEqkBoVlFCevT2DZMHrZAP161011.shtml"
+    },
+    {
+        "brief": "优优心情很不好，章鱼找了过来，通过一系列搞怪的动作和声音让优优开心了起来。艾丽也来到这里，本来它很开心地跳舞，却被优优的笑声打断，顿时非常不高兴，章鱼看到后又想办法让艾丽变得开心起来。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/10/12/e5a6def3fe294bbaba75e526fe65357c-610.jpg",
+        "title": "[动漫世界]《小P优优》 第36集",
+        "url": "https://tv.cctv.com/2016/10/12/VIDE6S0gAYaksMiDEBuydaqn161012.shtml"
+    },
+    {
+        "brief": "优优在画画，巴托在一旁观看，优优画的是艾丽和优优手牵手的画面，但是艾丽却看不见。优优拜托巴托充当邮递员的工作，将这幅画送到艾丽手中。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/10/12/4733877555b64c5899b5f3d2b098810a-20.jpg",
+        "title": "[动漫世界]《小P优优》 第37集",
+        "url": "https://tv.cctv.com/2016/10/12/VIDEIfvDRU0nSXFvSKjppCrj161012.shtml"
+    },
+    {
+        "brief": "优优今天成了一个超人，他邀请巴托跟他一起玩，超人优优在寻找需要帮助的人，他“帮助”了瞌睡鸟和小狗鲁拉还有大象艾丽，然而却是好心办坏事。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/10/13/bb3e231667d748f4a02c38763ac5485e-20.jpg",
+        "title": "[动漫世界]《小P优优》 第38集",
+        "url": "https://tv.cctv.com/2016/10/13/VIDE5mMmzOjdG8rX5Phe755W161013.shtml"
+    },
+    {
+        "brief": "优优、巴托和艾丽在一起搭积木塔，然而因为艾丽的喷嚏导致积木塔都塌了，不仅如此还将巴托都给喷飞了，巴托有点不开心。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/10/13/2fbe9b9ae3c64d5485ad871dbf4afbad-550.jpg",
+        "title": "[动漫世界]《小P优优》 第39集",
+        "url": "https://tv.cctv.com/2016/10/13/VIDESrVlgNIVWqNZtrRTHPPl161013.shtml"
+    },
+    {
+        "brief": "艾丽建了一个漂亮的城堡，优优看到后觉得很惊奇。艾丽拿出建筑样本给优优看，两人都觉得少了一面旗子。于是，艾丽就让优优看着城堡，自己去拿旗子。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/10/14/58cab3b307da45fabf522c9bd954e323-20.jpg",
+        "title": "[动漫世界]《小P优优》 第40集",
+        "url": "https://tv.cctv.com/2016/10/14/VIDERvZlJf94m0MR2eUifjQb161014.shtml"
+    },
+    {
+        "brief": "优优拿出水粉笔和颜料，准备画画。但是究竟画什么呢？优优考虑许久，这时一只小黄狗鲁拉跑了过来，优优很快就决定就画这只小黄狗鲁拉了。于是，鲁拉就成为了优优的最佳模特。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/10/14/83c0fc59713745ddaeeb24a6eeaec0de-20.jpg",
+        "title": "[动漫世界]《小P优优》 第41集",
+        "url": "https://tv.cctv.com/2016/10/14/VIDE1rdNU3rUkviYCKnLsj0H161014.shtml"
+    },
+    {
+        "brief": "优优想要做游戏，优优带着眼镜，不一会他就跑得没影了。他一会躲到水里，一会又躲到花丛中。优优发现了一个隐形按钮，既可以将东西变隐形，又可以把东西变回来。",
+        "img": "//p5.img.cctvpic.com/fmspic/2016/10/17/fa8352875cd74eb4b382400675577453-20.jpg",
+        "title": "[动漫世界]《小P优优》 第42集",
+        "url": "https://tv.cctv.com/2016/10/17/VIDEIubzYR9W0tvEntsgPl3I161017.shtml"
+    },
+    {
+        "brief": "优优和巴托在玩球，瞌睡鸟宝宝也想参加，他们一起玩球。鸟宝宝带着球躲来躲去，优优和巴托想要把球给带回来。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/10/17/7212c911f99e44d39f6ac6a3b8676ead-20.jpg",
+        "title": "[动漫世界]《小P优优》 第43集",
+        "url": "https://tv.cctv.com/2016/10/17/VIDEgkSrxHqXlPZDS4837JLE161017.shtml"
+    },
+    {
+        "brief": "优优、巴托、艾丽正在搭建城堡，但是巴托去拿积木的时候，忽然打起嗝来，艾丽和优优开始想办法帮助巴托。两人各自想了办法，优优想到了倒立，效果不错。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/10/18/225bc3abf03140009e092d8eb0043deb-610.jpg",
+        "title": "[动漫世界]《小P优优》 第44集",
+        "url": "https://tv.cctv.com/2016/10/18/VIDEKnh4GMxgSjp0dRQwfvaT161018.shtml"
+    },
+    {
+        "brief": "优优将一个收音机、气球等道具都拿到家里，他到底在忙什么呢？原来是聚会。没过多久，艾丽和巴托等一群朋友都来了，还带了很多好吃的，它们之后还一起进行网球比赛。",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/10/18/3d6e9aa8afc6402ba2135324ce844ef8-610.jpg",
+        "title": "[动漫世界]《小P优优》 第45集",
+        "url": "https://tv.cctv.com/2016/10/18/VIDE48FXNilj2YKWfynBXdlh161018.shtml"
+    },
+    {
+        "brief": "优优、巴托和艾丽要进行赛跑，优优获胜了；巴托准备来一场跳远比赛，艾丽赢了比赛，巴托还是不甘心。巴托得到了一双魔力鞋，能轻松赢得比赛，然而这双魔力鞋突然出现了问题。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/10/19/17625a3ca555495ea4cb5a5c76179882-20.jpg",
+        "title": "[动漫世界]《小P优优》 第46集",
+        "url": "https://tv.cctv.com/2016/10/19/VIDELq7X711iNhPMYJpxNUdK161019.shtml"
+    },
+    {
+        "brief": "外星宝宝来到地球，和优优成为了朋友，外星宝宝很胆小，在优优的帮助下，外星宝宝与巴托、艾丽也成为了朋友。",
+        "img": "//p1.img.cctvpic.com/fmspic/2016/10/19/86f749c98a8a47c0a6098b5e59440fe4-20.jpg",
+        "title": "[动漫世界]《小P优优》 第47集",
+        "url": "https://tv.cctv.com/2016/10/19/VIDEhihXurDC7CrOqvejZ6mi161019.shtml"
+    },
+    {
+        "brief": "优优和艾丽在玩餐馆游戏，艾丽准备扮演一个厨师，而优优则准备扮演一个服务员，但是他们好像缺少一位客人，怎么办呢？正好巴托经过此地，于是就被拉过来做起了客人。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/10/20/fbe31464fa1146e8a8c66413d6ffe2ac-20.jpg",
+        "title": "[动漫世界]《小P优优》 第48集",
+        "url": "https://tv.cctv.com/2016/10/20/VIDEtCPL6ypsJeoAg4xnfXYF161020.shtml"
+    },
+    {
+        "brief": "毛毛虫、巴托、艾丽等人跳上跳下的停不下来，非常激动。为什么呢？原来它们要进行才艺表演了。艾丽首先表演芭蕾空手道，鸟宝宝表演弹珠弹射，鲸鱼唱歌，巴托表演变形等等，大家玩得非常开心。",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/10/20/d081e64f265446d7a34baff53c4b0ce6-610.jpg",
+        "title": "[动漫世界]《小P优优》 第49集",
+        "url": "https://tv.cctv.com/2016/10/20/VIDEPpLDJItPsPlq9RooN47b161020.shtml"
+    },
+    {
+        "brief": "",
+        "img": "//p2.img.cctvpic.com/fmspic/2016/10/21/c74c680c82674ecabbfcbb7e328a2211-20.jpg",
+        "title": "[动漫世界]《小P优优》 第50集",
+        "url": "https://tv.cctv.com/2016/10/21/VIDEMNUMsq2LOMgwt1BzMe46161021.shtml"
+    },
+    {
+        "brief": "",
+        "img": "//p4.img.cctvpic.com/fmspic/2016/10/21/afbe9f1cecdd4b74ab092a214914c15e-20.jpg",
+        "title": "[动漫世界]《小P优优》 第51集",
+        "url": "https://tv.cctv.com/2016/10/21/VIDEHD8rypHE8A2AzhTCLwFZ161021.shtml"
+    },
+    {
+        "brief": "优优弄来一台电影放映机，准备放一部有关朋友们的电影，艾丽、巴托等小伙伴都准备一睹为快。这部电影记录了艾丽、优优和巴托等朋友们的生活点滴，小伙伴们看了之后都很开心。",
+        "img": "//p3.img.cctvpic.com/fmspic/2016/10/24/33b59784853f4566a7667801fb9cf9b8-550.jpg",
+        "title": "[动漫世界]《小P优优》 第52集",
+        "url": "https://tv.cctv.com/2016/10/24/VIDEKYpia69xvyA36md1rgHI161024.shtml"
+    }
+]
