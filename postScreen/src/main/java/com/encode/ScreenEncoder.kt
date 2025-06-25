@@ -250,11 +250,17 @@ object ScreenEncoder {
     fun close() {
         try {
             isPlaying = false
-            webSocketServer.stop()
-            webSocket.close()
-            mediaCodec.release()
+            if (this::webSocketServer.isInitialized) {
+                webSocketServer.stop()
+            }
+            if (this::webSocket.isInitialized) {
+                webSocket.close()
+            }
+            if (this::mediaCodec.isInitialized) {
+                mediaCodec.release()
+            }
             mediaProjection.stop()
-        } catch (e: InterruptedException) {
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }

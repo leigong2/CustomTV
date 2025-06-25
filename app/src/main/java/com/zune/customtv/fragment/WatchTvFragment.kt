@@ -86,18 +86,18 @@ class WatchTvFragment : Fragment() {
                 }
             }
         }
-        if (mLastPlayPosition >= 0) {
-            lifecycleScope.launch {
-                delay(300)
-                context?.let {
-                    if (mData[mLastPlayPosition].urls[0].url.endsWith(".txt")) {
-                        WebListActivity.start(it, mData[mLastPlayPosition].urls[0].url)
-                    } else {
-                        WebViewPlayActivity.start(it, mLastPlayPosition)
-                    }
-                }
-            }
-        }
+//        if (mLastPlayPosition >= 0) {
+//            lifecycleScope.launch {
+//                delay(300)
+//                context?.let {
+//                    if (mData[mLastPlayPosition].urls[0].url.endsWith(".txt")) {
+//                        WebListActivity.start(it, mData[mLastPlayPosition].urls[0].url)
+//                    } else {
+//                        WebViewPlayActivity.start(it, mLastPlayPosition)
+//                    }
+//                }
+//            }
+//        }
     }
 
     private fun getLayoutId(): Int {
