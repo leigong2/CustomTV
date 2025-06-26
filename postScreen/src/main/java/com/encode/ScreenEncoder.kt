@@ -25,9 +25,9 @@ import kotlin.experimental.and
 
 object ScreenEncoder {
     //不同手机支持的编码最大分辨率不同
-    var VIDEO_WIDTH = ScreenUtils.getScreenWidth()
-    var VIDEO_HEIGHT = ScreenUtils.getScreenHeight()
-    private val SCREEN_FRAME_BIT = ScreenUtils.getScreenHeight().toFloat() * ScreenUtils.getScreenWidth()  // 比特率（比特/秒）
+    var VIDEO_WIDTH = getCurrentWidth()
+    var VIDEO_HEIGHT = getCurrentHeight()
+    private val SCREEN_FRAME_BIT = getCurrentHeight().toFloat() * getCurrentWidth()  // 比特率（比特/秒）
     private const val SCREEN_FRAME_RATE = 20  //帧率
     private const val SCREEN_FRAME_INTERVAL = 1  //I帧的频率
     private const val ENCODE_TIME_OUT: Long = 10000 //超时时间
@@ -48,6 +48,14 @@ object ScreenEncoder {
     private var isPlaying = true
     private var isChangeOrientation = false
 
+    fun getCurrentWidth(): Int {
+        return 1080
+    }
+
+    fun getCurrentHeight(): Int {
+        return 1920
+    }
+
     fun start(mediaProjection: MediaProjection, withH265: Boolean) {
         if (this::webSocketServer.isInitialized) {
             return
@@ -59,7 +67,7 @@ object ScreenEncoder {
                 Log.e("我是一条鱼：", "有人连接进来了ip:${conn?.remoteSocketAddress}" )
                 conn?.apply {
                     webSocket = this
-                    val json = "{\"width\":${ScreenUtils.getScreenWidth()},\"height\":${ScreenUtils.getScreenHeight()}}"
+                    val json = "{\"width\":${getCurrentWidth()},\"height\":${getCurrentHeight()}}"
                     webSocket.send(json)
                 }
             }
@@ -70,11 +78,11 @@ object ScreenEncoder {
 
             override fun onMessage(conn: WebSocket?, message: String?) {
                 if (Objects.equals(message, Configuration.ORIENTATION_LANDSCAPE.toString())) {
-                    VIDEO_WIDTH = ScreenUtils.getScreenHeight()
-                    VIDEO_HEIGHT = ScreenUtils.getScreenWidth()
+                    VIDEO_WIDTH = getCurrentHeight()
+                    VIDEO_HEIGHT = getCurrentWidth()
                 } else if (Objects.equals(message, Configuration.ORIENTATION_PORTRAIT.toString())) {
-                    VIDEO_WIDTH = ScreenUtils.getScreenWidth()
-                    VIDEO_HEIGHT = ScreenUtils.getScreenHeight()
+                    VIDEO_WIDTH = getCurrentWidth()
+                    VIDEO_HEIGHT = getCurrentHeight()
                 }
                 isChangeOrientation = true
                 if (withH265) {
@@ -151,30 +159,33 @@ object ScreenEncoder {
     }
 
     private fun encodeH264Data(byteBuffer: ByteBuffer, vBufferInfo: MediaCodec.BufferInfo) {
-        var offset = 4
-        //判断帧的类型
-        if (byteBuffer[2].toInt() == 0x01) {
-            offset = 3
-        }
-        val type: Byte = byteBuffer[offset] and 0x1f
-        /*如果送来的流的第一帧Frame有pps和sps，可以不需要配置format.setByteBuffer的”csd-0” （sps） 和”csd-1”（pps）；
-          否则必须配置相应的pps和sps,通常情况下sps和pps如下
-          SPS帧和 PPS帧合在了一起发送,PS为 [4，len-8] PPS为后4个字节*/
-        if (type == NAL_SPS) {
-            sps_pps_buf = ByteArray(vBufferInfo.size)
-            byteBuffer.get(sps_pps_buf)
-        } else if (type == NAL_SLICE /* || type == NAL_SLICE_IDR */) {
-            val bytes = ByteArray(vBufferInfo.size)
-            byteBuffer[bytes]
-            sendMessage(bytes.addByteToFirst(2))
-        } else if (type == NAL_SLICE_IDR) {
-            // I帧，前面添加sps和pps
-            val bytes = ByteArray(vBufferInfo.size)
-            byteBuffer[bytes]
-            val newBuf = ByteArray(sps_pps_buf.size + bytes.size)
-            System.arraycopy(sps_pps_buf, 0, newBuf, 0, sps_pps_buf.size)
-            System.arraycopy(bytes, 0, newBuf, sps_pps_buf.size, bytes.size)
-            sendMessage(newBuf.addByteToFirst(2))
+        try {
+            var offset = 4
+            //判断帧的类型
+            if (byteBuffer[2].toInt() == 0x01) {
+                offset = 3
+            }
+            val type: Byte = byteBuffer[offset] and 0x1f
+            /*如果送来的流的第一帧Frame有pps和sps，可以不需要配置format.setByteBuffer的”csd-0” （sps） 和”csd-1”（pps）；
+              否则必须配置相应的pps和sps,通常情况下sps和pps如下
+              SPS帧和 PPS帧合在了一起发送,PS为 [4，len-8] PPS为后4个字节*/
+            if (type == NAL_SPS) {
+                sps_pps_buf = ByteArray(vBufferInfo.size)
+                byteBuffer.get(sps_pps_buf)
+            } else if (type == NAL_SLICE /* || type == NAL_SLICE_IDR */) {
+                val bytes = ByteArray(vBufferInfo.size)
+                byteBuffer[bytes]
+                sendMessage(bytes.addByteToFirst(2))
+            } else if (type == NAL_SLICE_IDR) {
+                // I帧，前面添加sps和pps
+                val bytes = ByteArray(vBufferInfo.size)
+                byteBuffer[bytes]
+                val newBuf = ByteArray(sps_pps_buf.size + bytes.size)
+                System.arraycopy(sps_pps_buf, 0, newBuf, 0, sps_pps_buf.size)
+                System.arraycopy(bytes, 0, newBuf, sps_pps_buf.size, bytes.size)
+                sendMessage(newBuf.addByteToFirst(2))
+            }
+        } catch (ignore: Exception) {
         }
     }
 

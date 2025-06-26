@@ -21,9 +21,9 @@ import java.net.URI
 import java.nio.ByteBuffer
 
 object ScreenDecoder {
-    var VIDEO_WIDTH = ScreenUtils.getScreenWidth()
-    var VIDEO_HEIGHT = ScreenUtils.getScreenHeight()
-    private val SCREEN_FRAME_BIT = ScreenUtils.getScreenHeight() * ScreenUtils.getScreenWidth()  // 比特率（比特/秒）
+    var VIDEO_WIDTH = getCurrentWidth()
+    var VIDEO_HEIGHT = getCurrentHeight()
+    private val SCREEN_FRAME_BIT = getCurrentHeight() * getCurrentWidth()  // 比特率（比特/秒）
     private const val SCREEN_FRAME_RATE = 20  //帧率
     private const val SCREEN_FRAME_INTERVAL = 1  //I帧的频率
     private const val DECODE_TIME_OUT: Long = 10000 //超时时间
@@ -32,6 +32,14 @@ object ScreenDecoder {
     private lateinit var webSocketClient: WebSocketClient
     private val handlerThread = HandlerThread("DecoderThread").apply { start() }
     private val decodeHandler = Handler(handlerThread.looper)
+
+    fun getCurrentWidth(): Int {
+        return 1080
+    }
+
+    fun getCurrentHeight(): Int {
+        return 1920
+    }
 
     fun start(ip: String, surface: Surface, withH265: Boolean) {
         webSocketClient = object : WebSocketClient(URI("ws://${ip}:${port}")) {

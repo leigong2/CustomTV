@@ -83,7 +83,7 @@ object RecordEncoder {
     private fun startRecordEncode() {
         recorder.startRecording()
         while (isRecording) {
-            val read: Int = recorder.read(bufferBytes, 0, 2048)
+            val read: Int = recorder.read(bufferBytes, 0, bufferBytes.size)
             if (read >= 0) {
                 val audio = ByteArray(read)
                 System.arraycopy(bufferBytes, 0, audio, 0, read)
@@ -93,32 +93,35 @@ object RecordEncoder {
     }
 
     private fun encodePCMData(chunkPCM: ByteArray) {
-        val bufferInfo = MediaCodec.BufferInfo()
-        val inputBuffer: ByteBuffer
-        var outputBuffer: ByteBuffer
-        val inputIndex: Int = mediaCodec.dequeueInputBuffer(-1)//同解码器
-        if (inputIndex >= 0) {
-            inputBuffer = mediaCodec.getInputBuffer(inputIndex) ?: return//同解码器
-            inputBuffer.clear();//同解码器
-            inputBuffer.put(chunkPCM);//PCM数据填充给inputBuffer
-            mediaCodec.queueInputBuffer(inputIndex, 0, chunkPCM.size, System.nanoTime()/1000, 0);//通知编码器 编码
-        }
-        var outputIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)
-        while (outputIndex >= 0) {
-            outputBuffer = mediaCodec.getOutputBuffer(outputIndex) ?: return //拿到输出Buffer
-            val outBitSize = bufferInfo.size
-            val outPacketSize = outBitSize + 7 //7为ADTS头部的大小
-            outputBuffer.position(bufferInfo.offset)
-            outputBuffer.limit(bufferInfo.offset + outBitSize)
-            val chunkAudio = ByteArray(outPacketSize)
-            addADTStoPacket(44100, chunkAudio, outPacketSize) //添加ADTS
-            outputBuffer.get(chunkAudio, 7, outBitSize) //将编码得到的AAC数据 取出到byte[]中 偏移量offset=7
-            outputBuffer.position(bufferInfo.offset)
-            // 传输或保存数据
-            Log.e("我是一条鱼：", "准备传输音频数据" )
-            ScreenEncoder.sendMessage(chunkAudio.addByteToFirst(1))
-            mediaCodec.releaseOutputBuffer(outputIndex, false)
-            outputIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)
+        try {
+            val bufferInfo = MediaCodec.BufferInfo()
+            val inputBuffer: ByteBuffer
+            var outputBuffer: ByteBuffer
+            val inputIndex: Int = mediaCodec.dequeueInputBuffer(-1)//同解码器
+            if (inputIndex >= 0) {
+                inputBuffer = mediaCodec.getInputBuffer(inputIndex) ?: return//同解码器
+                inputBuffer.clear();//同解码器
+                inputBuffer.put(chunkPCM);//PCM数据填充给inputBuffer
+                mediaCodec.queueInputBuffer(inputIndex, 0, chunkPCM.size, System.nanoTime()/1000, 0);//通知编码器 编码
+            }
+            var outputIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)
+            while (outputIndex >= 0) {
+                outputBuffer = mediaCodec.getOutputBuffer(outputIndex) ?: return //拿到输出Buffer
+                val outBitSize = bufferInfo.size
+                val outPacketSize = outBitSize + 7 //7为ADTS头部的大小
+                outputBuffer.position(bufferInfo.offset)
+                outputBuffer.limit(bufferInfo.offset + outBitSize)
+                val chunkAudio = ByteArray(outPacketSize)
+                addADTStoPacket(44100, chunkAudio, outPacketSize) //添加ADTS
+                outputBuffer.get(chunkAudio, 7, outBitSize) //将编码得到的AAC数据 取出到byte[]中 偏移量offset=7
+                outputBuffer.position(bufferInfo.offset)
+                // 传输或保存数据
+                Log.e("我是一条鱼：", "准备传输音频数据" )
+                ScreenEncoder.sendMessage(chunkAudio.addByteToFirst(1))
+                mediaCodec.releaseOutputBuffer(outputIndex, false)
+                outputIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)
+            }
+        } catch (ignore: Exception) {
         }
     }
 
