@@ -39,6 +39,7 @@ class TouPingReceiveActivity : BaseActivity() {
                         BaseApplication.getInstance().handler.post {
                             (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("开始连接到服务端:${ip}\n")
                             ScreenDecoder.start(ip, holder.surface, withH265)
+                            RecordDecoder.start()
                         }
                     }
 
@@ -49,7 +50,6 @@ class TouPingReceiveActivity : BaseActivity() {
                     }
                 })
             }
-//            RecordDecoder.start(ip)
         }
     }
 
@@ -70,7 +70,7 @@ class TouPingReceiveActivity : BaseActivity() {
 
     override fun onDestroy() {
         ScreenDecoder.release()
-//        RecordDecoder.release()
+        RecordDecoder.release()
         super.onDestroy()
     }
 }

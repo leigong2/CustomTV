@@ -6,11 +6,13 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.graphics.BitmapFactory
 import android.media.projection.MediaProjectionManager
 import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import com.Config.withH265
 import com.activity.TouPingPostActivity
 import com.encode.RecordEncoder
 import com.encode.ScreenEncoder
@@ -45,7 +47,7 @@ class ScreenService : Service() {
         val mediaProjectionManager = getSystemService(MEDIA_PROJECTION_SERVICE) as MediaProjectionManager
         mediaProjectionManager.getMediaProjection(resultCode, data
         )?.apply {
-//            ScreenEncoder.start(this, withH265)
+            ScreenEncoder.start(this, withH265)
             RecordEncoder.start(this)
         }
     }
@@ -82,7 +84,17 @@ class ScreenService : Service() {
             notificationManager.createNotificationChannel(channel)
         }
         val notification = builder.build()
-        startForeground(110, notification)
+        // Android 11 需要组合服务类型
+        val serviceType = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PROJECTION or ServiceInfo.FOREGROUND_SERVICE_TYPE_MICROPHONE
+        } else {
+            0
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(110, notification, serviceType)
+        } else {
+            startForeground(110, notification)
+        }
     }
 
     override fun onDestroy() {

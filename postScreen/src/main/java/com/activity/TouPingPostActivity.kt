@@ -8,6 +8,9 @@ import android.view.View
 import android.view.WindowManager
 import com.base.base.BaseActivity
 import com.base.base.BaseApplication
+import com.decode.AACPlayer
+import com.encode.RecordEncoder
+import com.encode.ScreenEncoder
 import com.service.ScreenService
 import com.translate.postscreen.R
 import java.io.File
@@ -60,5 +63,11 @@ class TouPingPostActivity : BaseActivity(){
                 startService(service)
             }
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        ScreenEncoder.close()
+        RecordEncoder.close()
     }
 }

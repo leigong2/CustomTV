@@ -3,6 +3,9 @@ package com.decode
 import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaFormat
+import android.os.Handler
+import android.os.HandlerThread
+import android.util.Log
 import android.view.Surface
 import android.view.SurfaceView
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -27,6 +30,8 @@ object ScreenDecoder {
     private const val port = 50000   //端口
     private lateinit var mediaCodec: MediaCodec
     private lateinit var webSocketClient: WebSocketClient
+    private val handlerThread = HandlerThread("DecoderThread").apply { start() }
+    private val decodeHandler = Handler(handlerThread.looper)
 
     fun start(ip: String, surface: Surface, withH265: Boolean) {
         webSocketClient = object : WebSocketClient(URI("ws://${ip}:${port}")) {
@@ -50,12 +55,15 @@ object ScreenDecoder {
                 }
             }
             override fun onMessage(bytes: ByteBuffer) {
-                val buf = ByteArray(bytes.remaining())
-                bytes[buf]
-                if (withH265) {
-                    decodeH265Data(buf)
-                } else {
-                    decodeH264Data(buf)
+                decodeHandler.post {
+                    val buf = ByteArray(bytes.remaining())
+                    bytes[buf]
+                    RecordDecoder.decodeRecordData(buf)
+                    if (withH265) {
+                        decodeH265Data(buf)
+                    } else {
+                        decodeH264Data(buf)
+                    }
                 }
             }
             override fun onClose(code: Int, reason: String?, remote: Boolean) {
@@ -128,11 +136,15 @@ object ScreenDecoder {
     private var  loged = false
 
     /*zune: H264解码*/
-    private fun decodeH264Data(data: ByteArray) {
-        val inputBuffers: Array<ByteBuffer> = mediaCodec.getInputBuffers()
+    private fun decodeH264Data(source: ByteArray) {
+        if (source.isEmpty()) return // 确保数据完整
+        if (source[0] != 2.toByte()) {
+            return
+        }
+        val data = source.copyOfRange(1, source.size) // 移除标识字节
         val inputBufferIndex: Int = mediaCodec.dequeueInputBuffer(100)
         if (inputBufferIndex >= 0) {
-            val inputBuffer = inputBuffers[inputBufferIndex]
+            val inputBuffer = mediaCodec.getInputBuffer(inputBufferIndex) ?: return
             inputBuffer.clear()
             inputBuffer.put(data, 0, data.size)
             mediaCodec.queueInputBuffer(inputBufferIndex, 0, data.size, System.currentTimeMillis(), 0)
@@ -155,7 +167,13 @@ object ScreenDecoder {
     }
 
     /*zune: H265解码*/
-    private fun decodeH265Data(data: ByteArray) {
+    private fun decodeH265Data(source: ByteArray) {
+        if (source.isEmpty()) return // 确保数据完整
+        if (source[0] != 2.toByte()) {
+            return
+        }
+        val data = source.copyOfRange(1, source.size) // 移除标识字节
+        Log.e("我是一条鱼：", "接收到视频数据，准备解析" )
         val index = mediaCodec.dequeueInputBuffer(DECODE_TIME_OUT)
         if (index >= 0) {
             mediaCodec.getInputBuffer(index)?.also { inputBuffer ->

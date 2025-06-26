@@ -6,11 +6,13 @@ import android.media.MediaCodec
 import android.media.MediaCodecInfo
 import android.media.MediaFormat
 import android.media.projection.MediaProjection
+import android.os.Build
 import android.util.Log
 import android.widget.TextView
 import com.ScreenUtils
 import com.activity.TouPingPostActivity
 import com.base.base.BaseApplication
+import com.encode.RecordEncoder.addByteToFirst
 import com.translate.postscreen.R
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
@@ -64,7 +66,6 @@ object ScreenEncoder {
 
             override fun onClose(conn: WebSocket?, code: Int, reason: String?, remote: Boolean) {
                 Log.e("我是一条鱼：", "远端关闭" )
-                loged = true
             }
 
             override fun onMessage(conn: WebSocket?, message: String?) {
@@ -114,6 +115,13 @@ object ScreenEncoder {
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT.toInt())
         mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, SCREEN_FRAME_RATE)
         mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, SCREEN_FRAME_INTERVAL)
+        // Android 13 新增推荐参数
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mediaFormat.setInteger(MediaFormat.KEY_PROFILE, MediaCodecInfo.CodecProfileLevel.AVCProfileMain)
+            mediaFormat.setInteger(MediaFormat.KEY_LEVEL, MediaCodecInfo.CodecProfileLevel.AVCLevel42)
+            mediaFormat.setInteger(MediaFormat.KEY_LATENCY, 1) // 低延迟模式
+            mediaFormat.setInteger(MediaFormat.KEY_MAX_B_FRAMES, 0) // 禁用B帧
+        }
         try {
             mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
             val surface = mediaCodec.createInputSurface()
@@ -142,8 +150,6 @@ object ScreenEncoder {
         }
     }
 
-    private var loged = false
-
     private fun encodeH264Data(byteBuffer: ByteBuffer, vBufferInfo: MediaCodec.BufferInfo) {
         var offset = 4
         //判断帧的类型
@@ -160,9 +166,7 @@ object ScreenEncoder {
         } else if (type == NAL_SLICE /* || type == NAL_SLICE_IDR */) {
             val bytes = ByteArray(vBufferInfo.size)
             byteBuffer[bytes]
-            if (this::webSocket.isInitialized && webSocket.isOpen) {
-                webSocket.send(bytes)
-            }
+            sendMessage(bytes.addByteToFirst(2))
         } else if (type == NAL_SLICE_IDR) {
             // I帧，前面添加sps和pps
             val bytes = ByteArray(vBufferInfo.size)
@@ -170,13 +174,7 @@ object ScreenEncoder {
             val newBuf = ByteArray(sps_pps_buf.size + bytes.size)
             System.arraycopy(sps_pps_buf, 0, newBuf, 0, sps_pps_buf.size)
             System.arraycopy(bytes, 0, newBuf, sps_pps_buf.size, bytes.size)
-            if (this::webSocket.isInitialized && webSocket.isOpen) {
-                webSocket.send(newBuf)
-            }
-            if (!loged) {
-                loged = true
-                Log.e("我是一条鱼：", "H264编码完成" )
-            }
+            sendMessage(newBuf.addByteToFirst(2))
         }
     }
 
@@ -233,16 +231,14 @@ object ScreenEncoder {
             System.arraycopy(h265_vps_pps_sps, 0, newBytes, 0, h265_vps_pps_sps.size)
             System.arraycopy(bytes, 0, newBytes, h265_vps_pps_sps.size, bytes.size)
             /*zune: 解码数据发送给远端*/
-            if (this::webSocket.isInitialized && webSocket.isOpen) {
-                webSocket.send(newBytes)
-            }
+            Log.e("我是一条鱼：", "准备传输视频数据" )
+            sendMessage(newBytes.addByteToFirst(2))
         } else {
             val bytes = ByteArray(bufferInfo.size)
             byteBuffer[bytes]
             /*zune: 解码数据发送给远端*/
-            if (this::webSocket.isInitialized && webSocket.isOpen) {
-                webSocket.send(bytes)
-            }
+            Log.e("我是一条鱼：", "准备传输视频数据" )
+            sendMessage(bytes.addByteToFirst(2))
         }
     }
 
@@ -262,6 +258,12 @@ object ScreenEncoder {
             mediaProjection.stop()
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    fun sendMessage(byteArray: ByteArray) {
+        if (this::webSocket.isInitialized && webSocket.isOpen) {
+            webSocket.send(byteArray)
         }
     }
 }
