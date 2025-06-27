@@ -36,7 +36,6 @@ object ScreenDecoder {
     fun getCurrentWidth(): Int {
         return 1080
     }
-
     fun getCurrentHeight(): Int {
         return 1920
     }
@@ -44,6 +43,7 @@ object ScreenDecoder {
     fun start(ip: String, surface: Surface, withH265: Boolean) {
         webSocketClient = object : WebSocketClient(URI("ws://${ip}:${port}")) {
             override fun onOpen(handshakedata: ServerHandshake?) {
+                Log.e("我是一条鱼：", "webSocketClient onOpen" )
                 BaseApplication.getInstance().handler.post {
                     (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<TextView>(R.id.info)?.append("远端开启成功:${ip}\n")
                 }
@@ -51,6 +51,15 @@ object ScreenDecoder {
             override fun onMessage(message: String?) {
                 message?.also { json ->
                     val jsonObject = JSONObject(json)
+                    if (jsonObject.has("orientation")) {
+                        val orientation = jsonObject.get("orientation").toString().toInt()
+                        BaseApplication.getInstance().handler.post {
+                            (BaseApplication.getInstance().topActivity as? TouPingReceiveActivity)?.findViewById<SurfaceView>(R.id.surfaceView)?.also {surfaceView ->
+                                resetOrientation(surfaceView, orientation)
+                            }
+                        }
+                        return
+                    }
                     val width = jsonObject.get("width")
                     val height = jsonObject.get("height")
                     VIDEO_WIDTH = width.toString().toInt()
@@ -64,13 +73,16 @@ object ScreenDecoder {
             }
             override fun onMessage(bytes: ByteBuffer) {
                 decodeHandler.post {
-                    val buf = ByteArray(bytes.remaining())
-                    bytes[buf]
-                    RecordDecoder.decodeRecordData(buf)
-                    if (withH265) {
-                        decodeH265Data(buf)
-                    } else {
-                        decodeH264Data(buf)
+                    try {
+                        val buf = ByteArray(bytes.remaining())
+                        bytes[buf]
+                        RecordDecoder.decodeRecordData(buf)
+                        if (withH265) {
+                            decodeH265Data(buf)
+                        } else {
+                            decodeH264Data(buf)
+                        }
+                    } catch (ignore: Exception) {
                     }
                 }
             }
@@ -86,6 +98,7 @@ object ScreenDecoder {
                 }
             }
         }
+        Log.e("我是一条鱼：", "webSocketClient 开始连接" )
         webSocketClient.connect()
         if (withH265) {
             startH265MediaCodec(surface)
@@ -94,7 +107,7 @@ object ScreenDecoder {
         }
     }
 
-    private fun resetSurfaceView(surfaceView: SurfaceView, videoWidth: Int, videoHeight: Int) {
+    fun resetSurfaceView(surfaceView: SurfaceView, videoWidth: Int, videoHeight: Int) {
         val screenWidth = ScreenUtils.getScreenWidth()
         val screenHeight = ScreenUtils.getScreenHeight()
         if (videoWidth / videoHeight.toFloat() > screenWidth / screenHeight.toFloat()) {
@@ -106,6 +119,23 @@ object ScreenDecoder {
             val layoutParams = surfaceView.layoutParams
             layoutParams.height = MATCH_PARENT
             layoutParams.width = (screenHeight.toFloat() / videoHeight * videoWidth).toInt()
+            surfaceView.layoutParams = layoutParams
+        }
+    }
+
+    fun resetOrientation(surfaceView: SurfaceView, orientation: Int) {
+        val screenWidth = ScreenUtils.getScreenWidth()
+        val screenHeight = ScreenUtils.getScreenHeight()
+        if (orientation == 0) {
+            //竖屏
+            val layoutParams = surfaceView.layoutParams
+            layoutParams.height = MATCH_PARENT
+            layoutParams.width = (screenHeight.toFloat() / VIDEO_HEIGHT * VIDEO_WIDTH).toInt()
+            surfaceView.layoutParams = layoutParams
+        } else {
+            val layoutParams = surfaceView.layoutParams
+            layoutParams.width = MATCH_PARENT
+            layoutParams.height = (screenWidth.toFloat() / VIDEO_WIDTH * VIDEO_HEIGHT).toInt()
             surfaceView.layoutParams = layoutParams
         }
     }

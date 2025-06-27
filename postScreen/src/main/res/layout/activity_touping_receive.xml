@@ -21,6 +21,7 @@
         android:id="@+id/info"
         android:textColor="#f00"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:padding="16dp"

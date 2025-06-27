@@ -1,8 +1,5 @@
 package com.encode
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
 import android.media.AudioAttributes
 import android.media.AudioFormat
 import android.media.AudioPlaybackCaptureConfiguration
@@ -12,13 +9,7 @@ import android.media.MediaFormat
 import android.media.MediaRecorder
 import android.media.projection.MediaProjection
 import android.os.Build
-import android.util.Log
-import androidx.core.content.ContextCompat
-import org.java_websocket.WebSocket
-import org.java_websocket.handshake.ClientHandshake
-import org.java_websocket.server.WebSocketServer
 import java.io.IOException
-import java.net.InetSocketAddress
 import java.nio.ByteBuffer
 
 
@@ -116,7 +107,6 @@ object RecordEncoder {
                 outputBuffer.get(chunkAudio, 7, outBitSize) //将编码得到的AAC数据 取出到byte[]中 偏移量offset=7
                 outputBuffer.position(bufferInfo.offset)
                 // 传输或保存数据
-                Log.e("我是一条鱼：", "准备传输音频数据" )
                 ScreenEncoder.sendMessage(chunkAudio.addByteToFirst(1))
                 mediaCodec.releaseOutputBuffer(outputIndex, false)
                 outputIndex = mediaCodec.dequeueOutputBuffer(bufferInfo, 0)

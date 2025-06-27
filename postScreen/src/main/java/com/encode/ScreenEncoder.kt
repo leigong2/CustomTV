@@ -1,6 +1,5 @@
 package com.encode
 
-import android.content.res.Configuration
 import android.hardware.display.DisplayManager
 import android.media.MediaCodec
 import android.media.MediaCodecInfo
@@ -8,19 +7,15 @@ import android.media.MediaFormat
 import android.media.projection.MediaProjection
 import android.os.Build
 import android.util.Log
-import android.widget.TextView
-import com.ScreenUtils
-import com.activity.TouPingPostActivity
 import com.base.base.BaseApplication
 import com.encode.RecordEncoder.addByteToFirst
-import com.translate.postscreen.R
+import com.encode.ScreenEncoder.webSocket
 import org.java_websocket.WebSocket
 import org.java_websocket.handshake.ClientHandshake
 import org.java_websocket.server.WebSocketServer
 import java.io.IOException
 import java.net.InetSocketAddress
 import java.nio.ByteBuffer
-import java.util.Objects
 import kotlin.experimental.and
 
 object ScreenEncoder {
@@ -48,6 +43,12 @@ object ScreenEncoder {
     private var isPlaying = true
     private var isChangeOrientation = false
 
+    init {
+        BaseApplication.getInstance().orientation.observeForever {
+            sendOrientation(it)
+        }
+    }
+
     fun getCurrentWidth(): Int {
         return 1080
     }
@@ -61,12 +62,14 @@ object ScreenEncoder {
             return
         }
         this.mediaProjection = mediaProjection
+        Log.e("我是一条鱼：", "mediaProjection:${mediaProjection}" )
         val inetSocketAddress = InetSocketAddress(port)
         webSocketServer = object : WebSocketServer(inetSocketAddress) {
             override fun onOpen(conn: WebSocket?, handshake: ClientHandshake?) {
                 Log.e("我是一条鱼：", "有人连接进来了ip:${conn?.remoteSocketAddress}" )
                 conn?.apply {
                     webSocket = this
+                    Log.e("我是一条鱼：", "webSocket:${this@ScreenEncoder::webSocket.isInitialized}" )
                     val json = "{\"width\":${getCurrentWidth()},\"height\":${getCurrentHeight()}}"
                     webSocket.send(json)
                 }
@@ -77,20 +80,6 @@ object ScreenEncoder {
             }
 
             override fun onMessage(conn: WebSocket?, message: String?) {
-                if (Objects.equals(message, Configuration.ORIENTATION_LANDSCAPE.toString())) {
-                    VIDEO_WIDTH = getCurrentHeight()
-                    VIDEO_HEIGHT = getCurrentWidth()
-                } else if (Objects.equals(message, Configuration.ORIENTATION_PORTRAIT.toString())) {
-                    VIDEO_WIDTH = getCurrentWidth()
-                    VIDEO_HEIGHT = getCurrentHeight()
-                }
-                isChangeOrientation = true
-                if (withH265) {
-                    initH265MediaCodec()
-                } else {
-                    initH264MediaCodec()
-                }
-                isChangeOrientation = false
             }
             override fun onError(conn: WebSocket?, ex: Exception?) {
                 Log.e("我是一条鱼：", "异常断开，error:${ex}" )
@@ -133,7 +122,9 @@ object ScreenEncoder {
         try {
             mediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE)
             val surface = mediaCodec.createInputSurface()
-            mediaProjection.createVirtualDisplay("ScreenRecorder", VIDEO_WIDTH, VIDEO_HEIGHT, 1, DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC, surface, null, null)
+            if (this::mediaProjection.isInitialized) {
+                mediaProjection.createVirtualDisplay("ScreenRecorder", VIDEO_WIDTH, VIDEO_HEIGHT, 1, DisplayManager.VIRTUAL_DISPLAY_FLAG_PUBLIC, surface, null, null)
+            }
             mediaCodec.start()
             Log.e("我是一条鱼：", "H264初始化完成" )
         } catch (e: IOException) {
@@ -192,6 +183,9 @@ object ScreenEncoder {
 
     /*zune: 初始化mediaCodeC*/
     private fun initH265MediaCodec() {
+        if (!this::mediaProjection.isInitialized) {
+            return
+        }
         val mediaFormat = MediaFormat.createVideoFormat(MediaFormat.MIMETYPE_VIDEO_HEVC, VIDEO_WIDTH, VIDEO_HEIGHT)
         mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT, MediaCodecInfo.CodecCapabilities.COLOR_FormatSurface)
         mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, SCREEN_FRAME_BIT.toInt())
@@ -242,13 +236,11 @@ object ScreenEncoder {
             System.arraycopy(h265_vps_pps_sps, 0, newBytes, 0, h265_vps_pps_sps.size)
             System.arraycopy(bytes, 0, newBytes, h265_vps_pps_sps.size, bytes.size)
             /*zune: 解码数据发送给远端*/
-            Log.e("我是一条鱼：", "准备传输视频数据" )
             sendMessage(newBytes.addByteToFirst(2))
         } else {
             val bytes = ByteArray(bufferInfo.size)
             byteBuffer[bytes]
             /*zune: 解码数据发送给远端*/
-            Log.e("我是一条鱼：", "准备传输视频数据" )
             sendMessage(bytes.addByteToFirst(2))
         }
     }
@@ -275,6 +267,14 @@ object ScreenEncoder {
     fun sendMessage(byteArray: ByteArray) {
         if (this::webSocket.isInitialized && webSocket.isOpen) {
             webSocket.send(byteArray)
+        }
+    }
+
+    fun sendOrientation(orientation: Int) {
+        Log.e("我是一条鱼：", "发送端发送：${orientation}, webSocket = ${this::webSocket.isInitialized}" )
+        if (this::webSocket.isInitialized) {
+            val json = "{\"width\":${getCurrentWidth()},\"height\":${getCurrentHeight()},\"orientation\":${orientation}}"
+            webSocket.send(json)
         }
     }
 }

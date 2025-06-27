@@ -1,16 +1,24 @@
 package com.base.base;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
 import androidx.multidex.MultiDexApplication;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class BaseApplication extends MultiDexApplication {
     private static BaseApplication sApplication;
@@ -30,6 +38,8 @@ public class BaseApplication extends MultiDexApplication {
     public Gson getGson() {
         return mGson;
     }
+
+    public MutableLiveData<Integer> orientation = new MutableLiveData<>();
 
     @Override
     public void onCreate() {
@@ -53,5 +63,15 @@ public class BaseApplication extends MultiDexApplication {
             @Override
             public void onActivityDestroyed(@NonNull Activity activity) {}
         });
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.intent.action.CONFIGURATION_CHANGED");
+        registerReceiver(new OrientationReceiver(),intentFilter);
+    }
+    private static class OrientationReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Integer value = BaseApplication.getInstance().orientation.getValue();
+            BaseApplication.getInstance().orientation.postValue(((value == null ? 0 : value) + 90) % 180);
+        }
     }
 }
